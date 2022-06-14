@@ -1,0 +1,21 @@
+SSSSSS   EEEEEE  SSSSSS  HH  HH
+SSSSSS   EEEEEE  SSSSSS  HH  HH
+SSS      EE      SSS     HH  HH
+SSS      EE      SSS     HH  HH
+SSSSSS   EEEEEE  SSSSSS  HHHHHH
+SSSSSS   EEEEEE  SSSSSS  HHHHHH
+   SSS   EE         SSS  HH  HH
+   SSS   EE         SSS  HH  HH
+SSSSSS   EEEEEE  SSSSSS  HH  HH
+SSSSSS   EEEEEE  SSSSSS  HH  HH
+
+                 OOOOOO  SSSSSS
+    II  II       OO  OO  SSSSSS
+    II  II       OO  OO  SSS   
+    II  II       OO  OO  SSS   
+  \\      //     OO  OO  SSSSSS
+   \\====//      OO  OO  SSSSSS
+                 OO  OO     SSS
+                 OO  OO     SSS
+                 OO  OO  SSSSSS
+                 OOOOOO  SSSSSS
