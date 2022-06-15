@@ -3,3 +3,6 @@ lib
 *.iso
 initramfs
 .vscode
+limine
+/limine-deploy
+/limine-deploy.exe
