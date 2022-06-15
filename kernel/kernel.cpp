@@ -20,6 +20,7 @@ limine_goto_address cpub();
 
 extern "C" void _start(void)
 {
+
     if (terminal_request.response == NULL || terminal_request.response->terminal_count < 1)
     {
         done();
@@ -30,6 +31,12 @@ extern "C" void _start(void)
     comout("Hello COM\n");
 
     printf("Welcome to SeshOS\n\0");
+
+    readFile("./yes.txt");
+
+    sleep(1);
+
+    readFile("./home/root/yes.txt");
 
     asm volatile ("int $0x69");
 

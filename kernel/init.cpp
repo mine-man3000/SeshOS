@@ -4,7 +4,6 @@
 #include "idt/interrupts.h"
 #include "kernelDefines.h"
 #include "init.h"
-#include "fs/ramfs.h"
 #include "video/renderer.h"
 
 extern "C" void disablePIC();

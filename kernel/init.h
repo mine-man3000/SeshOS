@@ -1,3 +1,5 @@
+#include "fs/ramfs.h"
+
 #pragma once
 
 /**

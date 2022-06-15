@@ -5,7 +5,7 @@ bool isRightShiftPressed;
 
 extern void drawRect(int startx, int starty, int width, int height, uint32_t VGA_COLOR);
 
-char input[10];
+char input[100];
 int i = 0;
 
 void HandleKeyboard(uint8_t scancode)

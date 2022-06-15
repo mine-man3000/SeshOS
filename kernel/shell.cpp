@@ -69,6 +69,18 @@ void Shell::TestCMD(char* input)
         printf("                 OOOOOO  SSSSSS    \n");
     }
     else if (mystrcmp(input, "")){}
+    else if (mystrcmp(input, "tree"))
+    {
+        for (int i = 0; headers[i]->filename != NULL; i++)
+        {
+            printf("%s\n", headers[i]->filename);
+        }
+        
+    }
+    else if (mystrcmp(twoStrings.a, "cat"))
+    {
+        readFile(twoStrings.b);
+    }
     else if (mystrcmp(input, "ls"))
     {
         ls();

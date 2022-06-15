@@ -60,7 +60,7 @@ void readFile(char* fileToReadName)
 
     if (fileToRead == 0)
     {
-        printf("File not found :(\n");
+        printf("File %s not found :(\n", fileToReadName);
         return;
     }
 
@@ -84,31 +84,34 @@ void readFile(char* fileToReadName)
     printf("%s", (((char *)initramfs->address) + offset));
 }
 
-const char* split(char* name)
-{
-    for (int i = 0; i < mystrlen(name); i++)
-    {
-        if (name[i] == '/')
-        {
-            name[i] = ' ';
-        }
-    }
-    name[0] = ' ';
-    return name;
-}
-
 void ls()
 {
-    char* currentFile = "";
     for (int i = 1; headers[i]->filename != NULL; i++)
     {
         TwoStrings fullName   = strsplit(headers[i]->filename, '/');
         TwoStrings nameInPath = strsplit(fullName.b, '/');
         
-        if(!mystrcmp(currentFile, nameInPath.a))
+        comout("\nfullName.a = ");
+        comout(fullName.a);
+        comout("\nfullName.b = ");
+        comout(fullName.b);
+        comout("\nnameInPath.a = ");
+        comout(nameInPath.a);
+        comout("\nnameInPath.b = ");
+        comout(nameInPath.b);
+        comout("\n");
+        if (i > 1)
+        {
+            TwoStrings oldFullName   = strsplit(headers[i-1]->filename, '/');
+            TwoStrings oldNameInPath = strsplit(oldFullName.b, '/');    
+            if (!mystrcmp(oldNameInPath.a, nameInPath.a))
+            {
+                printf("%s\n", nameInPath.a);
+            }
+        }
+        else
         {
             printf("%s\n", nameInPath.a);
         }
-        currentFile = nameInPath.a;
     }
 }
