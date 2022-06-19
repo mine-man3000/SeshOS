@@ -16,7 +16,7 @@ void init()
     LoadGDT(&gdtDescriptor);
 
 
-    comout("TETS");
+    comout("TETS\n");
 
     printf("[ %sOK %s] loading GDT\n", Green, White);
 

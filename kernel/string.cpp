@@ -70,17 +70,21 @@ TwoStrings strsplit(char *str, char split)
     char p1[128];
     char p2[128];
     int i = 0;
-
+    int j = 0;
+    
     for (; i < mystrlen(str) && str[i] != split; i++)
     {
         p1[i] = str[i];
     }
     i++;
-    for (int j = 0; i < mystrlen(str); j++)
+    p1[i] = '\0';
+    for (; i < mystrlen(str); j++)
     {
         p2[j] = str[i];
         i++;
     }
+    j++;
+    p2[j] = '\0';
     TwoStrings yes;
 
     for (int i = 0; i < 128; i++)

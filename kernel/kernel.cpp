@@ -3,7 +3,7 @@
 #include "kernel.h" 
 #include "acpi/acpi.h"
 
-void comout(const char* input);
+void _comout(const char* input);
 
 struct limine_file* initramfs;
 struct limine_file* font;
@@ -26,6 +26,7 @@ extern "C" void _start(void)
         done();
     }
 
+    comout("\033[2J \033[H");
     init();
 
     comout("Hello COM\n");
@@ -60,10 +61,10 @@ extern "C" void _start(void)
     done();
 }
 
-void comout(const char* input)
+void comout(const char* input, ...)
 {
     for (int i = 0; i < mystrlen(input); i++)
     {
         outb(0xE9, input[i]);
     }    
-} 
+}

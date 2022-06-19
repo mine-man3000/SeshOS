@@ -50,12 +50,12 @@ void readFile(char* fileToReadName)
     int fileToRead = 0;
     for (int i = 0; headers[i]->filename != NULL; i++)
     {
-        fileCount++;
         if (mystrcmp(fileToReadName, headers[i]->filename))
         {
             fileToRead = fileCount;
             printf("File Found!\n");
         }
+        fileCount++;
     }
 
     if (fileToRead == 0)
@@ -66,21 +66,27 @@ void readFile(char* fileToReadName)
 
     int offset = ((((size / 512) + 1) * 512) + ((fileToRead) * 512));
 
-    if (mystrcmp(fileToReadName, (((char *)initramfs->address) + offset)))
+    if (mystrlen((((char *)initramfs->address) + offset)) < getsize(headers[fileToRead]->size))
+    {
+        offset -= 512;
+    }
+    else if (mystrcmp(fileToReadName, (((char *)initramfs->address) + offset)))
     {
         offset += 512;
     }
-    else
+    else if (mystrcmp((((char *)initramfs->address) + offset), headers[fileToRead + 1]->filename))
     {
         for (int i = 0; headers[i]->filename != NULL; i++)
         {
-            if (mystrcmp(headers[i]->filename, (((char *)initramfs->address) + offset)))
-            {
-                offset -= 512;
-            }
+            offset -= 512;
         }
     }
-
+    //figure out how to see if I am reading 512 * 3 bytes behind and fix the offset to reflect this
+    //how am i going to do this? I have 0 idea...
+    
+    comout("offset is 0x");
+    comout(to_hstring((uint64_t)offset));
+    comout("\n");
     printf("%s", (((char *)initramfs->address) + offset));
 }
 
@@ -91,15 +97,6 @@ void ls()
         TwoStrings fullName   = strsplit(headers[i]->filename, '/');
         TwoStrings nameInPath = strsplit(fullName.b, '/');
         
-        comout("\nfullName.a = ");
-        comout(fullName.a);
-        comout("\nfullName.b = ");
-        comout(fullName.b);
-        comout("\nnameInPath.a = ");
-        comout(nameInPath.a);
-        comout("\nnameInPath.b = ");
-        comout(nameInPath.b);
-        comout("\n");
         if (i > 1)
         {
             TwoStrings oldFullName   = strsplit(headers[i-1]->filename, '/');

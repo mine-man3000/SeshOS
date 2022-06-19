@@ -73,7 +73,7 @@ void Shell::TestCMD(char* input)
     {
         for (int i = 0; headers[i]->filename != NULL; i++)
         {
-            printf("%s\n", headers[i]->filename);
+            printf("'%s'\n", headers[i]->filename);
         }
         
     }

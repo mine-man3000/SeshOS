@@ -9,7 +9,7 @@
 #include "time.h"
 #include "shell.h"
 
-void comout(const char* input);
+void comout(const char* input, ...);
 
 extern struct limine_module_request module;
 extern struct limine_file* initramfs;
