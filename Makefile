@@ -60,8 +60,8 @@ clean:
 	make -C limine clean
 
 initrd:
-	tar -cvf initramfs -C rootfs/ .
-
+	tar -cvf initramfs --format=ustar -C rootfs/ .
+	
 iso: 
 	make
 	make -C limine

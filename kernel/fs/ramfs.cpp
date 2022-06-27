@@ -27,7 +27,6 @@ unsigned int parse()
 
 unsigned int getsize(const char *in)
 {
- 
     unsigned int size = 0;
     unsigned int j;
     unsigned int count = 1;
@@ -36,58 +35,29 @@ unsigned int getsize(const char *in)
         size += ((in[j - 1] - '0') * count);
  
     return size;
- 
 }
 
-void readFile(char* fileToReadName)
+char *readFile(char* fileToReadName)
 {
     unsigned int address = *((int*)(&initramfs->address));
     struct tar_header *header = (struct tar_header *)address;
 
-    unsigned int size = getsize(header->size);
-
-    int fileCount = 0;
     int fileToRead = 0;
     for (int i = 0; headers[i]->filename != NULL; i++)
     {
         if (mystrcmp(fileToReadName, headers[i]->filename))
         {
-            fileToRead = fileCount;
-            printf("File Found!\n");
-        }
-        fileCount++;
-    }
-
-    if (fileToRead == 0)
-    {
-        printf("File %s not found :(\n", fileToReadName);
-        return;
-    }
-
-    int offset = ((((size / 512) + 1) * 512) + ((fileToRead) * 512));
-
-    if (mystrlen((((char *)initramfs->address) + offset)) < getsize(headers[fileToRead]->size))
-    {
-        offset -= 512;
-    }
-    else if (mystrcmp(fileToReadName, (((char *)initramfs->address) + offset)))
-    {
-        offset += 512;
-    }
-    else if (mystrcmp((((char *)initramfs->address) + offset), headers[fileToRead + 1]->filename))
-    {
-        for (int i = 0; headers[i]->filename != NULL; i++)
-        {
-            offset -= 512;
+            fileToRead = i;
+            header = headers[i];
+            break;
         }
     }
-    //figure out how to see if I am reading 512 * 3 bytes behind and fix the offset to reflect this
-    //how am i going to do this? I have 0 idea...
-    
-    comout("offset is 0x");
-    comout(to_hstring((uint64_t)offset));
-    comout("\n");
-    printf("%s", (((char *)initramfs->address) + offset));
+
+    char *contents = &((char *) header)[512]; // pointer shenanigans (:
+
+    // you should make this return a char *, so you can read different kinds of files
+
+    return contents;
 }
 
 void ls()

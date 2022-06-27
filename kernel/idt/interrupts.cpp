@@ -32,9 +32,8 @@ __attribute__((interrupt)) void GetBuffer_Handler(interrupt_frame* frame)
 
 __attribute__((interrupt)) void Test_Handler(interrupt_frame* frame)
 {
-    printf("NICE\n");
+    printf("\nNICE\n");
 }
-
 
 void outb(uint16_t port, uint8_t value)
 {

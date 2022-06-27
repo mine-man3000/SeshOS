@@ -17,6 +17,11 @@ uint64_t getMemSize()
 
 }
 
+void malloc()
+{
+    
+}
+
 void memset(void* base, uint8_t value, uint64_t length)
 {
 	for (uint64_t i = 0; i < length; i++)

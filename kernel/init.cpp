@@ -15,7 +15,6 @@ void init()
     gdtDescriptor.Offset = (uint64_t)&DefaultGDT;
     LoadGDT(&gdtDescriptor);
 
-
     comout("TETS\n");
 
     printf("[ %sOK %s] loading GDT\n", Green, White);

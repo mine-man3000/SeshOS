@@ -15,9 +15,6 @@ struct limine_smp_request smp {
     .revision = 0,
 };
 
-limine_goto_address cpua();
-limine_goto_address cpub();
-
 extern "C" void _start(void)
 {
 
@@ -32,13 +29,7 @@ extern "C" void _start(void)
     comout("Hello COM\n");
 
     printf("Welcome to SeshOS\n\0");
-
-    readFile("./yes.txt");
-
-    sleep(1);
-
-    readFile("./home/root/yes.txt");
-
+    
     asm volatile ("int $0x69");
 
     uint64_t totalMem = 0;
@@ -56,12 +47,13 @@ extern "C" void _start(void)
 
     time NewTime = GetTime();
 
-    newShell->PrintPrompt();    
+    newShell.shouldPrint = true;
+    newShell.PrintPrompt();    
 
     done();
 }
 
-void comout(const char* input, ...)
+void comout(const char* input)
 {
     for (int i = 0; i < mystrlen(input); i++)
     {

@@ -1,5 +1,5 @@
 [bits 64]
-LoadGDT:   
+LoadGDT: 
     lgdt [rdi]
     mov ax, 0x10 
     mov ds, ax
@@ -14,7 +14,7 @@ LoadGDT:
     retfq
 GLOBAL LoadGDT
 
-disablePIC:
+disablePIC: 
     mov al, 0xff
     out 0xa1, al
     out 0x21, al

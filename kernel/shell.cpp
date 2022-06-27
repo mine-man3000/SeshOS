@@ -1,10 +1,17 @@
 #include "shell.h"
 #include "memory/mem.h"
 #include "fs/ramfs.h"
+#include "video/window.h"
+#include "../tools/picsofbread.h"
+
+Shell newShell;
 
 void Shell::PrintPrompt()
 {
-    printf("%sroot@SeshOS%s / %s# ", Red, Blue, White);
+    if (shouldPrint)
+    {
+        printf("%sroot@SeshOS%s / %s# ", Red, Blue, White);
+    }    
 }
 
 void Shell::TestCMD(char* input)
@@ -69,17 +76,34 @@ void Shell::TestCMD(char* input)
         printf("                 OOOOOO  SSSSSS    \n");
     }
     else if (mystrcmp(input, "")){}
+    else if (mystrcmp(input, "pob"))
+    {
+        drawImage(g_picsofbread_data, 10, 10);
+    }
+    else if (mystrcmp(input, "startx"))
+    {
+        Clear(0);
+        Window yes = Window(10, 10, 300, 300, "Your Mom", 0xaabbccdd);
+        for (int i = 0; i < 10; i ++)
+        {
+            yes.m_Startx + 40;
+            yes.m_Starty + 40;
+            yes.DrawWindow();
+        }
+        
+        shouldPrint = false;
+    }
     else if (mystrcmp(input, "tree"))
     {
         for (int i = 0; headers[i]->filename != NULL; i++)
         {
-            printf("'%s'\n", headers[i]->filename);
+            printf("%s\n", headers[i]->filename);
         }
         
     }
     else if (mystrcmp(twoStrings.a, "cat"))
     {
-        readFile(twoStrings.b);
+        printf(readFile(twoStrings.b));
     }
     else if (mystrcmp(input, "ls"))
     {
@@ -101,10 +125,6 @@ void Shell::TestCMD(char* input)
     }
     else
     {
-        printf("Unknown command: \"");
-        printf(input);
-        printf("\"\n");
+        printf("Unknown command: \"%s\"\n", input);
     }
 }
-
-Shell *newShell;

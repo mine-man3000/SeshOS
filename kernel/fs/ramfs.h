@@ -62,5 +62,5 @@ struct tar_header
 extern struct tar_header *headers[32];
 unsigned int parse();
 unsigned int getsize(const char *in);
-void readFile(char* fileToReadName);
+char *readFile(char* fileToReadName);
 void ls();
