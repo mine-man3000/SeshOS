@@ -16,7 +16,7 @@ void Shell::PrintPrompt()
 
 void Shell::TestCMD(char* input)
 {
-   TwoStrings twoStrings = strsplit(input, ' ');
+    TwoStrings twoStrings = strsplit(input, ' ');
     if (mystrcmp(input, "ver"))
     {
         printf("SeshOS version 0.2.0\n");
@@ -84,13 +84,6 @@ void Shell::TestCMD(char* input)
     {
         Clear(0);
         Window yes = Window(10, 10, 300, 300, "Your Mom", 0xaabbccdd);
-        for (int i = 0; i < 10; i ++)
-        {
-            yes.m_Startx + 40;
-            yes.m_Starty + 40;
-            yes.DrawWindow();
-        }
-        
         shouldPrint = false;
     }
     else if (mystrcmp(input, "tree"))

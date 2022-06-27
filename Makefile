@@ -12,7 +12,6 @@ LDFLAGS = -T $(LDS) -static -Bsymbolic -nostdlib
 SRCDIR := kernel
 OBJDIR := lib
 BUILDDIR = bin
-BOOTEFI := $(GNUEFI)/x86_64/bootloader/main.efi
 
 rwildcard=$(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(subst *,%,$2),$d))
 
@@ -46,11 +45,6 @@ $(OBJDIR)/%_asm.o: $(SRCDIR)/%.asm
 link:
 	@ echo !==== LINKING
 	$(LD) $(LDFLAGS) -o $(BUILDDIR)/kernel.elf $(OBJS)
-
-setup:
-	@mkdir $(BUILDDIR)
-	@mkdir $(SRCDIR)
-	@mkdir $(OBJDIR)
 
 run: clean prep iso
 	qemu-system-x86_64 -smp 2 -m 1G image.iso -bios OVMF_CODE.fd -debugcon stdio

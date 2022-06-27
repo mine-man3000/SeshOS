@@ -67,21 +67,31 @@ bool mystrcmp(char *str1, char *str2) {
 
 TwoStrings strsplit(char *str, char split)
 {
-    TwoStrings yes;
+    char p1[128];
+    char p2[128];
     int i = 0;
     int j = 0;
     
     for (; i < mystrlen(str) && str[i] != split; i++)
     {
-        yes.a[i] = str[i];
+        p1[i] = str[i];
     }
-    yes.a[i + 1] = '\0';
+    i++;
+    p1[i] = '\0';
     for (; i < mystrlen(str); j++)
     {
-        yes.b[j] = str[i];
+        p2[j] = str[i];
         i++;
     }
-    yes.b[j + 1] = '\0';
+    j++;
+    p2[j] = '\0';
+    TwoStrings yes;
+
+    for (int i = 0; i < 128; i++)
+    {
+        yes.a[i] = p1[i];
+        yes.b[i] = p2[i];
+    }
     
     return yes;
 }
