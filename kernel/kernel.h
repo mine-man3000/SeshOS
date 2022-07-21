@@ -1,7 +1,6 @@
 #pragma once
 #include "limine.h"
 #include "video/renderer.h"
-#include "idt/interrupts.h"
 #include "string.h"
 #include "video/video.h"
 #include "init.h"
@@ -13,6 +12,7 @@ void comout(const char* input);
 
 extern struct limine_module_request module;
 extern struct limine_file* initramfs;
+extern struct limine_file* font;
 
 static void done(void)
 {

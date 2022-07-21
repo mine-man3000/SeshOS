@@ -1,6 +1,7 @@
 #pragma once
 #include "../video/video.h"
 #include "../video/renderer.h"
+#include "../userinput/mouse.h"
 
 #define PIC1_COMMAND 0x20
 #define mastr_pic_cmnd_port 0x20
@@ -26,6 +27,7 @@ __attribute__((interrupt)) void GPFault_Handler(interrupt_frame* frame);
 __attribute__((interrupt)) void GetBuffer_Handler(interrupt_frame* frame);
 __attribute__((interrupt)) void Keyboard_Handler(interrupt_frame* frame);
 __attribute__((interrupt)) void Test_Handler(interrupt_frame* frame);
+__attribute__((interrupt)) void MouseInt_Handler(interrupt_frame* frame);
 
 void RemapPIC();
 void PIC_EndMaster();

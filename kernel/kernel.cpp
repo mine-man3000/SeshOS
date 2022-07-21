@@ -1,7 +1,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include "kernel.h" 
-#include "acpi/acpi.h"
+#include "idt/interrupts.h"
 
 void _comout(const char* input);
 
@@ -48,8 +48,8 @@ extern "C" void _start(void)
     time NewTime = GetTime();
 
     newShell.shouldPrint = true;
-    newShell.PrintPrompt();    
-
+    newShell.PrintPrompt();
+    
     done();
 }
 

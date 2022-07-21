@@ -47,7 +47,7 @@ link:
 	$(LD) $(LDFLAGS) -o $(BUILDDIR)/kernel.elf $(OBJS)
 
 run: clean prep iso
-	qemu-system-x86_64 -smp 2 -m 1G image.iso -bios OVMF_CODE.fd -debugcon stdio
+	qemu-system-x86_64 -smp 2 -m 1G image.iso -bios OVMF_CODE.fd -debugcon stdio -cpu qemu64 
 
 clean:
 	rm -rvf lib bin image.iso initramfs
@@ -65,7 +65,7 @@ iso:
 
 	cp -v bin/kernel.elf limine.cfg limine/limine.sys \
 	      limine/limine-cd.bin limine/limine-cd-efi.bin \
-		  initramfs iso_root/ 
+		  initramfs font iso_root/ 
  
 	xorriso -as mkisofs -b limine-cd.bin \
 	        -no-emul-boot -boot-load-size 4 -boot-info-table \

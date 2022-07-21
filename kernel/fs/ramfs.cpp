@@ -55,17 +55,40 @@ char *readFile(char* fileToReadName)
 
     char *contents = &((char *) header)[512]; // pointer shenanigans (:
 
-    // you should make this return a char *, so you can read different kinds of files
-
     return contents;
 }
+
+void lsreset(TwoStrings fullName, TwoStrings nameInPath)
+{
+        for (int i = 0; i < mystrlen(fullName.a); i++)
+        {
+            fullName.a[i] = 0;
+        }
+        for (int i = 0; i < mystrlen(fullName.b); i++)
+        {
+            fullName.b[i] = 0;
+        }
+        for (int i = 0; i < mystrlen(nameInPath.a); i++)
+        {
+            nameInPath.a[i] = 0;
+        }
+        for (int i = 0; i < mystrlen(nameInPath.b); i++)
+        {
+            nameInPath.b[i] = 0;
+        }
+}
+
+TwoStrings fullName;
+TwoStrings nameInPath;
 
 void ls()
 {
     for (int i = 1; headers[i]->filename != NULL; i++)
-    {
-        TwoStrings fullName   = strsplit(headers[i]->filename, '/');
-        TwoStrings nameInPath = strsplit(fullName.b, '/');
+    {        
+        lsreset(fullName, nameInPath);
+
+        fullName   = strsplit(headers[i]->filename, '/');
+        nameInPath = strsplit(fullName.b, '/');
         
         if (i > 1)
         {
@@ -73,12 +96,12 @@ void ls()
             TwoStrings oldNameInPath = strsplit(oldFullName.b, '/');    
             if (!mystrcmp(oldNameInPath.a, nameInPath.a))
             {
-                printf("%s\n", nameInPath.a);
+                printf("'%s'\n", nameInPath.a);
             }
         }
         else
         {
-            printf("%s\n", nameInPath.a);
+            printf("'%s'\n", nameInPath.a);
         }
     }
 }

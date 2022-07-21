@@ -19,14 +19,20 @@ __attribute__((interrupt)) void Keyboard_Handler(interrupt_frame* frame){
     HandleKeyboard(scancode);
 }
 
+__attribute__((interrupt)) void MouseInt_Handler(interrupt_frame* frame){
+    printf("MOUSE");
+    uint8_t mouseData = inb(0x60);
+    HandlePS2Mouse(mouseData);
+}
+
 __attribute__((interrupt)) void GetBuffer_Handler(interrupt_frame* frame)
 {
     printf("Buffer Address: 0x");
-    printf(to_hstring((uint64_t)buffer->address));
+    printf("%x", buffer->address);
     printf("\nWidth: ");
-    printf(to_string((uint64_t)buffer->width));
+    printf("%x", buffer->width);
     printf("\nHeight: ");
-    printf(to_string((uint64_t)buffer->height));
+    printf("%x", buffer->height);
     printf("\n");
 }
 

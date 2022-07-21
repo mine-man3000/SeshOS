@@ -1,20 +1,16 @@
 #pragma once
 #include "../limine.h"
 #include "../string.h"
+#include "../math.h"
 
 extern struct limine_terminal *terminal;
 
-struct Point
-{
-    long X;
-    long Y;
-};
+extern uint32_t MouseCursorBuffer[16 * 16];
+extern uint32_t MouseCursorBufferAfter[16 * 16];
+extern bool MouseDrawn;
 
 void printf(const char *format, ...);
-
-struct font_header
-{
-    char magic0[1];
-    char magic1[1];
-};
+void gPrint(char chr[], unsigned int xOff, unsigned int yOff, uint32_t Color);
 void putChar(char c);
+void DrawOverlayMouseCursor(uint8_t* mouseCursor, Point position, uint32_t colour);
+void ClearMouseCursor(uint8_t* mouseCursor, Point position);

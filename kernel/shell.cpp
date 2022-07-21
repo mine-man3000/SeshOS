@@ -76,15 +76,19 @@ void Shell::TestCMD(char* input)
         printf("                 OOOOOO  SSSSSS    \n");
     }
     else if (mystrcmp(input, "")){}
+    else if (mystrcmp(input, "startx"))
+    {
+        drawRect(0, 0, buffer->width, buffer->height, 0xD97F1956);
+        Window yes = Window(10, 10, 200, 200, "Hello World        ", 0x12345678);
+        Window no = Window(100, 100, 200, 200, "1234567890!@#$%^&*()", 0x12345678);
+
+        drawRect(0, buffer->height - 40, buffer->width, 40, 0xff888888);
+
+        newShell.shouldPrint = false;
+    }
     else if (mystrcmp(input, "pob"))
     {
         drawImage(g_picsofbread_data, 10, 10);
-    }
-    else if (mystrcmp(input, "startx"))
-    {
-        Clear(0);
-        Window yes = Window(10, 10, 300, 300, "Your Mom", 0xaabbccdd);
-        shouldPrint = false;
     }
     else if (mystrcmp(input, "tree"))
     {

@@ -39,6 +39,7 @@ void create_idt()
 	CreateEntry(0x8,  (uint64_t)DoubleFault_Handler);
 	CreateEntry(0xD,  (uint64_t)GPFault_Handler);
 	CreateEntry(0x21, (uint64_t)Keyboard_Handler);
+	CreateEntry(0x2C, (uint64_t)MouseInt_Handler);
 	CreateEntry(0x69, (uint64_t)Test_Handler);
 
 	asm("lidt %0" : : "m" (idt));

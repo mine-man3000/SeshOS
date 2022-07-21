@@ -11,7 +11,7 @@ class Window
         int m_Startx;
         int m_Starty;
         uint32_t m_BackgroundColor;
-        char m_Name[10];
+        char m_Name[20];
         void DrawWindow();
         void UpdateWindow();
 };  

@@ -9,7 +9,7 @@ then run ``make run`` and it will build and run the OS.
 What I want to do: 
 - [X] Booting 
 - [ ] Basic GUI 
-- [ ] Mouse Detection 
+- [X] Mouse Detection 
 - [X] Keyboard Driver
 - [X] Terminal
 - [ ] Port *Something*
@@ -28,4 +28,4 @@ What I need to do:
 - [ ] Decide how to abstract devices. UNIX likes usually go for a /dev virtual filesystem 
 - [ ] Get a userland going by loading executables from your VFS and running them in ring 3. Set up a way to run sys calls.
 - [ ] Write a PCI driver.
-- [ ] Add support for a storage medium, the easiest and most common ones are AHCI and NVMe# SeshOS-UEFI-Better
+- [ ] Add support for a storage medium, the easiest and most common ones are AHCI and NVMe
