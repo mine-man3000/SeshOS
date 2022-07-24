@@ -207,6 +207,7 @@ void ProcessMousePacket()
 
 void InitPS2Mouse()
 {
+    outb(0x64, 0xFF);
     outb(0x64, 0xA8); // enabling the auxiliary device - mouse
 
     MouseWait();

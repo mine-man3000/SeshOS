@@ -47,7 +47,7 @@ void create_idt()
 	
 	outb(mastr_pic_data_port, 0b11111101);
 	outb(slave_pic_data_port, 0b11111111);
-	
+		
 	asm("sti");
 }
 

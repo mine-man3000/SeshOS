@@ -2,38 +2,37 @@
 #include "../video/video.h"
 #include "../userinput/keyboard.h"
 
-__attribute__((interrupt)) void PageFault_Handler(interrupt_frame* frame){
+extern void PIC_EndMaster();
+extern void PIC_EndSlave();
+
+__attribute__((interrupt)) void PageFault_Handler(interrupt_frame* frame)
+{
     Panic("Page Fault Detected");
 }
 
-__attribute__((interrupt)) void DoubleFault_Handler(interrupt_frame* frame){
+__attribute__((interrupt)) void DoubleFault_Handler(interrupt_frame* frame)
+{
     Panic("Double Fault Detected");
 }
 
-__attribute__((interrupt)) void GPFault_Handler(interrupt_frame* frame){
+__attribute__((interrupt)) void GPFault_Handler(interrupt_frame* frame)
+{
     Panic("General Protection Fault Detected");
 }
 
-__attribute__((interrupt)) void Keyboard_Handler(interrupt_frame* frame){
+__attribute__((interrupt)) void Keyboard_Handler(interrupt_frame* frame)
+{
     uint8_t scancode = inb(0x60);
     HandleKeyboard(scancode);
+    PIC_EndMaster();
 }
 
-__attribute__((interrupt)) void MouseInt_Handler(interrupt_frame* frame){
-    printf("MOUSE");
+__attribute__((interrupt)) void MouseInt_Handler(interrupt_frame* frame)
+{
+    printf("MOUSE?");
     uint8_t mouseData = inb(0x60);
     HandlePS2Mouse(mouseData);
-}
-
-__attribute__((interrupt)) void GetBuffer_Handler(interrupt_frame* frame)
-{
-    printf("Buffer Address: 0x");
-    printf("%x", buffer->address);
-    printf("\nWidth: ");
-    printf("%x", buffer->width);
-    printf("\nHeight: ");
-    printf("%x", buffer->height);
-    printf("\n");
+    PIC_EndSlave();
 }
 
 __attribute__((interrupt)) void Test_Handler(interrupt_frame* frame)
@@ -74,4 +73,13 @@ void io_wait()
     asm volatile("outb %%al, $0x80"
         :
         : "a"(0));
+}
+
+void PIC_EndMaster(){
+    outb(PIC1_COMMAND, PIC_EOI);
+}
+
+void PIC_EndSlave(){
+    outb(PIC2_COMMAND, PIC_EOI);
+    outb(PIC1_COMMAND, PIC_EOI);
 }
