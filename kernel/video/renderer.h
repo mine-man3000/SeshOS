@@ -5,8 +5,8 @@
 
 extern struct limine_terminal *terminal;
 
-extern uint32_t MouseCursorBuffer[16 * 16];
-extern uint32_t MouseCursorBufferAfter[16 * 16];
+extern uint32_t MouseCursorBuffer[19 * 19];
+extern uint32_t MouseCursorBufferAfter[19 * 19];
 extern bool MouseDrawn;
 
 void printf(const char *format, ...);

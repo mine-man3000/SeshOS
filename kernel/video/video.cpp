@@ -14,7 +14,7 @@ void putPixel(int x, int y, uint32_t pixel)
 
 uint32_t getPixel(uint32_t x, uint32_t y)
 {
-    return *(uint32_t *)((uint64_t)buffer->address + (x * 4) + (y * buffer->pitch * 4));
+    return *(uint32_t *)(uint32_t*)(buffer->address + 4 * (buffer->pitch / 4) * y + 4 * x);
 }
 
 void memcpy(uint8_t *source, uint8_t *dest, int nbytes) {

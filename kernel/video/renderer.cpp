@@ -6,8 +6,8 @@
 #define PSF1_MAGIC0 0x36
 #define PSF1_MAGIC1 0x04
 
-uint32_t MouseCursorBuffer[16 * 16];
-uint32_t MouseCursorBufferAfter[16 * 16];
+uint32_t      MouseCursorBuffer[19 * 19];
+uint32_t MouseCursorBufferAfter[19 * 19];
 bool MouseDrawn;
 
 volatile struct limine_terminal_request terminal_request = {
@@ -96,27 +96,27 @@ void ClearMouseCursor(uint8_t *mouseCursor, Point position)
     if (!MouseDrawn)
         return;
 
-    int xMax = 16;
-    int yMax = 16;
+    int xMax = 19;
+    int yMax = 19;
     int differenceX = buffer->width - position.X;
     int differenceY = buffer->height - position.Y;
 
-    if (differenceX < 16)
+    if (differenceX < 19)
         xMax = differenceX;
-    if (differenceY < 16)
+    if (differenceY < 19)
         yMax = differenceY;
 
     for (int y = 0; y < yMax; y++)
     {
         for (int x = 0; x < xMax; x++)
         {
-            int bit = y * 16 + x;
-            int byte = bit / 8;
+            int bit = y * 19 + x;
+            int byte = bit / (19 / 2);
             if ((mouseCursor[byte] & (0b10000000 >> (x % 8))))
             {
-                if (getPixel(position.X + x, position.Y + y) == MouseCursorBufferAfter[x + y * 16])
+                if (getPixel(position.X + x, position.Y + y) == MouseCursorBufferAfter[x + y * 19])
                 {
-                    putPixel(position.X + x, position.Y + y, MouseCursorBuffer[x + y * 16]);
+                    putPixel(position.X + x, position.Y + y, MouseCursorBuffer[x + y * 19]);
                 }
             }
         }
@@ -125,23 +125,23 @@ void ClearMouseCursor(uint8_t *mouseCursor, Point position)
 
 void DrawOverlayMouseCursor(uint8_t *mouseCursor, Point position, uint32_t color)
 {
-    int xMax = 16;
-    int yMax = 16;
+    int xMax = 19;
+    int yMax = 19;
     int differenceX = buffer->width - position.X;
     int differenceY = buffer->height - position.Y;
 
-    if (differenceX < 16) xMax = differenceX;
-    if (differenceY < 16) yMax = differenceY;
+    if (differenceX < 19) xMax = differenceX;
+    if (differenceY < 19) yMax = differenceY;
 
     for (int y = 0; y < yMax; y++){
         for (int x = 0; x < xMax; x++){
-            int bit = y * 16 + x;
-            int byte = bit / 8;
+            int bit = y * 19 + x;
+            int byte = bit / (19 / 2);
             if ((mouseCursor[byte] & (0b10000000 >> (x % 8))))
             {
-                MouseCursorBuffer[x + y * 16] = getPixel(position.X + x, position.Y + y);
+                MouseCursorBuffer[x + y * 19] = getPixel(position.X + x, position.Y + y);
                 putPixel(position.X + x, position.Y + y, color);
-                MouseCursorBufferAfter[x + y * 16] = getPixel(position.X + x, position.Y + y);
+                MouseCursorBufferAfter[x + y * 19] = getPixel(position.X + x, position.Y + y);
 
             }
         }

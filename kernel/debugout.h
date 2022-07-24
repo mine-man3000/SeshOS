@@ -1,0 +1,1 @@
+extern void comout(const char* input);

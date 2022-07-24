@@ -50,7 +50,7 @@ run: clean prep iso
 	qemu-system-x86_64 -smp 2 -m 1G image.iso -bios OVMF_CODE.fd -debugcon stdio -cpu qemu64 
 
 clean:
-	rm -rvf lib bin image.iso initramfs
+	rm -rvf lib bin/* image.iso initramfs
 	make -C limine clean
 
 initrd:

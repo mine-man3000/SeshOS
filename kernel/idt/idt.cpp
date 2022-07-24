@@ -1,5 +1,6 @@
 #include "idt.h"
 #include "interrupts.h"
+#include "../debugout.h"
 
 void set_interrupt_offset(InterruptEntry* int_ptr, uint64_t offset)
 {
@@ -33,8 +34,8 @@ void CreateEntry(int interruptNum, uint64_t Handler)
 void create_idt()
 {
 	idt.limit = 0x0FFF;
-	idt.offset = (uint64_t)&idt_page[0];
-
+	idt.offset = (uint64_t)&idt_page[0];	
+	
 	CreateEntry(0xE,  (uint64_t)PageFault_Handler);
 	CreateEntry(0x8,  (uint64_t)DoubleFault_Handler);
 	CreateEntry(0xD,  (uint64_t)GPFault_Handler);
@@ -45,8 +46,8 @@ void create_idt()
 	asm("lidt %0" : : "m" (idt));
 	remap_interrupts_for_io();
 	
-	outb(mastr_pic_data_port, 0b11111101);
-	outb(slave_pic_data_port, 0b11111111);
+	outb(mastr_pic_data_port, 0b11111001);
+	outb(slave_pic_data_port, 0b11101111);
 		
 	asm("sti");
 }

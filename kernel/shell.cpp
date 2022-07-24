@@ -5,6 +5,7 @@
 #include "../tools/picsofbread.h"
 
 Shell newShell;
+bool xRunning = false;
 
 void Shell::PrintPrompt()
 {
@@ -28,7 +29,7 @@ void Shell::TestCMD(char* input)
         printf("    help:        shows this menu\n");
         printf("    clear:       clears the screen\n");
         printf("    neofetch:    only a Linux user would understand\n");
-        printf("    intro: runs the NCommander Intro\n");
+        printf("    intro:       runs the NCommander Intro\n");
     }
     else if (mystrcmp(input, "clear"))
     {
@@ -76,14 +77,21 @@ void Shell::TestCMD(char* input)
         printf("                 OOOOOO  SSSSSS    \n");
     }
     else if (mystrcmp(input, "")){}
+    else if (mystrcmp(input, "endx"))
+    {
+        xRunning = false;
+        Clear(0);
+        newShell.shouldPrint = true;
+    }
     else if (mystrcmp(input, "startx"))
     {
+        xRunning = true;
         drawRect(0, 0, buffer->width, buffer->height, 0xD97F1956);
         Window yes = Window(10, 10, 200, 200, "Hello World        ", 0x12345678);
         Window no = Window(100, 100, 200, 200, "1234567890!@#$%^&*()", 0x12345678);
 
-        drawRect(0, buffer->height - 40, buffer->width, 40, 0xff888888);
-
+        drawRect(0, buffer->height - 40, buffer->width, 40, 0xff888888);        
+    
         newShell.shouldPrint = false;
     }
     else if (mystrcmp(input, "pob"))

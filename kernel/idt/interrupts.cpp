@@ -1,6 +1,7 @@
 #include "interrupts.h"
 #include "../video/video.h"
 #include "../userinput/keyboard.h"
+#include "../debugout.h"
 
 extern void PIC_EndMaster();
 extern void PIC_EndSlave();
@@ -29,7 +30,6 @@ __attribute__((interrupt)) void Keyboard_Handler(interrupt_frame* frame)
 
 __attribute__((interrupt)) void MouseInt_Handler(interrupt_frame* frame)
 {
-    printf("MOUSE?");
     uint8_t mouseData = inb(0x60);
     HandlePS2Mouse(mouseData);
     PIC_EndSlave();
@@ -37,7 +37,7 @@ __attribute__((interrupt)) void MouseInt_Handler(interrupt_frame* frame)
 
 __attribute__((interrupt)) void Test_Handler(interrupt_frame* frame)
 {
-    printf("\nNICE\n");
+    printf("NICE\n");
 }
 
 void outb(uint16_t port, uint8_t value)

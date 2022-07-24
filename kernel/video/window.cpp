@@ -2,6 +2,7 @@
 #include "video.h"
 #include "../string.h"
 #include "../shell.h"
+#include "../userinput/mouse.h"
 
 uint32_t closeIcon[] = 
 {
