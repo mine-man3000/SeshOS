@@ -22,7 +22,7 @@ What I need to do:
 - [X] Load an IDT so that exceptions and interrupts can be handled.
 - [ ] Memory Management 
 - [ ] Start up the other CPU cores
-- [ ] schedular. 
+- [ ] scheduler 
 - [ ] VFS
 - [ ] elf loader
 - [ ] userland
