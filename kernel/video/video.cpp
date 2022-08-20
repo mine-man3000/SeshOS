@@ -70,12 +70,7 @@ uint8_t drawImage(uint32_t *icon, int posx, int posy)
 void Panic(const char *panicMessage)
 {
     Clear(0);
-    printf("Kernel Panic\n\n");
-
-    printf(panicMessage);
-
-    printf("\n\nSeshOS has been shutdown to prevent damage to your computer");
-
+    printf("Kernel Panic\n\n %s \n\nSeshOS has been shutdown to prevent damage to your computer");
     asm("hlt");
 }
 
