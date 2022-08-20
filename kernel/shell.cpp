@@ -77,7 +77,11 @@ void Shell::TestCMD(char* input)
         printf("                 OOOOOO  SSSSSS    \n");
     }
     else if (mystrcmp(input, "")){}
-    else if (mystrcmp(input, "endx"))
+    else if (mystrcmp(input, "panic"))
+    {
+        Panic("User Caused Panic");
+    }
+    else if (mystrcmp(input, "exitx"))
     {
         xRunning = false;
         Clear(0);

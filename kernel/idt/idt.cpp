@@ -37,6 +37,7 @@ void create_idt()
 	idt.offset = (uint64_t)&idt_page[0];	
 	
 	CreateEntry(0xE,  (uint64_t)PageFault_Handler);
+	CreateEntry(0x0,  (uint64_t)DivideByZero_Handler);
 	CreateEntry(0x8,  (uint64_t)DoubleFault_Handler);
 	CreateEntry(0xD,  (uint64_t)GPFault_Handler);
 	CreateEntry(0x21, (uint64_t)Keyboard_Handler);

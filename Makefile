@@ -5,7 +5,7 @@ CC = gcc
 ASMC = nasm
 LD = ld
 
-CFLAGS = -ffreestanding -fshort-wchar -mno-red-zone -fno-exceptions -fno-stack-protector -mcmodel=kernel -g
+CFLAGS = -ffreestanding -fshort-wchar -mno-red-zone -fno-exceptions -fno-stack-protector -mcmodel=kernel -g -fno-pie
 ASMFLAGS = 
 LDFLAGS = -T $(LDS) -static -Bsymbolic -nostdlib
 
@@ -30,7 +30,7 @@ prep:
 $(OBJDIR)/idt/interrupts.o: $(SRCDIR)/idt/interrupts.cpp
 	@ echo !==== COMPILING $^
 	@ mkdir -p $(@D)
-	$(CC) -mno-red-zone -mgeneral-regs-only -ffreestanding -c $^ -o $@ -mcmodel=kernel -g
+	$(CC) -mno-red-zone -mgeneral-regs-only -ffreestanding -c $^ -o $@ -mcmodel=kernel -g -fno-pie
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	@ echo !==== COMPILING $^

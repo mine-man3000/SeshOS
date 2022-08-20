@@ -27,6 +27,7 @@ void end_interrupts_for_mastr_io();
 void end_interrupts_for_slave_io();
 
 struct interrupt_frame;
+__attribute__((interrupt)) void DivideByZero_Handler(interrupt_frame* frame);
 __attribute__((interrupt)) void PageFault_Handler(interrupt_frame* frame);
 __attribute__((interrupt)) void DoubleFault_Handler(interrupt_frame* frame);
 __attribute__((interrupt)) void GPFault_Handler(interrupt_frame* frame);

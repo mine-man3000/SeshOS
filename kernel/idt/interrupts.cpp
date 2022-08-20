@@ -6,6 +6,11 @@
 extern void PIC_EndMaster();
 extern void PIC_EndSlave();
 
+__attribute__((interrupt)) void DivideByZero_Handler(interrupt_frame* frame)
+{
+    Panic("You can't divide by 0 silly :P");
+}
+
 __attribute__((interrupt)) void PageFault_Handler(interrupt_frame* frame)
 {
     Panic("Page Fault Detected");

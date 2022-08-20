@@ -58,26 +58,6 @@ char *readFile(char* fileToReadName)
     return contents;
 }
 
-void lsreset(TwoStrings fullName, TwoStrings nameInPath)
-{
-        for (int i = 0; i < mystrlen(fullName.a); i++)
-        {
-            fullName.a[i] = 0;
-        }
-        for (int i = 0; i < mystrlen(fullName.b); i++)
-        {
-            fullName.b[i] = 0;
-        }
-        for (int i = 0; i < mystrlen(nameInPath.a); i++)
-        {
-            nameInPath.a[i] = 0;
-        }
-        for (int i = 0; i < mystrlen(nameInPath.b); i++)
-        {
-            nameInPath.b[i] = 0;
-        }
-}
-
 TwoStrings fullName;
 TwoStrings nameInPath;
 
@@ -85,8 +65,22 @@ void ls()
 {
     for (int i = 1; headers[i]->filename != NULL; i++)
     {        
-        lsreset(fullName, nameInPath);
-
+        for (int i = 0; i < (sizeof(fullName.a) + 1); i++)
+        {
+            fullName.a[i] = 0;
+        }
+        for (int i = 0; i < (sizeof(fullName.b) + 1); i++)
+        {
+            fullName.b[i] = 0;
+        }
+        for (int i = 0; i < (sizeof(nameInPath.a) + 1); i++)
+        {
+            nameInPath.a[i] = 0;
+        }
+        for (int i = 0; i < (sizeof(nameInPath.b) + 1); i++)
+        {
+            nameInPath.b[i] = 0;
+        }
         fullName   = strsplit(headers[i]->filename, '/');
         nameInPath = strsplit(fullName.b, '/');
         

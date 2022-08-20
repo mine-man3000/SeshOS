@@ -49,7 +49,6 @@ extern "C" void _start(void)
 
     newShell.shouldPrint = true;
     newShell.PrintPrompt();
-
     done();
 }
 
