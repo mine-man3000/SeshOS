@@ -31,8 +31,6 @@ void init()
 
     printf("[ %sOK %s] loading IDT\n", Green, White);
 
-    printf("[ %sOK %s] mouse?\n", Green, White);
-
     physical_kernel_start = kernel_address_request.response->physical_base;
 	virtual_kernel_start = kernel_address_request.response->virtual_base;
 

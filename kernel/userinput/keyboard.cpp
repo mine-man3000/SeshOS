@@ -4,6 +4,7 @@ bool isLeftShiftPressed;
 bool isRightShiftPressed;
 
 extern void drawRect(int startx, int starty, int width, int height, uint32_t VGA_COLOR);
+extern bool xRunning;
 
 char input[100];
 int i = 0;
@@ -34,7 +35,7 @@ void HandleKeyboard(uint8_t scancode)
 		c = '\0';
 	}
 
-	if (scancode == us_qwerty_enter)
+	if (scancode == us_qwerty_enter && xRunning == false)
 	{
 		printf("\n");
 		c = '\0';
@@ -60,7 +61,7 @@ void HandleKeyboard(uint8_t scancode)
 		}
 	}
 
-	if (c != '\0')
+	if (c != '\0' && xRunning == false)
 	{
 		char str[2] = {c, '\0'};
 		input[i] = c;

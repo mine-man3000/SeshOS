@@ -18,8 +18,6 @@ volatile struct limine_terminal_request terminal_request = {
 };
 
 static void limine_term_callback(struct limine_terminal *term, uint64_t t, uint64_t a, uint64_t b, uint64_t c) {
-    comout("type = ");
-    comout(to_string(t));
     if (t == 50)
     {
         Point termPos;
@@ -76,7 +74,7 @@ void printf(const char* format, ...)
     va_end(ap);
 }
 
-void gPrint(char chr[], unsigned int xOff, unsigned int yOff, uint32_t Color)
+void gPrint(const char chr[], unsigned int xOff, unsigned int yOff, uint32_t Color)
 {
     unsigned int *pixPtr = (unsigned int *)buffer->address;
     int offset = 0;

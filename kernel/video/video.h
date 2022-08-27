@@ -24,8 +24,8 @@ void Clear(uint32_t color);
 void putPixel(int x, int y, uint32_t pixel);
 uint32_t getPixel(uint32_t x, uint32_t y);
 
-void update_cursor(int x, int y);
-uint16_t get_cursor_position(void);
+void setCursorPos(int x, int y);
+void getCursorPos();
 
 extern volatile struct limine_framebuffer_request framebuffer_request;
 extern struct limine_framebuffer* buffer;

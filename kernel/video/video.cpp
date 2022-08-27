@@ -205,3 +205,8 @@ void setCursorPos(int x, int y)
     printf("\033[%i;%iH", x, y);
     printf("%s", "\033[1;1H");
 }
+
+void getCursorPos()
+{
+    printf("%s","\033[6n");
+}

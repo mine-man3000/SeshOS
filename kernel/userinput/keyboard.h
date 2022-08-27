@@ -4,9 +4,9 @@
 
 #define us_qwerty_left_shift	0x2A
 #define us_qwerty_right_shift	0x36
-
 #define us_qwerty_enter		0x1C
 #define us_qwerty_backspace	0x0E
+
 
 extern uint8_t is_us_qwerty_left_shift_pressed;
 extern uint8_t is_us_qwerty_right_shift_pressed;

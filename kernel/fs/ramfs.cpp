@@ -60,34 +60,31 @@ char *readFile(char* fileToReadName)
 
 TwoStrings fullName;
 TwoStrings nameInPath;
+TwoStrings oldFullName;
+TwoStrings oldNameInPath;
+
+void lsReset(TwoStrings* a, TwoStrings* b)
+{
+    for (int i = 0; i < (sizeof(a->a) + 1); i++) a->a[i] = 0;
+    for (int i = 0; i < (sizeof(a->b) + 1); i++) a->b[i] = 0;
+    for (int i = 0; i < (sizeof(b->a) + 1); i++) b->a[i] = 0;
+    for (int i = 0; i < (sizeof(b->b) + 1); i++) b->b[i] = 0;
+}
 
 void ls()
 {
     for (int i = 1; headers[i]->filename != NULL; i++)
     {        
-        for (int i = 0; i < (sizeof(fullName.a) + 1); i++)
-        {
-            fullName.a[i] = 0;
-        }
-        for (int i = 0; i < (sizeof(fullName.b) + 1); i++)
-        {
-            fullName.b[i] = 0;
-        }
-        for (int i = 0; i < (sizeof(nameInPath.a) + 1); i++)
-        {
-            nameInPath.a[i] = 0;
-        }
-        for (int i = 0; i < (sizeof(nameInPath.b) + 1); i++)
-        {
-            nameInPath.b[i] = 0;
-        }
+        lsReset(&fullName, &nameInPath);
+
         fullName   = strsplit(headers[i]->filename, '/');
         nameInPath = strsplit(fullName.b, '/');
         
         if (i > 1)
-        {
-            TwoStrings oldFullName   = strsplit(headers[i-1]->filename, '/');
-            TwoStrings oldNameInPath = strsplit(oldFullName.b, '/');    
+        {   
+            lsReset(&oldFullName, &oldNameInPath);
+            oldFullName   = strsplit(headers[i-1]->filename, '/');
+            oldNameInPath = strsplit(oldFullName.b, '/');    
             if (!mystrcmp(oldNameInPath.a, nameInPath.a))
             {
                 printf("'%s'\n", nameInPath.a);
