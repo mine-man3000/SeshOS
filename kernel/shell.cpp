@@ -29,7 +29,6 @@ void Shell::TestCMD(char* input)
         printf("    help:        shows this menu\n");
         printf("    clear:       clears the screen\n");
         printf("    neofetch:    only a Linux user would understand\n");
-        printf("    intro:       runs the NCommander Intro\n");
     }
     else if (mystrcmp(input, "clear"))
     {
@@ -126,11 +125,6 @@ void Shell::TestCMD(char* input)
         outw(0xB004, 0x2000);
         outw(0x604, 0x2000);
         outw(0x4004, 0x3400);
-    }
-    else if (mystrcmp(input, "intro"))
-    {
-        Clear(0);
-        nComIntro();
     }
     else
     {

@@ -29,4 +29,3 @@ void getCursorPos();
 
 extern volatile struct limine_framebuffer_request framebuffer_request;
 extern struct limine_framebuffer* buffer;
-void nComIntro();
