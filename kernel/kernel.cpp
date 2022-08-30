@@ -10,14 +10,25 @@ struct limine_file* font;
 struct limine_framebuffer* buffer;
 struct limine_terminal *terminal;
 
-struct limine_smp_request smp {
+volatile struct limine_smp_request smp {
     .id = LIMINE_SMP_REQUEST,
     .revision = 0,
 };
 
+limine_goto_address test()
+{
+    printf("Hello from the Second core!");
+    while (1)
+    {
+        if (MousePosition.X > 2)
+        {
+            comout("j");
+        }
+    }    
+} 
+
 extern "C" void _start(void)
 {
-
     if (terminal_request.response == NULL || terminal_request.response->terminal_count < 1)
     {
         done();
@@ -25,6 +36,15 @@ extern "C" void _start(void)
 
     comout("\033[2J \033[H");
     init();
+
+    printf("CPU count: %i\n", smp.response->cpu_count);
+
+    //smp.response->cpus[1]->goto_address = test();
+
+    for (int i = 0; i < smp.response->cpu_count; i++)
+    {
+        printf("CPU %i goto address %x\n", i ,smp.response->cpus[i]->goto_address);
+    }    
 
     comout("Hello COM\n");
 
