@@ -17,17 +17,17 @@ extern "C" void disablePIC();
 
 void init()
 {
-    //GDTDescriptor gdtDescriptor;
-    //gdtDescriptor.Size = sizeof(GDT) - 1;
-    //gdtDescriptor.Offset = (uint64_t)&DefaultGDT;
-    //LoadGDT(&gdtDescriptor);
+    GDTDescriptor gdtDescriptor;
+    gdtDescriptor.Size = sizeof(GDT) - 1;
+    gdtDescriptor.Offset = (uint64_t)&DefaultGDT;
+    LoadGDT(&gdtDescriptor);
 
     comout("TETS\n");
 
     printf("[ %sOK %s] loading GDT\n", Green, White);
 
-    //create_idt();
-    //InitPS2Mouse();
+    create_idt();
+    InitPS2Mouse();
 
     printf("[ %sOK %s] loading IDT\n", Green, White);
 
