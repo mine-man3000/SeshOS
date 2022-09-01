@@ -42,12 +42,10 @@ char *readFile(char* fileToReadName)
     unsigned int address = *((int*)(&initramfs->address));
     struct tar_header *header = (struct tar_header *)address;
 
-    int fileToRead = 0;
     for (int i = 0; headers[i]->filename != NULL; i++)
     {
         if (mystrcmp(fileToReadName, headers[i]->filename))
         {
-            fileToRead = i;
             header = headers[i];
             break;
         }
@@ -65,10 +63,10 @@ TwoStrings oldNameInPath;
 
 void lsReset(TwoStrings* a, TwoStrings* b)
 {
-    for (int i = 0; i < (sizeof(a->a) + 1); i++) a->a[i] = 0;
-    for (int i = 0; i < (sizeof(a->b) + 1); i++) a->b[i] = 0;
-    for (int i = 0; i < (sizeof(b->a) + 1); i++) b->a[i] = 0;
-    for (int i = 0; i < (sizeof(b->b) + 1); i++) b->b[i] = 0;
+    for (int i = 0; i < 100; i++) a->a[i] = 0;
+    for (int i = 0; i < 100; i++) a->b[i] = 0;
+    for (int i = 0; i < 100; i++) b->a[i] = 0;
+    for (int i = 0; i < 100; i++) b->b[i] = 0;
 }
 
 void ls()
@@ -76,13 +74,13 @@ void ls()
     for (int i = 1; headers[i]->filename != NULL; i++)
     {        
         lsReset(&fullName, &nameInPath);
+        lsReset(&oldFullName, &oldNameInPath);
 
         fullName   = strsplit(headers[i]->filename, '/');
         nameInPath = strsplit(fullName.b, '/');
         
         if (i > 1)
         {   
-            lsReset(&oldFullName, &oldNameInPath);
             oldFullName   = strsplit(headers[i-1]->filename, '/');
             oldNameInPath = strsplit(oldFullName.b, '/');    
             if (!mystrcmp(oldNameInPath.a, nameInPath.a))
