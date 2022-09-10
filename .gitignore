@@ -1,8 +1,8 @@
-bin
-lib
-*.iso
+*.o
+*.d
+*.elf
+limine/
+iso_root/
 initramfs
+*.iso
 .vscode
-limine
-/limine-deploy
-/limine-deploy.exe

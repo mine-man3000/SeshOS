@@ -2,6 +2,7 @@
 #include <stddef.h>
 #include "kernel.h" 
 #include "idt/interrupts.h"
+#include "video/window.h"
 
 void _comout(const char* input);
 
@@ -70,8 +71,13 @@ extern "C" void _start(void)
     newShell.shouldPrint = true;
     newShell.PrintPrompt();
     
-    getCursorPos();
-    
+    drawRect(0, 0, buffer->width, buffer->height, 0xD97F1956);
+    Window yes = Window(10, 10, 200, 200, "Hello World        ", 0x12345678);
+    Window no = Window(100, 100, 200, 200, "1234567890!@#$%^&*()", 0x12345678);
+    drawRect(0, buffer->height - 40, buffer->width, 40, 0xff888888);
+
+    newShell.shouldPrint = false;
+
     done();
 }
 

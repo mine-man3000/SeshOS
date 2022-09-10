@@ -3,6 +3,6 @@
 #pragma once
 
 /**
- * @brief systemd/Windows init system but less bloated
+ * @brief systemd but less bloated
  */
 void init();

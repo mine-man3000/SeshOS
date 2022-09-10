@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include "../limine.h"
+#include "../debugout.h"
 
 /**
  * @brief startx but better
@@ -18,7 +19,7 @@ void initGUI();
  * @param VGA_COLOR the color of the rectangle given as 0xAARRGGBB (alpha, red, green, blue)
  */
 void drawRect(int startx, int starty, int width, int height, uint32_t VGA_COLOR);
-uint8_t drawImage(uint32_t *icon, int posx, int posy);
+void drawImage(uint32_t *icon, int posx, int posy);
 void Panic(const char *panicMessage);
 void Clear(uint32_t color);
 void putPixel(int x, int y, uint32_t pixel);

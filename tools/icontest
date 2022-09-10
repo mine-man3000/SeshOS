@@ -68,7 +68,6 @@ f.write(" * Icon Last Mod: ")
 f.write(str(FinalFinalModDate))
 f.write("                                            \n")
 f.write("*****************************************/\n\n")
-f.write("#include \"../video/video.h\"\n")
 
 f.close()
 
@@ -79,10 +78,10 @@ f = open(output, "at")
 
 f.write("uint32_t g_")
 f.write(newPicture)
-f.write("_data[] = {\n")
+f.write("_data[] = {\n\t")
+f.write(f"{width}, {height}, ")
 
 for y in range(height):
-    f.write("\t")
     for x in range(width):
 
         pixel = image[y, x]
@@ -105,22 +104,7 @@ for y in range(height):
         if(newHex == "0x000, "):
             newHex = "0x00000000, "
         f.write(newHex)
-    f.write("'2',\n")
 
-f.write("3};\n\n")
-
-f.write("Image g_")
-f.write(newPicture)
-f.write("_icon = {\n")
-
-f.write("\t")
-f.write(str(width))
-f.write(", ")
-f.write(str(height))
-f.write(", g_") 
-f.write(newPicture)
-f.write("_data\n")
-
-f.write("};\n")
+f.write("};\n\n")
 
 f.close()

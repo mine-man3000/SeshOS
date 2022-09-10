@@ -29,23 +29,14 @@ void drawRect(int startx, int starty, int width, int height, uint32_t VGA_COLOR)
             putPixel(x, y, VGA_COLOR);
         }
     }
-}   
+}
 
-uint8_t drawImage(uint32_t *icon, int posx, int posy)
-{
-    int x = posx;
-    int y = posy;
-    for (int i = 0; icon[i] != 3; i++)
-    {
-        if(icon[i] == 2 || icon[i] == '2')
-        {
-            x = posx;
-            y++;
-        }
-        else
-        {
-            putPixel(x, y, icon[i]);
-            x++;
+void drawImage(uint32_t *icon, int posx, int posy) {
+    int width = icon[0];
+    int height = icon[1];
+    for (int y = 0; y < height; y ++) {
+        for (int x = 0; x < width; x ++) {
+            putPixel(posx + x, posy + y, icon[y * width + x + 2]);
         }
     }
 }
@@ -60,13 +51,13 @@ void Panic(const char *panicMessage)
 void Clear(uint32_t color)
 {
     printf("%s", "\033[2J \033[H");
-    //for (int x = 0; x < buffer->width; x++)
-    //{
-    //    for (int y = 0; y < buffer->height; y++)
-    //    {
-    //        putPixel(x, y, 0);
-    //    }
-    //}
+    for (int x = 0; x < buffer->width; x++)
+    {
+        for (int y = 0; y < buffer->height; y++)
+        {
+            putPixel(x, y, 0);
+        }
+    }
 }
 
 void setCursorPos(int x, int y)

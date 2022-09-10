@@ -1,7 +1,6 @@
 #include "shell.h"
 #include "memory/mem.h"
 #include "fs/ramfs.h"
-#include "video/window.h"
 #include "../tools/picsofbread.h"
 
 Shell newShell;
@@ -17,7 +16,18 @@ void Shell::PrintPrompt()
 
 void Shell::TestCMD(char* input)
 {
-    TwoStrings twoStrings = strsplit(input, ' ');
+    TwoStrings twoStrings;
+    for (int i = 0; input[i] != NULL; i ++) {
+        twoStrings.a[i] = NULL;
+    }
+    for (int i = 0; input[i] != NULL; i ++) {
+        twoStrings.b[i] = NULL;
+    }
+
+    twoStrings = strsplit(input, ' ');
+    
+    printf(twoStrings.a);
+
     if (mystrcmp(input, "ver"))
     {
         printf("SeshOS version 0.2.0\n");
@@ -88,14 +98,7 @@ void Shell::TestCMD(char* input)
     }
     else if (mystrcmp(input, "startx"))
     {
-        xRunning = true;
-        drawRect(0, 0, buffer->width, buffer->height, 0xD97F1956);
-        Window yes = Window(10, 10, 200, 200, "Hello World        ", 0x12345678);
-        Window no = Window(100, 100, 200, 200, "1234567890!@#$%^&*()", 0x12345678);
-
-        drawRect(0, buffer->height - 40, buffer->width, 40, 0xff888888);        
-    
-        newShell.shouldPrint = false;
+        
     }
     else if (mystrcmp(input, "pob"))
     {

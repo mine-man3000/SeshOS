@@ -42,10 +42,9 @@ void HandleKeyboard(uint8_t scancode)
 		i = 0;
 		newShell.TestCMD(input);
 		newShell.PrintPrompt();
-
-		for (int i = 0; i < input[i] != '\0'; i++)
-		{
-			input[i] = NULL;
+		
+		for (int i = 0; input[i + 1] != NULL; i ++) {
+		    input[i] = NULL;
 		}
 	}
 	else if (scancode == us_qwerty_backspace)

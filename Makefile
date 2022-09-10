@@ -21,7 +21,7 @@ $(eval $(call DEFAULT_VAR,CC,cc))
 $(eval $(call DEFAULT_VAR,LD,ld))
  
 # User controllable CFLAGS.
-CFLAGS ?= -O2 -g -Wall -Wextra -Wpedantic -pipe
+CFLAGS ?= -g -Wall -Wextra -Wpedantic -pipe
  
 # User controllable preprocessor flags. We set none by default.
 CPPFLAGS ?=
@@ -118,3 +118,6 @@ iso:
         --efi-boot limine-cd-efi.bin \
         -efi-boot-part --efi-boot-image --protective-msdos-label \
         iso_root -o image.iso
+
+run: iso
+	qemu-system-x86_64 -hda image.iso -bios /usr/share/OVMF/OVMF_CODE.fd -debugcon stdio -m 1G
