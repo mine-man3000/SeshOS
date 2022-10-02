@@ -73,59 +73,60 @@ override HEADER_DEPS := $(CFILES:.cpp=.d) $(ASFILES:.S=.d)
 all: dirs $(KERNEL)
  
 dirs:
-	mkdir -p build
-	mkdir -p build/kernel/{fs,gdt,idt,memory,userinput,video}
-	mkdir -p bin
+	@mkdir -p build
+	@mkdir -p build/kernel/{fs,gdt,idt,memory,userinput,video}
+	@mkdir -p bin
 
 # Link rules for the final kernel executable.
 $(KERNEL): $(OBJ)
-	$(LD) $(subst ./,build/,$(OBJ)) $(LDFLAGS) -o bin/$@
+	@echo "   LD   $(subst ./,,$(subst kernel/,,$(OBJ))) ==> $@"
+	@$(LD) $(subst ./,build/,$(OBJ)) $(LDFLAGS) -o bin/$@
  
 # Include header dependencies.
 -include $(HEADER_DEPS)
  
 # Compilation rules for *.c files.
 %.o: %.cpp
-	g++ $(CPPFLAGS) $(CFLAGS) -c $< -o build/$@
+	@echo "   CXX   $@"
+	@g++ $(CPPFLAGS) $(CFLAGS) -c $< -o build/$@
  
 # Compilation rules for *.S files.
 %.o: %.S
-	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o build/$@
+	@echo "   AS    $@"
+	@$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o build/$@
  
 # Compilation rules for *.asm (nasm) files.
 %.asm.o: %.asm
-	nasm $(NASMFLAGS) $< -o build/$@
+	@echo "   NASM  $@"
+	@nasm $(NASMFLAGS) $< -o build/$@
  
 # Remove object files and the final executable.
 .PHONY: clean
 clean:
-	rm -rf $(KERNEL) $(OBJ) $(HEADER_DEPS) limine initramfs iso_root/
+	@rm -rf $(KERNEL) $(OBJ) $(HEADER_DEPS) limine initramfs iso_root/
+	@echo "Cleaned!"
 
 initramfs:
-	tar -cvf initramfs --format=ustar -C rootfs/ .
+	@tar -cf initramfs --format=ustar -C rootfs/ .
 
 limine.h:
-	curl https://raw.githubusercontent.com/limine-bootloader/limine/trunk/limine.h -o $@
+	@wget https://raw.githubusercontent.com/limine-bootloader/limine/trunk/limine.h -q
 
 iso:	
-	make clean
-	make limine.h
-	make
-	make initramfs
-	git clone https://github.com/limine-bootloader/limine.git --branch=v4.x-branch-binary --depth=1
+	@make clean
+	@make limine.h
+	@make
+	@make initramfs
+	@git clone https://github.com/limine-bootloader/limine.git --branch=v4.x-branch-binary --depth=1 --quiet
  
-	make -C limine
+	@make -C limine
  
-	mkdir -p iso_root
+	@mkdir -p iso_root
  
-	cp -v bin/kernel.elf initramfs font limine.cfg limine/limine.sys \
+	@cp bin/kernel.elf initramfs font limine.cfg limine/limine.sys \
 	  limine/limine-cd.bin limine/limine-cd-efi.bin iso_root/
  
-	xorriso -as mkisofs -b limine-cd.bin \
-		-no-emul-boot -boot-load-size 4 -boot-info-table \
-		--efi-boot limine-cd-efi.bin \
-		-efi-boot-part --efi-boot-image --protective-msdos-label \
-		iso_root -o bin/image.iso
+	@./tools/iso.sh
 
 run: iso
-	qemu-system-x86_64 -cdrom bin/image.iso -bios /usr/share/OVMF/OVMF_CODE.fd -debugcon stdio -m 1G
+	@qemu-system-x86_64 -cdrom bin/image.iso -bios /usr/share/OVMF/OVMF_CODE.fd -debugcon stdio -m 1G
