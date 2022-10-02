@@ -51,8 +51,8 @@ void HandleKeyboard(uint8_t scancode)
 	{
 		printf("\b \b");
 		c = '\0';
-		input[i] = NULL;
 		i--;
+		input[i] = NULL;
 		if (i < 0)
 		{
 			printf(" ");

@@ -2,6 +2,9 @@
 #include "memory/mem.h"
 #include "fs/ramfs.h"
 #include "../tools/picsofbread.h"
+#include "video/window.h"
+
+char* SeshOSVer = "0.2.0";
 
 Shell newShell;
 bool xRunning = false;
@@ -10,6 +13,7 @@ void Shell::PrintPrompt()
 {
     if (shouldPrint)
     {
+        //printf("C:/> ");
         printf("%sroot@SeshOS%s / %s# ", Red, Blue, White);
     }    
 }
@@ -26,11 +30,9 @@ void Shell::TestCMD(char* input)
 
     twoStrings = strsplit(input, ' ');
     
-    printf(twoStrings.a);
-
     if (mystrcmp(input, "ver"))
     {
-        printf("SeshOS version 0.2.0\n");
+        printf("SeshOS version %s\n", SeshOSVer);
     }
     else if (mystrcmp(input, "help"))
     {
@@ -52,7 +54,7 @@ void Shell::TestCMD(char* input)
         for (int i = 0; i < mmap.response->entry_count; i++)
         {
             uint64_t type = mmap.response->entries[i]->type;
-            if (type == 0 || type == 2 || type == 5)
+            if (type == LIMINE_MEMMAP_USABLE || type == LIMINE_MEMMAP_ACPI_RECLAIMABLE || type == LIMINE_MEMMAP_BOOTLOADER_RECLAIMABLE)
             {
                 freMem += mmap.response->entries[i]->length;
             }
@@ -65,8 +67,8 @@ void Shell::TestCMD(char* input)
 
         printf("SSSSSS   EEEEEE  SSSSSS  HH  HH    root@SeshOS\n");
         printf("SSSSSS   EEEEEE  SSSSSS  HH  HH    -----------\n");
-        printf("SSS      EE      SSS     HH  HH    OS: SeshOS 0.2.0\n");
-        printf("SSS      EE      SSS     HH  HH    Kernel: 0.2.0\n");
+        printf("SSS      EE      SSS     HH  HH    OS: SeshOS %s\n", SeshOSVer);
+        printf("SSS      EE      SSS     HH  HH    Kernel: %s\n", SeshOSVer);
         printf("SSSSSS   EEEEEE  SSSSSS  HHHHHH    Shell: SESH (SEsh SHell)\n");
         printf("SSSSSS   EEEEEE  SSSSSS  HHHHHH    Memory: %i KB/%i KB\n", useMem / 1024, totMem / 1024); 
         printf("   SSS   EE         SSS  HH  HH    Resolution: %ix%i\n", buffer->width, buffer->height);
@@ -86,6 +88,10 @@ void Shell::TestCMD(char* input)
         printf("                 OOOOOO  SSSSSS    \n");
     }
     else if (mystrcmp(input, "")){}
+    else if (mystrcmp(input, "rm"))
+    {
+        printf("your 'rm' program is bad, sorry.\n");
+    }
     else if (mystrcmp(input, "panic"))
     {
         Panic("User Caused Panic");
@@ -98,11 +104,18 @@ void Shell::TestCMD(char* input)
     }
     else if (mystrcmp(input, "startx"))
     {
-        
+        xRunning = true;
+        drawRect(0, 0, buffer->width, buffer->height, 0xD97F1956);
+        Window yes = Window(10, 10, 200, 200, "Hello World        ", 0x12345678);
+        Window no = Window(100, 100, 200, 200, "1234567890!@#$%^&*()", 0x12345678);
+
+        drawRect(0, buffer->height - 40, buffer->width, 40, 0xff888888);        
+    
+        newShell.shouldPrint = false;
     }
     else if (mystrcmp(input, "pob"))
     {
-        drawImage(g_picsofbread_data, 10, 10);
+        drawImage(g_picsofbread_data, buffer->width / 2 - 36,  buffer->height / 2 - 36);
     }
     else if (mystrcmp(input, "tree"))
     {
@@ -120,7 +133,7 @@ void Shell::TestCMD(char* input)
     {
         ls();
     }
-    else if (mystrcmp(input, "exit"))
+    else if (mystrcmp(input, "shutdown"))
     {
         Clear(0);
         printf("SHUT DOWN SEQUENCE INITIATED");

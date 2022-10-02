@@ -38,45 +38,12 @@ extern "C" void _start(void)
     comout("\033[2J \033[H");
     init();
 
-    printf("CPU count: %i\n", smp.response->cpu_count);
-
-    //smp.response->cpus[1]->goto_address = test();
-
-    for (int i = 0; i < smp.response->cpu_count; i++)
-    {
-        printf("CPU %i goto address %x\n", i ,smp.response->cpus[i]->goto_address);
-    }    
-
     comout("Hello COM\n");
 
     printf("Welcome to SeshOS\n\0");
-    
-    asm volatile ("int $0x69");
-
-    uint64_t totalMem = 0;
-
-    for (int i = 0; i < mmap.response->entry_count; i++)
-    {
-        totalMem += mmap.response->entries[i]->length;
-    }
-
-    printf("total memory: %i MB\n", totalMem / 1024 / 1024);
-
-    comout("Hello COM\n");
-
-    printf("total pages: %i\n", numPages());
-
-    time NewTime = GetTime();
 
     newShell.shouldPrint = true;
     newShell.PrintPrompt();
-    
-    drawRect(0, 0, buffer->width, buffer->height, 0xD97F1956);
-    Window yes = Window(10, 10, 200, 200, "Hello World        ", 0x12345678);
-    Window no = Window(100, 100, 200, 200, "1234567890!@#$%^&*()", 0x12345678);
-    drawRect(0, buffer->height - 40, buffer->width, 40, 0xff888888);
-
-    newShell.shouldPrint = false;
 
     done();
 }

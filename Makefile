@@ -49,7 +49,6 @@ override CFLAGS +=       \
     -mno-sse2            \
     -mno-red-zone        \
     -mcmodel=kernel      \
-    -MMD
  
 # Internal linker flags that should not be changed by the user.
 override LDFLAGS +=         \
@@ -100,11 +99,15 @@ clean:
 initramfs:
 	tar -cvf initramfs --format=ustar -C rootfs/ .
 
+limine.h:
+	curl https://raw.githubusercontent.com/limine-bootloader/limine/trunk/limine.h -o $@
+
 iso:	
 	make clean
+	make limine.h
 	make
 	make initramfs
-	git clone https://github.com/limine-bootloader/limine.git --branch=v3.0-branch-binary --depth=1
+	git clone https://github.com/limine-bootloader/limine.git --branch=v4.x-branch-binary --depth=1
  
 	make -C limine
  
