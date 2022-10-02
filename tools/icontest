@@ -104,6 +104,7 @@ for y in range(height):
         if(newHex == "0x000, "):
             newHex = "0x00000000, "
         f.write(newHex)
+    f.write("\n")
 
 f.write("};\n\n")
 
