@@ -4,12 +4,12 @@ override KERNEL := kernel.elf
  
 # Convenience macro to reliably declare overridable command variables.
 define DEFAULT_VAR =
-    ifeq ($(origin $1),default)
-        override $(1) := $(2)
-    endif
-    ifeq ($(origin $1),undefined)
-        override $(1) := $(2)
-    endif
+	ifeq ($(origin $1),default)
+		override $(1) := $(2)
+	endif
+	ifeq ($(origin $1),undefined)
+		override $(1) := $(2)
+	endif
 endef
  
 # It is highly recommended to use a custom built cross toolchain to build a kernel.
@@ -34,32 +34,32 @@ LDFLAGS ?=
  
 # Internal C flags that should not be changed by the user.
 override CFLAGS +=       \
-    -I.                  \
-    -ffreestanding       \
-    -fno-stack-protector \
-    -fno-stack-check     \
-    -fno-pie             \
-    -fno-pic             \
-    -m64                 \
-    -march=x86-64        \
-    -mabi=sysv           \
-    -mno-80387           \
-    -mno-mmx             \
-    -mno-sse             \
-    -mno-sse2            \
-    -mno-red-zone        \
-    -mcmodel=kernel      \
+	-I.                  \
+	-ffreestanding       \
+	-fno-stack-protector \
+	-fno-stack-check     \
+	-fno-pie             \
+	-fno-pic             \
+	-m64                 \
+	-march=x86-64        \
+	-mabi=sysv           \
+	-mno-80387           \
+	-mno-mmx             \
+	-mno-sse             \
+	-mno-sse2            \
+	-mno-red-zone        \
+	-mcmodel=kernel      \
  
 # Internal linker flags that should not be changed by the user.
 override LDFLAGS +=         \
-    -nostdlib               \
-    -static                 \
-    -z max-page-size=0x1000 \
-    -T linker.ld
+	-nostdlib               \
+	-static                 \
+	-z max-page-size=0x1000 \
+	-T linker.ld
  
 # Internal nasm flags that should not be changed by the user.
 override NASMFLAGS += \
-    -f elf64
+	-f elf64
  
 # Use find to glob all *.c, *.S, and *.asm files in the directory and extract the object names.
 override CFILES := $(shell find . -type f -name '*.cpp')
@@ -70,57 +70,63 @@ override HEADER_DEPS := $(CFILES:.cpp=.d) $(ASFILES:.S=.d)
  
 # Default target.
 .PHONY: all
-all: $(KERNEL)
+all: dirs $(KERNEL)
  
+dirs:
+	@mkdir -p build
+	@mkdir -p build/kernel/{fs,gdt,idt,memory,userinput,video}
+	@mkdir -p bin
+
 # Link rules for the final kernel executable.
 $(KERNEL): $(OBJ)
-	$(LD) $(OBJ) $(LDFLAGS) -o $@
+	@echo "   LD   $(subst ./,,$(subst kernel/,,$(OBJ))) ==> $@"
+	@$(LD) $(subst ./,build/,$(OBJ)) $(LDFLAGS) -o bin/$@
  
 # Include header dependencies.
 -include $(HEADER_DEPS)
  
 # Compilation rules for *.c files.
 %.o: %.cpp
-	g++ $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+	@echo "   CXX   $@"
+	@g++ $(CPPFLAGS) $(CFLAGS) -c $< -o build/$@
  
 # Compilation rules for *.S files.
 %.o: %.S
-	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+	@echo "   AS    $@"
+	@$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o build/$@
  
 # Compilation rules for *.asm (nasm) files.
 %.asm.o: %.asm
-	nasm $(NASMFLAGS) $< -o $@
+	@echo "   NASM  $@"
+	@nasm $(NASMFLAGS) $< -o build/$@
  
 # Remove object files and the final executable.
 .PHONY: clean
 clean:
-	rm -rf $(KERNEL) $(OBJ) $(HEADER_DEPS) limine initramfs iso_root/
+	@rm -rf $(KERNEL) $(OBJ) $(HEADER_DEPS) limine initramfs iso_root/
+	@echo "Cleaned!"
 
 initramfs:
-	tar -cvf initramfs --format=ustar -C rootfs/ .
+	@tar -cf initramfs --format=ustar -C rootfs/ .
 
 limine.h:
-	curl https://raw.githubusercontent.com/limine-bootloader/limine/trunk/limine.h -o $@
+	@wget https://raw.githubusercontent.com/limine-bootloader/limine/trunk/limine.h -q
 
 iso:	
-	make clean
-	make limine.h
-	make
-	make initramfs
-	git clone https://github.com/limine-bootloader/limine.git --branch=v4.x-branch-binary --depth=1
+	@make clean
+	@make limine.h
+	@make
+	@make initramfs
+	@git clone https://github.com/limine-bootloader/limine.git --branch=v4.x-branch-binary --depth=1 --quiet
  
-	make -C limine
+	@make -C limine
  
-	mkdir -p iso_root
+	@mkdir -p iso_root
  
-	cp -v kernel.elf initramfs font limine.cfg limine/limine.sys \
-      limine/limine-cd.bin limine/limine-cd-efi.bin iso_root/
+	@cp bin/kernel.elf initramfs font limine.cfg limine/limine.sys \
+	  limine/limine-cd.bin limine/limine-cd-efi.bin iso_root/
  
-	xorriso -as mkisofs -b limine-cd.bin \
-        -no-emul-boot -boot-load-size 4 -boot-info-table \
-        --efi-boot limine-cd-efi.bin \
-        -efi-boot-part --efi-boot-image --protective-msdos-label \
-        iso_root -o image.iso
+	@./tools/iso.sh
 
 run: iso
-	qemu-system-x86_64 -hda image.iso -bios /usr/share/OVMF/OVMF_CODE.fd -debugcon stdio -m 1G
+	@qemu-system-x86_64 -cdrom bin/image.iso -bios /usr/share/OVMF/OVMF_CODE.fd -debugcon stdio -m 1G
