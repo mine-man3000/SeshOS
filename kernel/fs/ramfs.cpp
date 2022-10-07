@@ -63,22 +63,38 @@ TwoStrings oldNameInPath;
 
 void lsReset(TwoStrings* a, TwoStrings* b)
 {
-    for (int i = 0; i < 100; i++) a->a[i] = 0;
-    for (int i = 0; i < 100; i++) a->b[i] = 0;
-    for (int i = 0; i < 100; i++) b->a[i] = 0;
-    for (int i = 0; i < 100; i++) b->b[i] = 0;
+    for (int i = 0; i < 100; i++) a->a[i] = NULL;
+    for (int i = 0; i < 100; i++) a->b[i] = NULL;
+    for (int i = 0; i < 100; i++) b->a[i] = NULL;
+    for (int i = 0; i < 100; i++) b->b[i] = NULL;
 }
 
 void ls()
 {
     for (int i = 1; headers[i]->filename != NULL; i++)
-    {        
-        lsReset(&fullName, &nameInPath);
-        lsReset(&oldFullName, &oldNameInPath);
+    {   
+        for (int i = 0; i < 100; i++) fullName.a[i] = NULL;
+        for (int i = 0; i < 100; i++) fullName.b[i] = NULL;
+        for (int i = 0; i < 100; i++) nameInPath.a[i] = NULL;
+        for (int i = 0; i < 100; i++) nameInPath.b[i] = NULL;
+        for (int i = 0; i < 100; i++) oldFullName.a[i] = NULL;
+        for (int i = 0; i < 100; i++) oldFullName.b[i] = NULL;
+        for (int i = 0; i < 100; i++) oldNameInPath.a[i] = NULL;
+        for (int i = 0; i < 100; i++) oldNameInPath.b[i] = NULL;
 
         fullName   = strsplit(headers[i]->filename, '/');
         nameInPath = strsplit(fullName.b, '/');
-        
+
+        comout("fullname.a  ");
+        comout(fullName.a);
+        comout("\nfullname.b  ");
+        comout(fullName.b);
+        comout("\nnameInPath.a  ");
+        comout(nameInPath.a);
+        comout("\nnameInPath.b  ");
+        comout(nameInPath.b);
+        comout("\n");
+
         if (i > 1)
         {   
             oldFullName   = strsplit(headers[i-1]->filename, '/');
