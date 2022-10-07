@@ -77,14 +77,14 @@ TwoStrings strsplit(char *str, char split)
         p1[i] = str[i];
     }
     i++;
-    p1[i] = '\0';
+    p1[i - 1] = '\0';
     for (; i < mystrlen(str); j++)
     {
         p2[j] = str[i];
         i++;
     }
     j++;
-    p2[j] = '\0';
+    p2[j - 1] = '\0';
     TwoStrings yes;
 
     for (int i = 0; i < 128; i++)

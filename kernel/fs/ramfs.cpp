@@ -85,16 +85,6 @@ void ls()
         fullName   = strsplit(headers[i]->filename, '/');
         nameInPath = strsplit(fullName.b, '/');
 
-        comout("fullname.a  ");
-        comout(fullName.a);
-        comout("\nfullname.b  ");
-        comout(fullName.b);
-        comout("\nnameInPath.a  ");
-        comout(nameInPath.a);
-        comout("\nnameInPath.b  ");
-        comout(nameInPath.b);
-        comout("\n");
-
         if (i > 1)
         {   
             oldFullName   = strsplit(headers[i-1]->filename, '/');
