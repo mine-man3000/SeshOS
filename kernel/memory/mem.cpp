@@ -13,19 +13,32 @@ uint64_t getMemSize()
         memSize += mmap.response->entries[i]->length;
     }
     return memSize; 
-    mmap.response->entry_count;
-
 }
 
-void malloc()
+extern "C" void *memset(void *b, int c, int len)
 {
-    
+	uint8_t *p = (uint8_t*)b;
+	while (len > 0)
+    {
+		*p = c;
+		p++;
+		len--;
+	}
+	return b;
 }
 
-void memset(void* base, uint8_t value, uint64_t length)
+extern "C" void *memcpy(void* destination, const void* source, size_t num)
 {
-	for (uint64_t i = 0; i < length; i++)
-        *(uint8_t*)((uint64_t)base + i) = value;
+	// Convert to char* for easy access
+	char *src  = (char *)source;
+	char *dest = (char *)destination;
+
+	// Copy bytes
+	for (size_t i = 0; i < num; i++)
+    {
+		dest[i] = src[i];
+	}
+	return destination;
 }
 
 int numPages()

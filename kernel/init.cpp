@@ -5,6 +5,7 @@
 #include "kernelDefines.h"
 #include "init.h"
 #include "video/renderer.h"
+#include "memory/malloc.h"
 
 #define PIC1		    0x20		/* IO base address for master PIC */
 #define PIC2		    0xA0		/* IO base address for slave PIC */
@@ -14,6 +15,7 @@
 #define PIC2_DATA	    (PIC2+1)
 
 extern "C" void disablePIC();
+HANDLE kernelHeap = NULL;
 
 void init()
 {
@@ -47,5 +49,6 @@ void init()
     parse();
 
     printf("[ %sOK %s] ramdisk parsed\n", Green, White);
-
+    
+    kernelHeap = mallocInit(32 * 1024 * 1024);
 }
