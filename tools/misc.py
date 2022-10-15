@@ -18,3 +18,5 @@ dateRightFormat[2] = year
 newToday = "/".join(dateRightFormat)
 
 finalDate = newToday[1]
+
+#bread credit goes to https://www.picsofbread.com (tis the favicon)
