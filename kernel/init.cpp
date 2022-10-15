@@ -7,6 +7,9 @@
 #include "video/renderer.h"
 #include "memory/malloc.h"
 
+
+extern kernie_heap heap;
+
 #define PIC1		    0x20		/* IO base address for master PIC */
 #define PIC2		    0xA0		/* IO base address for slave PIC */
 #define PIC1_COMMAND	PIC1
@@ -15,7 +18,7 @@
 #define PIC2_DATA	    (PIC2+1)
 
 extern "C" void disablePIC();
-HANDLE kernelHeap = NULL;
+extern unsigned char* backbuffer;
 
 void init()
 {
@@ -50,5 +53,5 @@ void init()
 
     printf("[ %sOK %s] ramdisk parsed\n", Green, White);
     
-    kernelHeap = mallocInit(32 * 1024 * 1024);
+    backbuffer = (unsigned char *)heap.malloc(buffer->width * buffer->height * sizeof(unsigned char));
 }

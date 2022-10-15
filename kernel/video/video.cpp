@@ -1,15 +1,20 @@
 #include "video.h"
 #include "../string.h"
 #include "../time.h"
+#include "../memory/malloc.h"
 
 volatile struct limine_framebuffer_request framebuffer_request = {
     .id = LIMINE_FRAMEBUFFER_REQUEST,
     .revision = 0
 };
+unsigned char *backbuffer;
 
 void putPixel(int x, int y, uint32_t pixel)
 {
-    *((uint32_t*)(buffer->address + 4 * (buffer->pitch / 4) * y + 4 * x)) = pixel;
+    printf("backbuffer address: %x", backbuffer);
+    asm("cli\nhlt");
+    backbuffer[4 * buffer->pitch * y + 4 * x] = pixel;
+    //*((uint32_t*)(buffer->address + 4 * (buffer->pitch / 4) * y + 4 * x)) = pixel;
 }
 
 uint32_t getPixel(uint32_t x, uint32_t y)
