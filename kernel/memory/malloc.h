@@ -15,8 +15,8 @@ struct kernie_heap
 
     void init(unsigned char* addr);
 
-    static kernie_heap the() {
-        static kernie_heap me;
-        return me;
+    static kernie_heap* the(){
+		static kernie_heap me;
+		return &me;
     }
 };

@@ -39,16 +39,17 @@ extern "C" void _start(void)
     }
 
     comout("\033[2J \033[H");
-    init();
-
+    
     for (int i = 0; i < mmap.response->entry_count; i++)
     {
         uint64_t type = mmap.response->entries[i]->type;
         if (type == LIMINE_MEMMAP_USABLE)
         {
-            kernie_heap::the().init((unsigned char*)mmap.response->entries[i]->base);
+            kernie_heap::the()->init((unsigned char*)mmap.response->entries[i]->base);
         }
     }
+
+    init();
 
     comout("Hello COM\n");
 

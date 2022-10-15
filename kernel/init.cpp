@@ -8,8 +8,6 @@
 #include "memory/malloc.h"
 
 
-extern kernie_heap heap;
-
 #define PIC1		    0x20		/* IO base address for master PIC */
 #define PIC2		    0xA0		/* IO base address for slave PIC */
 #define PIC1_COMMAND	PIC1
@@ -52,6 +50,6 @@ void init()
     parse();
 
     printf("[ %sOK %s] ramdisk parsed\n", Green, White);
-    
-    backbuffer = (unsigned char *)heap.malloc(buffer->width * buffer->height * sizeof(unsigned char));
+
+    backbuffer = (unsigned char *)kernie_heap::the()->malloc(buffer->width * buffer->height * sizeof(unsigned char));
 }
