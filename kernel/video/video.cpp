@@ -11,8 +11,6 @@ unsigned char *backbuffer;
 
 void putPixel(int x, int y, uint32_t pixel)
 {
-    printf("backbuffer address: %x", backbuffer);
-    asm("cli\nhlt");
     backbuffer[4 * buffer->pitch * y + 4 * x] = pixel;
     //*((uint32_t*)(buffer->address + 4 * (buffer->pitch / 4) * y + 4 * x)) = pixel;
 }

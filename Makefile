@@ -30,7 +30,7 @@ CPPFLAGS ?=
 NASMFLAGS ?= -F dwarf -g
  
 # User controllable linker flags. We set none by default.
-LDFLAGS ?=
+LDFLAGS ?= 
  
 # Internal C flags that should not be changed by the user.
 override CFLAGS +=       \
@@ -40,6 +40,7 @@ override CFLAGS +=       \
 	-fno-stack-check     \
 	-fno-pie             \
 	-fno-pic             \
+	-fno-threadsafe-statics \
 	-m64                 \
 	-march=x86-64        \
 	-mabi=sysv           \

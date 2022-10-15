@@ -46,7 +46,7 @@ extern "C" void _start(void)
         uint64_t type = mmap.response->entries[i]->type;
         if (type == LIMINE_MEMMAP_USABLE)
         {
-            heap.heap_space = (unsigned char*)mmap.response->entries[i]->base;
+            kernie_heap::the().init((unsigned char*)mmap.response->entries[i]->base);
         }
     }
 

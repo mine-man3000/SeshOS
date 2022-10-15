@@ -100,3 +100,7 @@ void kernie_heap::free(void* ptr)
 
     mcb->free = true;
 }
+
+void kernie_heap::init(unsigned char* addr) {
+    this->heap_space = addr;
+}

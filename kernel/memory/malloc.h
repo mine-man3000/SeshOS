@@ -12,4 +12,11 @@ struct kernie_heap
     bool have_allocated = false;
     unsigned char *last_valid_address;
     unsigned char *heap_space;
+
+    void init(unsigned char* addr);
+
+    static kernie_heap the() {
+        static kernie_heap me;
+        return me;
+    }
 };
