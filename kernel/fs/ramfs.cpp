@@ -42,7 +42,7 @@ char *readFile(char* fileToReadName)
     unsigned int address = *((int*)(&initramfs->address));
     struct tar_header *header = (struct tar_header *)address;
 
-    for (int i = 0; headers[i]->filename != NULL; i++)
+    for (int i = 0; headers[i]->filename != "\0"; i++)
     {
         if (mystrcmp(fileToReadName, headers[i]->filename))
         {
@@ -63,24 +63,24 @@ TwoStrings oldNameInPath;
 
 void lsReset(TwoStrings* a, TwoStrings* b)
 {
-    for (int i = 0; i < 100; i++) a->a[i] = NULL;
-    for (int i = 0; i < 100; i++) a->b[i] = NULL;
-    for (int i = 0; i < 100; i++) b->a[i] = NULL;
-    for (int i = 0; i < 100; i++) b->b[i] = NULL;
+    for (int i = 0; i < 100; i++) a->a[i] = '\0';
+    for (int i = 0; i < 100; i++) a->b[i] = '\0';
+    for (int i = 0; i < 100; i++) b->a[i] = '\0';
+    for (int i = 0; i < 100; i++) b->b[i] = '\0';
 }
 
 void ls()
 {
-    for (int i = 1; headers[i]->filename != NULL; i++)
+    for (int i = 1; headers[i]->filename != "\0"; i++)
     {   
-        for (int i = 0; i < 100; i++) fullName.a[i] = NULL;
-        for (int i = 0; i < 100; i++) fullName.b[i] = NULL;
-        for (int i = 0; i < 100; i++) nameInPath.a[i] = NULL;
-        for (int i = 0; i < 100; i++) nameInPath.b[i] = NULL;
-        for (int i = 0; i < 100; i++) oldFullName.a[i] = NULL;
-        for (int i = 0; i < 100; i++) oldFullName.b[i] = NULL;
-        for (int i = 0; i < 100; i++) oldNameInPath.a[i] = NULL;
-        for (int i = 0; i < 100; i++) oldNameInPath.b[i] = NULL;
+        for (int i = 0; i < 100; i++) fullName.a[i] =      '\0';
+        for (int i = 0; i < 100; i++) fullName.b[i] =      '\0';
+        for (int i = 0; i < 100; i++) nameInPath.a[i] =    '\0';
+        for (int i = 0; i < 100; i++) nameInPath.b[i] =    '\0';
+        for (int i = 0; i < 100; i++) oldFullName.a[i] =   '\0';
+        for (int i = 0; i < 100; i++) oldFullName.b[i] =   '\0';
+        for (int i = 0; i < 100; i++) oldNameInPath.a[i] = '\0';
+        for (int i = 0; i < 100; i++) oldNameInPath.b[i] = '\0';
 
         fullName   = strsplit(headers[i]->filename, '/');
         nameInPath = strsplit(fullName.b, '/');

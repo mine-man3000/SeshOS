@@ -18,11 +18,12 @@ void initGUI();
  * @param height how tall the rectangle will be
  * @param VGA_COLOR the color of the rectangle given as 0xAARRGGBB (alpha, red, green, blue)
  */
-void drawRect(int startx, int starty, int width, int height, uint32_t VGA_COLOR);
-void drawImage(uint32_t *icon, int posx, int posy);
-void Panic(const char *panicMessage);
-void Clear(uint32_t color);
+unsigned char* drawRect(int startx, int starty, int width, int height, uint32_t VGA_COLOR);
+unsigned char* drawImage(uint32_t *icon, int posx, int posy);
+unsigned char* Clear(uint32_t color);
 void putPixel(int x, int y, uint32_t pixel);
+
+void Panic(const char *panicMessage);
 uint32_t getPixel(uint32_t x, uint32_t y);
 
 void setCursorPos(int x, int y);

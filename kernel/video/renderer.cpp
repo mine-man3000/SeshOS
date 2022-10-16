@@ -87,7 +87,7 @@ void gPrint(const char chr[], unsigned int xOff, unsigned int yOff, uint32_t Col
             {
                 if ((*fontPtr & (0b10000000 >> (x - xOff))) > 0)
                 {
-                    *(unsigned int *)(pixPtr + x + offset + (y * (buffer->pitch / 4))) = Color;
+                    putPixel(x, y, Color);
                 }
             }
             fontPtr++;

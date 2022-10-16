@@ -11,7 +11,12 @@ unsigned char *backbuffer;
 
 void putPixel(int x, int y, uint32_t pixel)
 {
-    backbuffer[4 * buffer->pitch * y + 4 * x] = pixel;
+    backbuffer[4 * (buffer->pitch / 4) * y + 4 * x] = pixel;
+    comout("pixel drawn at (");
+    comout(to_string(x));
+    comout(", ");
+    comout(to_string(y));
+    comout(")\n");
     //*((uint32_t*)(buffer->address + 4 * (buffer->pitch / 4) * y + 4 * x)) = pixel;
 }
 
@@ -20,7 +25,7 @@ uint32_t getPixel(uint32_t x, uint32_t y)
     return *(uint32_t *)(uint32_t*)(buffer->address + 4 * (buffer->pitch / 4) * y + 4 * x);
 }
 
-void drawRect(int startx, int starty, int width, int height, uint32_t VGA_COLOR)
+unsigned char* drawRect(int startx, int starty, int width, int height, uint32_t VGA_COLOR)
 {
     int endx = startx + width;
     int endy = starty + height;
@@ -32,9 +37,10 @@ void drawRect(int startx, int starty, int width, int height, uint32_t VGA_COLOR)
             putPixel(x, y, VGA_COLOR);
         }
     }
+    return backbuffer;
 }
 
-void drawImage(uint32_t *icon, int posx, int posy) {
+unsigned char* drawImage(uint32_t *icon, int posx, int posy) {
     int width = icon[0];
     int height = icon[1];
     for (int y = 0; y < height; y ++) {
@@ -42,6 +48,7 @@ void drawImage(uint32_t *icon, int posx, int posy) {
             putPixel(posx + x, posy + y, icon[y * width + x + 2]);
         }
     }
+    return backbuffer;
 }
 
 void Panic(const char *panicMessage)
@@ -51,7 +58,7 @@ void Panic(const char *panicMessage)
     asm("hlt");
 }
 
-void Clear(uint32_t color)
+unsigned char* Clear(uint32_t color)
 {
     printf("%s", "\033[2J \033[H");
     for (int x = 0; x < buffer->width; x++)
@@ -61,6 +68,7 @@ void Clear(uint32_t color)
             putPixel(x, y, 0);
         }
     }
+    return backbuffer;
 }
 
 void setCursorPos(int x, int y)

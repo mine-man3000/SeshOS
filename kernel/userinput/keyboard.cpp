@@ -3,7 +3,6 @@
 bool isLeftShiftPressed;
 bool isRightShiftPressed;
 
-extern void drawRect(int startx, int starty, int width, int height, uint32_t VGA_COLOR);
 extern bool xRunning;
 
 char input[100];

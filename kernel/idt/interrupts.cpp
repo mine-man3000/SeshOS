@@ -8,26 +8,31 @@ extern void PIC_EndSlave();
 
 __attribute__((interrupt)) void DivideByZero_Handler(interrupt_frame* frame)
 {
+    frame = frame;
     Panic("You can't divide by 0 silly :P");
 }
 
 __attribute__((interrupt)) void PageFault_Handler(interrupt_frame* frame)
 {
+    frame = frame;
     Panic("Page Fault Detected");
 }
 
 __attribute__((interrupt)) void DoubleFault_Handler(interrupt_frame* frame)
 {
+    frame = frame;
     Panic("Double Fault Detected");
 }
 
 __attribute__((interrupt)) void GPFault_Handler(interrupt_frame* frame)
 {
+    frame = frame;
     Panic("General Protection Fault Detected");
 }
 
 __attribute__((interrupt)) void Keyboard_Handler(interrupt_frame* frame)
 {
+    frame = frame;
     uint8_t scancode = inb(0x60);
     HandleKeyboard(scancode);
     PIC_EndMaster();
@@ -35,6 +40,7 @@ __attribute__((interrupt)) void Keyboard_Handler(interrupt_frame* frame)
 
 __attribute__((interrupt)) void MouseInt_Handler(interrupt_frame* frame)
 {
+    frame = frame;
     uint8_t mouseData = inb(0x60);
     HandlePS2Mouse(mouseData);
     PIC_EndSlave();
@@ -42,6 +48,7 @@ __attribute__((interrupt)) void MouseInt_Handler(interrupt_frame* frame)
 
 __attribute__((interrupt)) void Test_Handler(interrupt_frame* frame)
 {
+    frame = frame;
     printf("NICE\n");
 }
 

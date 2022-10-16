@@ -35,7 +35,7 @@ extern "C" void _start(void)
 {
     if (terminal_request.response == NULL || terminal_request.response->terminal_count < 1)
     {
-        done();
+        asm("cli\nhlt");
     }
 
     comout("\033[2J \033[H");
@@ -58,7 +58,7 @@ extern "C" void _start(void)
     newShell.shouldPrint = true;
     newShell.PrintPrompt();
 
-    done();
+    asm("hlt");
 }
 
 void comout(const char* input)

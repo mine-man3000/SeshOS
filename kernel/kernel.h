@@ -13,11 +13,3 @@ void comout(const char* input);
 extern struct limine_module_request module;
 extern struct limine_file* initramfs;
 extern struct limine_file* font;
-
-static void done(void)
-{
-    for (;;)
-    {
-        __asm__("hlt");
-    }
-}
