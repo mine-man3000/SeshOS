@@ -4,6 +4,8 @@
 #include "idt/interrupts.h"
 #include "video/window.h"
 #include "memory/malloc.h"
+#include "audio/pcspk.h"
+#include <cpuid.h>
 
 void _comout(const char* input);
 
@@ -57,6 +59,8 @@ extern "C" void _start(void)
 
     newShell.shouldPrint = true;
     newShell.PrintPrompt();
+
+    // beep();
 
     while (1)
     {
