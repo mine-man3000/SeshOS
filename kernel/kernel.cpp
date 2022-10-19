@@ -40,7 +40,7 @@ extern "C" void _start(void)
 
     comout("\033[2J \033[H");
     
-    for (int i = 0; i < mmap.response->entry_count; i++)
+    for (uint64_t i = 0; i < mmap.response->entry_count; i++)
     {
         uint64_t type = mmap.response->entries[i]->type;
         if (type == LIMINE_MEMMAP_USABLE)
@@ -58,7 +58,10 @@ extern "C" void _start(void)
     newShell.shouldPrint = true;
     newShell.PrintPrompt();
 
-    asm("hlt");
+    while (1)
+    {
+        __asm__("hlt");
+    }
 }
 
 void comout(const char* input)

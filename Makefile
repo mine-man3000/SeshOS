@@ -50,6 +50,11 @@ override CFLAGS +=       \
 	-mno-sse2            \
 	-mno-red-zone        \
 	-mcmodel=kernel      \
+	-Wno-unused-parameter \
+	-Wno-c++20-extensions \
+	-Wno-missing-field-initializers \
+	-Wno-address \
+	-Wno-int-to-pointer-cast
  
 # Internal linker flags that should not be changed by the user.
 override LDFLAGS +=         \
@@ -66,7 +71,7 @@ override NASMFLAGS += \
 override CFILES := $(shell find . -type f -name '*.cpp')
 override ASFILES := $(shell find . -type f -name '*.S')
 override NASMFILES := $(shell find . -type f -name '*.asm')
-override OBJ := $(CFILES:.cpp=.o) $(ASFILES:.S=.o) $(NASMFILES:.asm=.asm.o)
+override OBJ := $(CFILES:.cpp=.o) $(ASFILES:.S=.o) $(NASMFILES:.asm=.o)
 override HEADER_DEPS := $(CFILES:.cpp=.d) $(ASFILES:.S=.d)
  
 # Default target.
@@ -97,7 +102,7 @@ $(KERNEL): $(OBJ)
 	@$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o build/$@
  
 # Compilation rules for *.asm (nasm) files.
-%.asm.o: %.asm
+%.o: %.asm
 	@echo "   NASM  $@"
 	@nasm $(NASMFLAGS) $< -o build/$@
  

@@ -42,8 +42,8 @@ void HandleKeyboard(uint8_t scancode)
 		newShell.TestCMD(input);
 		newShell.PrintPrompt();
 		
-		for (int i = 0; input[i + 1] != NULL; i ++) {
-		    input[i] = NULL;
+		for (int i = 0; input[i + 1] != '\0'; i ++) {
+		    input[i] = '\0';
 		}
 	}
 	else if (scancode == us_qwerty_backspace)
@@ -51,7 +51,7 @@ void HandleKeyboard(uint8_t scancode)
 		printf("\b \b");
 		c = '\0';
 		i--;
-		input[i] = NULL;
+		input[i] = '\0';
 		if (i < 0)
 		{
 			printf(" ");

@@ -172,13 +172,9 @@ void ProcessMousePacket()
         }
     }
 
-    if (MousePosition.X < 0)
-        MousePosition.X = 0;
     if (MousePosition.X > buffer->width - 1)
         MousePosition.X = buffer->width - 1;
 
-    if (MousePosition.Y < 0)
-        MousePosition.Y = 0;
     if (MousePosition.Y > buffer->height - 1)
         MousePosition.Y = buffer->height - 1;
 

@@ -5,7 +5,7 @@
 struct kernie_heap
 {
     void *malloc(size_t size);
-    void *realloc(void *ptr, size_t size);
+    void *realloc(char* ptr, size_t size);
     void free(void *ptr);
 
     bool heap_is_set_up = false;

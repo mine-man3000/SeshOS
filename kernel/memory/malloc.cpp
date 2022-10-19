@@ -11,7 +11,7 @@ struct mem_control_blk
     size_t size;
 };
     
-void *aligned_ptr(void *ptr)
+void *aligned_ptr(char *ptr)
 {
     while ((uintptr_t) ptr % sizeof(int) != 0)
     {
@@ -30,7 +30,7 @@ void *kernie_heap::malloc(size_t size)
     }
 
     unsigned char *current_ptr = heap_space;
-    void *allocated_location = 0;
+    char *allocated_location = 0;
 
     size += sizeof(mem_control_blk);
     mem_control_blk *mcb = (mem_control_blk *)current_ptr;
@@ -42,12 +42,12 @@ void *kernie_heap::malloc(size_t size)
             if (mcb->free && mcb->size >= size)
             {
                 mcb->free = false;
-                allocated_location = current_ptr;
+                allocated_location = (char*)current_ptr;
                 break;
             }
 
             current_ptr += mcb->size;
-            current_ptr = (unsigned char*)aligned_ptr(current_ptr);
+            current_ptr = (unsigned char*)aligned_ptr((char*)current_ptr);
             comout((const char*)current_ptr);
             //printf("%p\r\n", current_ptr);
         }
@@ -55,7 +55,7 @@ void *kernie_heap::malloc(size_t size)
 
     if (!allocated_location)
     {
-        allocated_location = last_valid_address;
+        allocated_location = (char*)last_valid_address;
         last_valid_address += size;
 
         mcb = (mem_control_blk*)allocated_location;
@@ -68,7 +68,7 @@ void *kernie_heap::malloc(size_t size)
     return allocated_location;
 }
 
-void *kernie_heap::realloc(void *ptr, size_t size)
+void *kernie_heap::realloc(char* ptr, size_t size)
 {
     if (!ptr)
     {

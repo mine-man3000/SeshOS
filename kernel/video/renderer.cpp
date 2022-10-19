@@ -76,7 +76,6 @@ void printf(const char* format, ...)
 
 void gPrint(const char chr[], unsigned int xOff, unsigned int yOff, uint32_t Color)
 {
-    unsigned int *pixPtr = (unsigned int *)buffer->address;
     int offset = 0;
     for (int i = 0; i < mystrlen(chr); i++)
     {

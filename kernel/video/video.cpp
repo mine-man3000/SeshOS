@@ -7,25 +7,20 @@ volatile struct limine_framebuffer_request framebuffer_request = {
     .id = LIMINE_FRAMEBUFFER_REQUEST,
     .revision = 0
 };
-unsigned char *backbuffer;
+uint32_t *backbuffer;
 
 void putPixel(int x, int y, uint32_t pixel)
 {
-    backbuffer[4 * (buffer->pitch / 4) * y + 4 * x] = pixel;
-    comout("pixel drawn at (");
-    comout(to_string(x));
-    comout(", ");
-    comout(to_string(y));
-    comout(")\n");
+    backbuffer[x * y] = pixel;
     //*((uint32_t*)(buffer->address + 4 * (buffer->pitch / 4) * y + 4 * x)) = pixel;
 }
 
 uint32_t getPixel(uint32_t x, uint32_t y)
 {
-    return *(uint32_t *)(uint32_t*)(buffer->address + 4 * (buffer->pitch / 4) * y + 4 * x);
+    return *(uint32_t *)((uint32_t*)buffer->address + 4 * (buffer->pitch / 4) * y + 4 * x);
 }
 
-unsigned char* drawRect(int startx, int starty, int width, int height, uint32_t VGA_COLOR)
+uint32_t* drawRect(int startx, int starty, int width, int height, uint32_t VGA_COLOR)
 {
     int endx = startx + width;
     int endy = starty + height;
@@ -40,7 +35,7 @@ unsigned char* drawRect(int startx, int starty, int width, int height, uint32_t 
     return backbuffer;
 }
 
-unsigned char* drawImage(uint32_t *icon, int posx, int posy) {
+uint32_t* drawImage(uint32_t *icon, int posx, int posy) {
     int width = icon[0];
     int height = icon[1];
     for (int y = 0; y < height; y ++) {
@@ -58,12 +53,12 @@ void Panic(const char *panicMessage)
     asm("hlt");
 }
 
-unsigned char* Clear(uint32_t color)
+uint32_t* Clear(uint32_t color)
 {
     printf("%s", "\033[2J \033[H");
-    for (int x = 0; x < buffer->width; x++)
+    for (uint64_t x = 0; x < buffer->width; x++)
     {
-        for (int y = 0; y < buffer->height; y++)
+        for (uint64_t y = 0; y < buffer->height; y++)
         {
             putPixel(x, y, 0);
         }

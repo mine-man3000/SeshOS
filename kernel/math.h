@@ -2,6 +2,6 @@
 
 struct Point
 {
-    long X;
-    long Y;
+    uint64_t X;
+    uint64_t Y;
 };

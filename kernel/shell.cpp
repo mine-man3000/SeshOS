@@ -4,9 +4,9 @@
 #include "../tools/picsofbread.h"
 #include "video/window.h"
 
-char* SeshOSVer = "0.2.0";
+char SeshOSVer[] = "0.2.0";
 
-unsigned char* vidBuffer = 0;
+uint32_t* vidBuffer = 0;
 
 Shell newShell;
 bool xRunning = false;
@@ -20,23 +20,38 @@ void Shell::PrintPrompt()
     }    
 }
 
+char ver[]      = "ver";
+char help[]     = "help";
+char clear[]    = "clear";
+char neofetch[] = "neofetch";
+char rm[]       = "rm";
+char panic[]    = "panic";
+char exitx[]    = "exitx";
+char startx[]   = "startx";
+char pob[]      = "pob";
+char tree[]     = "tree";
+char cat[]      = "cat";
+char lsStr[]    = "lsStr";
+char shutdown[] = "shutdown";
+char blank[] = "";
+
 void Shell::TestCMD(char* input)
 {
     TwoStrings twoStrings;
-    for (int i = 0; input[i] != NULL; i ++) {
-        twoStrings.a[i] = NULL;
+    for (int i = 0; input[i] != '\0'; i ++) {
+        twoStrings.a[i] = '\0';
     }
-    for (int i = 0; input[i] != NULL; i ++) {
-        twoStrings.b[i] = NULL;
+    for (int i = 0; input[i] != '\0'; i ++) {
+        twoStrings.b[i] = '\0';
     }
 
     twoStrings = strsplit(input, ' ');
     
-    if (mystrcmp(input, "ver"))
+    if (mystrcmp(input, ver))
     {
         printf("SeshOS version %s\n", SeshOSVer);
     }
-    else if (mystrcmp(input, "help"))
+    else if (mystrcmp(input, help))
     {
         printf("List of available commands:\n");
         printf("    ver:         shows the version of SeshOS\n");
@@ -44,16 +59,16 @@ void Shell::TestCMD(char* input)
         printf("    clear:       clears the screen\n");
         printf("    neofetch:    only a Linux user would understand\n");
     }
-    else if (mystrcmp(input, "clear"))
+    else if (mystrcmp(input, clear))
     {
         Clear(0);
     }
-    else if (mystrcmp(input, "neofetch"))
+    else if (mystrcmp(input, neofetch))
     {
         uint64_t totMem = 0;
         uint64_t useMem = 0;
         uint64_t freMem = 0;
-        for (int i = 0; i < mmap.response->entry_count; i++)
+        for (uint64_t i = 0; i < mmap.response->entry_count; i++)
         {
             uint64_t type = mmap.response->entries[i]->type;
             if (type == LIMINE_MEMMAP_USABLE || type == LIMINE_MEMMAP_ACPI_RECLAIMABLE || type == LIMINE_MEMMAP_BOOTLOADER_RECLAIMABLE)
@@ -89,54 +104,57 @@ void Shell::TestCMD(char* input)
         printf("                 OO  OO  SSSSSS    \n");
         printf("                 OOOOOO  SSSSSS    \n");
     }
-    else if (mystrcmp(input, "")){}
-    else if (mystrcmp(input, "rm"))
+    else if (mystrcmp(input, blank)){}
+    else if (mystrcmp(input, rm))
     {
         printf("your 'rm' program is bad, sorry.\n");
     }
-    else if (mystrcmp(input, "panic"))
+    else if (mystrcmp(input, panic))
     {
         Panic("User Caused Panic");
     }
-    else if (mystrcmp(input, "exitx"))
+    else if (mystrcmp(input, exitx))
     {
         xRunning = false;
         Clear(0);
         newShell.shouldPrint = true;
     }
-    else if (mystrcmp(input, "startx"))
+    else if (mystrcmp(input, startx))
     {
         xRunning = true;
         vidBuffer = drawRect(0, 0, buffer->width, buffer->height, 0xD97F1956);
-        memcpy(vidBuffer, buffer->address, buffer->width * buffer->height * sizeof(unsigned char));
+        memcpy(buffer->address, vidBuffer, buffer->width * buffer->height * sizeof(uint32_t));
         Window yes = Window(10, 10, 200, 200, "Hello World        ", 0x12345678);
         Window no = Window(100, 100, 200, 200, "1234567890!@#$%^&*()", 0x12345678);
+
+        yes.DrawWindow();
+        no.DrawWindow();
 
         drawRect(0, buffer->height - 40, buffer->width, 40, 0xff888888);        
     
         newShell.shouldPrint = false;
     }
-    else if (mystrcmp(input, "pob"))
+    else if (mystrcmp(input, pob))
     {
         drawImage(g_picsofbread_data, buffer->width / 2 - 36,  buffer->height / 2 - 36);
     }
-    else if (mystrcmp(input, "tree"))
+    else if (mystrcmp(input, tree))
     {
-        for (int i = 0; headers[i]->filename != NULL; i++)
+        for (int i = 0; headers[i]->filename != "\0"; i++)
         {
             printf("%s\n", headers[i]->filename);
         }
         
     }
-    else if (mystrcmp(twoStrings.a, "cat"))
+    else if (mystrcmp(twoStrings.a, cat))
     {
         printf(readFile(twoStrings.b));
     }
-    else if (mystrcmp(input, "ls"))
+    else if (mystrcmp(input, lsStr))
     {
         ls();
     }
-    else if (mystrcmp(input, "shutdown"))
+    else if (mystrcmp(input, shutdown))
     {
         Clear(0);
         printf("SHUT DOWN SEQUENCE INITIATED");

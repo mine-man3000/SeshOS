@@ -8,7 +8,7 @@ volatile struct limine_memmap_request mmap {
 uint64_t getMemSize()
 {
     uint64_t memSize = 0;
-    for (int i = 0; i < mmap.response->entry_count; i++)
+    for (uint64_t i = 0; i < mmap.response->entry_count; i++)
     {
         memSize += mmap.response->entries[i]->length;
     }
@@ -44,7 +44,7 @@ extern "C" void *memcpy(void* destination, const void* source, size_t num)
 int numPages()
 {
     int pageCount = 0;
-    for (int i = 0; i < mmap.response->entry_count; i++)
+    for (uint64_t i = 0; i < mmap.response->entry_count; i++)
     {
         if (mmap.response->entries[i]->length > 4096)
         {
