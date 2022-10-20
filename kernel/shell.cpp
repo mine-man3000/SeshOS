@@ -31,7 +31,7 @@ char startx[]   = "startx";
 char pob[]      = "pob";
 char tree[]     = "tree";
 char cat[]      = "cat";
-char lsStr[]    = "lsStr";
+char lsStr[]    = "ls";
 char shutdown[] = "shutdown";
 char blank[] = "";
 
@@ -47,7 +47,7 @@ void Shell::TestCMD(char* input)
 
     twoStrings = strsplit(input, ' ');
     
-    if (mystrcmp(input, ver))
+    if (mystrcmp(input, "ver"))
     {
         printf("SeshOS version %s\n", SeshOSVer);
     }
@@ -59,11 +59,11 @@ void Shell::TestCMD(char* input)
         printf("    clear:       clears the screen\n");
         printf("    neofetch:    only a Linux user would understand\n");
     }
-    else if (mystrcmp(input, clear))
+    else if (mystrcmp(input, "clear"))
     {
         Clear(0);
     }
-    else if (mystrcmp(input, neofetch))
+    else if (mystrcmp(input, "neofetch"))
     {
         uint64_t totMem = 0;
         uint64_t useMem = 0;
@@ -104,22 +104,22 @@ void Shell::TestCMD(char* input)
         printf("                 OO  OO  SSSSSS    \n");
         printf("                 OOOOOO  SSSSSS    \n");
     }
-    else if (mystrcmp(input, blank)){}
-    else if (mystrcmp(input, rm))
+    else if (mystrcmp(input, "")){}
+    else if (mystrcmp(input, "rm"))
     {
         printf("your 'rm' program is bad, sorry.\n");
     }
-    else if (mystrcmp(input, panic))
+    else if (mystrcmp(input, "panic"))
     {
         Panic("User Caused Panic");
     }
-    else if (mystrcmp(input, exitx))
+    else if (mystrcmp(input, "exitx"))
     {
         xRunning = false;
         Clear(0);
         newShell.shouldPrint = true;
     }
-    else if (mystrcmp(input, startx))
+    else if (mystrcmp(input, "startx"))
     {
         xRunning = true;
         vidBuffer = drawRect(0, 0, buffer->width, buffer->height, 0xD97F1956);
@@ -134,11 +134,11 @@ void Shell::TestCMD(char* input)
     
         newShell.shouldPrint = false;
     }
-    else if (mystrcmp(input, pob))
+    else if (mystrcmp(input, "pob"))
     {
         drawImage(g_picsofbread_data, buffer->width / 2 - 36,  buffer->height / 2 - 36);
     }
-    else if (mystrcmp(input, tree))
+    else if (mystrcmp(input, "tree"))
     {
         for (int i = 0; headers[i]->filename != "\0"; i++)
         {
@@ -146,15 +146,15 @@ void Shell::TestCMD(char* input)
         }
         
     }
-    else if (mystrcmp(twoStrings.a, cat))
+    else if (mystrcmp(twoStrings.a, "cat"))
     {
         printf(readFile(twoStrings.b));
     }
-    else if (mystrcmp(input, lsStr))
+    else if (mystrcmp(input, "ls"))
     {
         ls();
     }
-    else if (mystrcmp(input, shutdown))
+    else if (mystrcmp(input, "shutdown"))
     {
         Clear(0);
         printf("SHUT DOWN SEQUENCE INITIATED");

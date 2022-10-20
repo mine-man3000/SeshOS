@@ -21,17 +21,23 @@ volatile struct limine_smp_request smp {
 
 kernie_heap heap;
 
-limine_goto_address test()
+limine_goto_address testA()
 {
-    printf("Hello from the Second core!");
     while (1)
     {
-        if (MousePosition.X > 2)
-        {
-            comout("j");
-        }
+        comout("uwu\n");
+        sleep(1);
     }    
-} 
+}
+
+limine_goto_address testB()
+{
+    while (1)
+    {
+        comout("owo\n");
+        sleep(1);
+    }    
+}
 
 extern "C" void _start(void)
 {
@@ -52,6 +58,9 @@ extern "C" void _start(void)
     }
 
     init();
+
+    smp.response->cpus[0]->goto_address = testB();
+    smp.response->cpus[1]->goto_address = testA();
 
     comout("Hello COM\n");
 

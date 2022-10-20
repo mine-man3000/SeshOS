@@ -126,7 +126,7 @@ iso:
 	@git clone https://github.com/limine-bootloader/limine.git --branch=v4.x-branch-binary --depth=1 --quiet
  
 	@make -C limine
- 
+
 	@mkdir -p iso_root
  
 	@cp bin/kernel.elf initramfs font limine.cfg limine/limine.sys \
@@ -136,3 +136,6 @@ iso:
 
 run: iso
 	@qemu-system-x86_64 -cdrom bin/image.iso -bios /usr/share/OVMF/OVMF_CODE.fd -debugcon stdio -m 1G -soundhw pcspk
+
+debug:
+	@qemu-system-x86_64 -cdrom bin/image.iso -bios /usr/share/OVMF/OVMF_CODE.fd -debugcon stdio -m 1G -soundhw pcspk -d int -no-reboot -no-shutdown
