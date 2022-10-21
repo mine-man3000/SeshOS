@@ -39,6 +39,7 @@ limine_goto_address testB()
     }    
 }
 
+
 extern "C" void _start(void)
 {
     if (terminal_request.response == NULL || terminal_request.response->terminal_count < 1)
@@ -59,8 +60,18 @@ extern "C" void _start(void)
 
     init();
 
-    smp.response->cpus[0]->goto_address = testB();
-    smp.response->cpus[1]->goto_address = testA();
+for (uint64_t i = 0; i < smp.response->cpu_count; i++) {
+    if (smp.response->cpus[i]->lapic_id != smp.response->bsp_lapic_id) {
+        if (i == 1)
+        {
+            smp.response->cpus[i]->goto_address = (limine_goto_address)testA;
+        }            
+        else
+        {
+            smp.response->cpus[i]->goto_address = (limine_goto_address)testB;
+        }
+    }
+}
 
     comout("Hello COM\n");
 

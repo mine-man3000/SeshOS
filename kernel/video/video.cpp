@@ -12,7 +12,7 @@ uint32_t *backbuffer;
 void putPixel(int x, int y, uint32_t pixel)
 {
     backbuffer[4 * (buffer->pitch / 4) * y + 4 * x] = pixel;
-    //*((uint32_t*)(buffer->address + 4 * (buffer->pitch / 4) * y + 4 * x)) = pixel;
+    *((uint32_t*)(buffer->address + 4 * (buffer->pitch / 4) * y + 4 * x)) = pixel;
 }
 
 uint32_t getPixel(uint32_t x, uint32_t y)

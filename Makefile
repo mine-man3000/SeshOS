@@ -135,7 +135,7 @@ iso:
 	@./tools/iso.sh
 
 run: iso
-	@qemu-system-x86_64 -cdrom bin/image.iso -bios /usr/share/OVMF/OVMF_CODE.fd -debugcon stdio -m 1G -soundhw pcspk
+	@qemu-system-x86_64 -cdrom bin/image.iso -bios /usr/share/OVMF/OVMF_CODE.fd -debugcon stdio -m 1G -soundhw pcspk -smp 3
 
 debug:
 	@qemu-system-x86_64 -cdrom bin/image.iso -bios /usr/share/OVMF/OVMF_CODE.fd -debugcon stdio -m 1G -soundhw pcspk -d int -no-reboot -no-shutdown

@@ -13,7 +13,8 @@ __attribute__((interrupt)) void DivideByZero_Handler(interrupt_frame* frame)
 
 __attribute__((interrupt)) void PageFault_Handler(interrupt_frame* frame)
 {
-    Panic("Page Fault Detected");
+    return;
+    //Panic("Page Fault Detected");
 }
 
 __attribute__((interrupt)) void DoubleFault_Handler(interrupt_frame* frame)
