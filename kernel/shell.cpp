@@ -6,8 +6,6 @@
 
 char SeshOSVer[] = "0.2.0";
 
-uint32_t* vidBuffer = 0;
-
 Shell newShell;
 bool xRunning = false;
 
@@ -122,8 +120,7 @@ void Shell::TestCMD(char* input)
     else if (mystrcmp(input, "startx"))
     {
         xRunning = true;
-        vidBuffer = drawRect(0, 0, buffer->width, buffer->height, 0xD97F1956);
-        memcpy(buffer->address, vidBuffer, buffer->width * buffer->height * sizeof(uint32_t));
+        drawRect(0, 0, buffer->width, buffer->height, 0xD97F1956);
         Window yes = Window(10, 10, 200, 200, "Hello World        ", 0x12345678);
         Window no = Window(100, 100, 200, 200, "1234567890!@#$%^&*()", 0x12345678);
 
