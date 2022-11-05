@@ -34,7 +34,7 @@ void CreateEntry(int interruptNum, uint64_t Handler)
 void create_idt()
 {
 	idt.limit = 0x0FFF;
-	idt.offset = (uint64_t)&idt_page[0];	
+	idt.offset = (uint64_t)&idt_page[0];
 	
 	CreateEntry(0xE,  (uint64_t)PageFault_Handler);
 	CreateEntry(0x0,  (uint64_t)DivideByZero_Handler);
