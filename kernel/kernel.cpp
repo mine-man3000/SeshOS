@@ -60,18 +60,18 @@ extern "C" void _start(void)
 
     init();
 
-for (uint64_t i = 0; i < smp.response->cpu_count; i++) {
-    if (smp.response->cpus[i]->lapic_id != smp.response->bsp_lapic_id) {
-        if (i == 1)
-        {
-            smp.response->cpus[i]->goto_address = (limine_goto_address)testA;
-        }            
-        else
-        {
-            smp.response->cpus[i]->goto_address = (limine_goto_address)testB;
+    for (uint64_t i = 0; i < smp.response->cpu_count; i++) {
+        if (smp.response->cpus[i]->lapic_id != smp.response->bsp_lapic_id) {
+            if (i == 1)
+            {
+                smp.response->cpus[i]->goto_address = (limine_goto_address)testA;
+            }
+            else
+            {
+                smp.response->cpus[i]->goto_address = (limine_goto_address)testB;
+            }
         }
     }
-}
 
     comout("Hello COM\n");
 
