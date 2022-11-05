@@ -8,7 +8,6 @@
 #include "memory/malloc.h"
 
 extern "C" void disablePIC();
-extern uint32_t* backbuffer;
 
 void init()
 {
@@ -43,5 +42,4 @@ void init()
 
     printf("[ %sOK %s] ramdisk parsed\n", Green, White);
 
-    backbuffer = (uint32_t *)kernie_heap::the()->malloc(buffer->width * buffer->height * (buffer->bpp / 8) * sizeof(uint32_t));
 }
