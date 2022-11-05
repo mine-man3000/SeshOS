@@ -49,7 +49,6 @@ void *kernie_heap::malloc(size_t size)
             current_ptr += mcb->size;
             current_ptr = (unsigned char*)aligned_ptr((char*)current_ptr);
             comout((const char*)current_ptr);
-            //printf("%p\r\n", current_ptr);
         }
     }
 

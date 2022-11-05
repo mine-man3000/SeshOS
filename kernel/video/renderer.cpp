@@ -76,6 +76,7 @@ void printf(const char* format, ...)
 
 void gPrint(const char chr[], unsigned int xOff, unsigned int yOff, uint32_t Color)
 {
+    unsigned int *pixPtr = (unsigned int *)buffer->address;
     int offset = 0;
     for (int i = 0; i < mystrlen(chr); i++)
     {
@@ -86,7 +87,7 @@ void gPrint(const char chr[], unsigned int xOff, unsigned int yOff, uint32_t Col
             {
                 if ((*fontPtr & (0b10000000 >> (x - xOff))) > 0)
                 {
-                    putPixel(x, y, Color);
+                    *(unsigned int *)(pixPtr + x + offset + (y * (buffer->pitch / 4))) = Color;
                 }
             }
             fontPtr++;
