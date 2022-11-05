@@ -54,7 +54,10 @@ override CFLAGS +=       \
 	-Wno-c++20-extensions \
 	-Wno-missing-field-initializers \
 	-Wno-address \
-	-Wno-int-to-pointer-cast
+	-Wno-int-to-pointer-cast \
+	-Wno-pointer-arith \
+	-Wno-write-strings \
+	-Wno-cast-function-type
  
 # Internal linker flags that should not be changed by the user.
 override LDFLAGS +=         \
