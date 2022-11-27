@@ -122,14 +122,11 @@ limine.h:
 	@wget https://raw.githubusercontent.com/limine-bootloader/limine/trunk/limine.h -q
 
 iso:	
-	@make clean
 	@make limine.h
 	@make
 	@make initramfs
 	@git clone https://github.com/limine-bootloader/limine.git --branch=v4.x-branch-binary --depth=1 --quiet
- 
-	@make -C limine
-
+	
 	@mkdir -p iso_root
  
 	@cp bin/kernel.elf initramfs font limine.cfg limine/limine.sys \
