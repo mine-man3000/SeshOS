@@ -20,9 +20,9 @@ What I want to do:
 
 What I need to do:
 - [X] Load an IDT so that exceptions and interrupts can be handled.
-- [ ] Memory Management 
+- [X] Memory Management 
 - [ ] Scheduler 
-- [ ] Start up the other CPU cores
+- [X] Start up the other CPU cores
 - [ ] VFS
 - [ ] Elf loader
 - [ ] Userland
