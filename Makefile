@@ -71,11 +71,11 @@ override NASMFLAGS += \
 	-f elf64
  
 # Use find to glob all *.c, *.S, and *.asm files in the directory and extract the object names.
-override CFILES := $(shell find . -type f -name '*.cpp')
+override CPPFILES := $(shell find . -type f -name '*.cpp')
 override ASFILES := $(shell find . -type f -name '*.S')
 override NASMFILES := $(shell find . -type f -name '*.asm')
-override OBJ := $(CFILES:.cpp=.o) $(ASFILES:.S=.o) $(NASMFILES:.asm=.o)
-override HEADER_DEPS := $(CFILES:.cpp=.d) $(ASFILES:.S=.d)
+override OBJ := $(CPPFILES:.cpp=.o) $(ASFILES:.S=.o) $(NASMFILES:.asm=.o)
+override HEADER_DEPS := $(CPPFILES:.cpp=.d) $(ASFILES:.S=.d)
  
 # Default target.
 .PHONY: all
@@ -112,7 +112,7 @@ $(KERNEL): $(OBJ)
 # Remove object files and the final executable.
 .PHONY: clean
 clean:
-	@rm -rf $(KERNEL) $(OBJ) $(HEADER_DEPS) limine initramfs iso_root/
+	@rm -rf $(KERNEL) $(OBJ) $(HEADER_DEPS) limine initramfs iso_root/ bin/*
 	@echo "Cleaned!"
 
 initramfs:
@@ -121,7 +121,8 @@ initramfs:
 limine.h:
 	@wget https://raw.githubusercontent.com/limine-bootloader/limine/trunk/limine.h -q
 
-iso:	
+iso:
+	rm -rf limine/
 	@make limine.h
 	@make
 	@make initramfs
@@ -135,7 +136,7 @@ iso:
 	@./tools/iso.sh
 
 run: iso
-	@qemu-system-x86_64 -cdrom bin/image.iso -bios /usr/share/OVMF/OVMF_CODE.fd -debugcon stdio -m 1G -soundhw pcspk -smp 3
+	@qemu-system-x86_64 -cdrom bin/image.iso -bios ./OVMF_CODE.fd -debugcon stdio -m 1G -smp 3 -display sdl
 
 debug:
-	@qemu-system-x86_64 -cdrom bin/image.iso -bios /usr/share/OVMF/OVMF_CODE.fd -debugcon stdio -m 1G -soundhw pcspk -d int -no-reboot -no-shutdown
+	@qemu-system-x86_64 -cdrom bin/image.iso -bios ./OVMF_CODE.fd -debugcon stdio -m 1G -d int -no-reboot -no-shutdown -display sdl
