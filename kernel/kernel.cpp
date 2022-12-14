@@ -25,7 +25,7 @@ limine_goto_address testA()
 {
     while (1)
     {
-        comout("uwu\n");
+        //comout("uwu\n");
         sleep(1);
     }    
 }
@@ -34,11 +34,10 @@ limine_goto_address testB()
 {
     while (1)
     {
-        comout("owo\n");
+        //comout("owo\n");
         sleep(1);
     }    
 }
-
 
 extern "C" void _start(void)
 {
@@ -90,7 +89,7 @@ extern "C" void _start(void)
 
 void comout(const char* input)
 {
-    for (int i = 0; i < mystrlen(input); i++)
+    for (unsigned int i = 0; i < mystrlen(input); i++)
     {
         outb(0xE9, input[i]);
     }    
