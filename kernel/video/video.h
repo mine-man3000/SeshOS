@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include <stddef.h>
+#include "../idt/interrupts.h"
 #include "../limine.h"
 #include "../debugout.h"
 
@@ -24,6 +25,7 @@ void Clear(uint32_t color);
 void putPixel(int x, int y, uint32_t pixel);
 
 void Panic(const char *panicMessage);
+void Panic(const char *panicMessage, interrupt_frame *regs);
 uint32_t getPixel(uint32_t x, uint32_t y);
 
 void setCursorPos(int x, int y);

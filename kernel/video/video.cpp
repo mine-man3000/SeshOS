@@ -48,6 +48,18 @@ void Panic(const char *panicMessage)
     asm("cli;hlt");
 }
 
+void Panic(const char *panicMessage, interrupt_frame *regs)
+{
+    Clear(0);
+    uint64_t cr2;
+    asm("movq %%cr2, %0\r\n" : "=r" (cr2) : );\
+    printf("Kernel Panic\n\n%s \n\nSeshOS has been shutdown to prevent damage to your computer\
+\n\nDebug Info:\nRAX: %x\nRBX: %x\nRCX: %x\nRDX: %x\nRDI: %x\nRSI: %x\nRIP: %x\nCR2: %x", panicMessage, regs->rax, regs->rbx, regs->rcx, regs->rdx, regs->rdi, regs->rip, cr2);
+    while (true) {
+        asm("cli; hlt");
+    }
+}
+
 void Clear(uint32_t color)
 {
     printf("%s", "\033[2J \033[H");
