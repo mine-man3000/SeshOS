@@ -17,7 +17,7 @@ struct TwoStrings
  * @param str the string to get the length of
  * @return length of the string 
  */
-int mystrlen(const char* str);
+unsigned int mystrlen(const char* str);
 
 /**
  * @brief turns the givin value into a string

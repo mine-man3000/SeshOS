@@ -46,9 +46,9 @@ const char *to_hstring(uint64_t value)
     return hexTo_StringOutput;
 }
 
-int mystrlen(const char* str)
+unsigned int mystrlen(const char* str)
 {
-    int i = 0;
+    unsigned int i = 0;
     for (; str[i] != '\0'; i++);
     return i;
 }
@@ -69,8 +69,8 @@ TwoStrings strsplit(char *str, char split)
 {
     char p1[128];
     char p2[128];
-    int i = 0;
-    int j = 0;
+    unsigned int i = 0;
+    unsigned int j = 0;
     
     for (; i < mystrlen(str) && str[i] != split; i++)
     {
