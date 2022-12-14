@@ -45,7 +45,7 @@ void Panic(const char *panicMessage)
 {
     Clear(0);
     printf("Kernel Panic\n\n%s \n\nSeshOS has been shutdown to prevent damage to your computer", panicMessage);
-    asm("hlt");
+    asm("cli;hlt");
 }
 
 void Clear(uint32_t color)
