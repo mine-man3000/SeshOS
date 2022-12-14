@@ -78,7 +78,7 @@ void gPrint(const char chr[], unsigned int xOff, unsigned int yOff, uint32_t Col
 {
     unsigned int *pixPtr = (unsigned int *)buffer->address;
     int offset = 0;
-    for (int i = 0; i < mystrlen(chr); i++)
+    for (unsigned int i = 0; i < mystrlen(chr); i++)
     {
         char *fontPtr = (char *)font->address + (chr[i] * 16) + 4;
         for (unsigned long y = yOff; y < yOff + 16; y++)
