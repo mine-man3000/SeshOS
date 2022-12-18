@@ -137,7 +137,7 @@ void Shell::TestCMD(char* input)
     }
     else if (mystrcmp(input, "tree"))
     {
-        for (int i = 0; headers[i]->filename != "\0"; i++)
+        for (int i = 0; headers[i]->filename[0] != 0; i++)
         {
             printf("%s\n", headers[i]->filename);
         }

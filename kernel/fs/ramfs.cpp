@@ -12,11 +12,12 @@ unsigned int parse()
     for (i = 0; ; i++)
     {
         struct tar_header *header = (struct tar_header *)address;
+        headers[i] = header;
+
         if (header->filename[0] == '\0')
             break;
 
         unsigned int size = getsize(header->size);
-        headers[i] = header;
         address += ((size / 512) + 1) * 512;
         
         if (size % 512)
@@ -71,7 +72,7 @@ void lsReset(TwoStrings* a, TwoStrings* b)
 
 void ls()
 {
-    for (int i = 1; headers[i]->filename != "\0"; i++)
+    for (int i = 1; headers[i]->filename[0] != 0; i++)
     {   
         for (int i = 0; i < 100; i++) fullName.a[i] =      '\0';
         for (int i = 0; i < 100; i++) fullName.b[i] =      '\0';
@@ -85,27 +86,18 @@ void ls()
         fullName   = strsplit(headers[i]->filename, '/');
         nameInPath = strsplit(fullName.b, '/');
 
-        //comout("\nfullName.a: ");
-        //comout(fullName.a);
-        //comout("\nfullName.b: ");
-        //comout(fullName.b);
-        //comout("\nnameInPath.a: ");
-        //comout(nameInPath.a);
-        //comout("\nnameInPath.b: ");
-        //comout(nameInPath.b);
-
         if (i > 1)
         {   
             oldFullName   = strsplit(headers[i-1]->filename, '/');
             oldNameInPath = strsplit(oldFullName.b, '/');    
             if (!mystrcmp(oldNameInPath.a, nameInPath.a))
             {
-                printf("'%s'\n", nameInPath.a);
+                printf("%s\n", nameInPath.a);
             }
         }
         else
         {
-            printf("'%s'\n", nameInPath.a);
+            printf("%s\n", nameInPath.a);
         }
     }
 }
