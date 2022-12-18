@@ -48,6 +48,10 @@ const char *to_hstring(uint64_t value)
 
 unsigned int mystrlen(const char* str)
 {
+
+    comout("'");
+    //comout(to_hstring((uint)str));
+    //comout("'");
     unsigned int i = 0;
     for (; str[i] != '\0'; i++);
     return i;
