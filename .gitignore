@@ -6,3 +6,4 @@ iso_root/
 initramfs
 *.iso
 .vscode
+log.txt

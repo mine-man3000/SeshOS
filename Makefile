@@ -138,5 +138,5 @@ iso:
 run: iso
 	@qemu-system-x86_64 -cdrom bin/image.iso -bios ./OVMF_CODE.fd -debugcon stdio -m 1G -smp 3 -display sdl
 
-debug:
-	@qemu-system-x86_64 -cdrom bin/image.iso -bios ./OVMF_CODE.fd -debugcon stdio -m 1G -d int -no-reboot -no-shutdown -display sdl
+debug: iso
+	@qemu-system-x86_64 -cdrom bin/image.iso -bios ./OVMF_CODE.fd -debugcon stdio -m 1G -d int -D log.txt -no-reboot -no-shutdown -display sdl
