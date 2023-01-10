@@ -2,6 +2,7 @@
 #include "../video/video.h"
 #include "../video/renderer.h"
 #include "../userinput/mouse.h"
+#include "../kernel.h"
 
 #define PIC1_COMMAND 0x20
 #define mastr_pic_cmnd_port 0x20

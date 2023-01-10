@@ -23,7 +23,6 @@ void drawImage(uint32_t *icon, int posx, int posy);
 void Clear(uint32_t color);
 void putPixel(int x, int y, uint32_t pixel);
 
-void Panic(const char *panicMessage);
 uint32_t getPixel(uint32_t x, uint32_t y);
 
 void setCursorPos(int x, int y);

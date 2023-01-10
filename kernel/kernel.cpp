@@ -25,7 +25,7 @@ limine_goto_address testA()
 {
     while (1)
     {
-        //comout("uwu\n");
+        comout("uwu\n");
         sleep(1);
     }    
 }
@@ -34,7 +34,7 @@ limine_goto_address testB()
 {
     while (1)
     {
-        //comout("owo\n");
+        comout("owo\n");
         sleep(1);
     }    
 }
@@ -85,6 +85,7 @@ extern "C" void _start(void)
     {
         __asm__("hlt");
     }
+    
 }
 
 void comout(const char* input)
@@ -93,4 +94,20 @@ void comout(const char* input)
     {
         outb(0xE9, input[i]);
     }    
+}
+
+limine_goto_address halt() {
+    asm("cli;hlt");
+}
+
+void Panic(const char *panicMessage)
+{
+    Clear(0);
+    printf("Kernel Panic\n\n%s \n\nSeshOS has been shutdown to prevent damage to your computer", panicMessage);
+
+    for (uint64_t i = 0; i < smp.response->cpu_count; i++) {
+        smp.response->cpus[i]->goto_address = (limine_goto_address)halt;
+    }
+    comout("test!");
+    asm("cli;hlt");
 }
