@@ -57,8 +57,10 @@ override CFLAGS +=       \
 	-Wno-int-to-pointer-cast \
 	-Wno-pointer-arith \
 	-Wno-write-strings \
-	-Wno-cast-function-type
- 
+	-Wno-cast-function-type \
+	-std=c++20 \
+	-Wno-return-type
+
 # Internal linker flags that should not be changed by the user.
 override LDFLAGS +=         \
 	-nostdlib               \
