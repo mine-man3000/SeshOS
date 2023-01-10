@@ -3,6 +3,7 @@
 #include "fs/ramfs.h"
 #include "../tools/picsofbread.h"
 #include "video/window.h"
+#include "train/train.h"
 
 char SeshOSVer[] = "0.2.0";
 
@@ -103,6 +104,10 @@ void Shell::TestCMD(char* input)
         printf("                 OOOOOO  SSSSSS    \n");
     }
     else if (mystrcmp(input, "")){}
+    else if (mystrcmp(input, "train"))
+    {
+        train();
+    }
     else if (mystrcmp(input, "rm"))
     {
         printf("your 'rm' program is bad, sorry.\n");
