@@ -41,5 +41,4 @@ void init()
     parse();
 
     printf("[ %sOK %s] ramdisk parsed\n", Green, White);
-
 }
