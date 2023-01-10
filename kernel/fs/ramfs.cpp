@@ -62,14 +62,6 @@ TwoStrings nameInPath;
 TwoStrings oldFullName;
 TwoStrings oldNameInPath;
 
-void lsReset(TwoStrings* a, TwoStrings* b)
-{
-    for (int i = 0; i < 100; i++) a->a[i] = '\0';
-    for (int i = 0; i < 100; i++) a->b[i] = '\0';
-    for (int i = 0; i < 100; i++) b->a[i] = '\0';
-    for (int i = 0; i < 100; i++) b->b[i] = '\0';
-}
-
 void ls()
 {
     for (int i = 1; headers[i]->filename[0] != 0; i++)
