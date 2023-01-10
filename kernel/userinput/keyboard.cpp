@@ -42,7 +42,7 @@ void HandleKeyboard(uint8_t scancode)
 		newShell.TestCMD(input);
 		newShell.PrintPrompt();
 		
-		for (int i = 0; input[i + 1] != '\0'; i ++) {
+		for (int i = 0; 100; i ++) {
 		    input[i] = '\0';
 		}
 	}
