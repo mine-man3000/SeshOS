@@ -1,21 +1,39 @@
 #!/usr/bin/python3
-import sys
-import numpy as np
-from misc import *
-import cv2
+from sys import argv
+from datetime import date
+from os import path
+from time import ctime
+from cv2 import imread
+from cv2 import IMREAD_UNCHANGED
 
-if len(sys.argv) < 3:
-    print("Usage: iconconv <bitmapfile> <output_name>")
-    raise TypeError("Usage: iconconv <bitmapfile> <output_name>")
+today = date.today()
 
-bmp = sys.argv[1]
-output = sys.argv[2]
-outputFile = sys.argv[2]
+dateRightFormat = str(today).split("-")
 
-modTime = os.path.getmtime(bmp)
-modDate = time.ctime(modTime)
+day   = dateRightFormat[2]
+month = dateRightFormat[1]
+year  = dateRightFormat[0]
 
-image = cv2.imread(bmp, cv2.IMREAD_UNCHANGED)
+dateRightFormat[0] = month
+dateRightFormat[1] = day
+dateRightFormat[2] = year
+
+newToday = "/".join(dateRightFormat)
+
+finalDate = newToday[1]
+
+if len(argv) < 3:
+	print("Usage: iconconv <bitmap file> <output name>")
+	raise TypeError("Usage: iconconv <bitmap file> <output name>")
+
+bmp = argv[1]
+output = argv[2]
+outputFile = argv[2]
+
+modTime = path.getmtime(bmp)
+modDate = ctime(modTime)
+
+image = imread(bmp, IMREAD_UNCHANGED)
 
 tmp = output.split("/")
 array = tmp[-1].split(".")
@@ -33,41 +51,34 @@ newMonth = test[1]
 newDay   = test[2]
 newYear  = test[4]
 
-FinalModDate = ["", "", ""]
+IconLastModDate = ["", "", ""]
 
-FinalModDate[0] = newMonth
-FinalModDate[1] = newDay
-FinalModDate[2] = newYear
+IconLastModDate[0] = newMonth
+IconLastModDate[1] = newDay
+IconLastModDate[2] = newYear
 
-FinalFinalModDate = "/".join(FinalModDate)
+IconLastModDateFull = "/".join(IconLastModDate)
 split = output.split(".")
 
 
-#print("picture:", bmp,end="")
-#print(", output:", output,end="")
-#print(", outputFile:", outputFile)
-
 print(tmp)
 
-if output[-1] != "h":
-    raise TypeError("OUTPUT FILE IS NOT A .h FILE!")
+if output[-2] != '.' or output[-1] != 'h' :
+	raise TypeError("OUTPUT FILE IS NOT A .h FILE!")
 
 f = open(output, "wt")
-f.write("/*****************************************  \n")
-f.write("                   SeshOS                   \n")
-f.write("                                          \n\n")
-f.write("  This is a converted icon to embed into    \n")
-f.write("            the kernel image.               \n")
-f.write(" * Converted File: ")
-f.write(bmp)
-f.write("                                            \n")
-f.write(" * Converted Date: ")
-f.write(str(newToday))
-f.write("                                            \n")
-f.write(" * Icon Last Mod: ")
-f.write(str(FinalFinalModDate))
-f.write("                                            \n")
-f.write("*****************************************/\n\n")
+f.write(
+	"/*****************************************\n"
+	"                  SeshOS\n"
+	"\n"
+	"\n"
+	"  This is a converted icon to embed into\n"
+	"            the kernel image.\n"
+	" * Converted File: " + bmp + "\n"
+	" * Converted Date: " + str(newToday) + "\n"
+	" * Icon Last Mod: " + str(IconLastModDateFull) + "\n"
+	"*****************************************/\n\n"
+)
 
 f.close()
 
@@ -76,36 +87,26 @@ y = 0
 
 f = open(output, "at")
 
-f.write("uint32_t g_")
-f.write(newPicture)
-f.write("_data[] = {\n\t")
-f.write(f"{width}, {height}, ")
-
+f.write(
+	"uint32_t g_" + newPicture + "_data[] = {\n"
+		"\t" f"{width}, {height}, "
+)
 for y in range(height):
-    for x in range(width):
+	for x in range(width):
 
-        pixel = image[y, x]
-        rgba = 0
+		pixel = image[y, x]
+		rgba = 0
 
-        rgba |= (pixel[0] << 0)    #blue
-        rgba |= (pixel[1] << 8)    #green
-        rgba |= (pixel[2] << 16)   #red
+		rgba |= (pixel[0] << 0)    # blue
+		rgba |= (pixel[1] << 8)    # green
+		rgba |= (pixel[2] << 16)   # red
 
-        hexWithout0x = str(hex(rgba)).split("x")
+		newHex = "0x00" + str(hex(rgba))[2] + ", "
 
-        toAdd = ["0x00", "", ", "]
-        toAdd[1] = hexWithout0x[1] 
 
-        newHex = "".join(toAdd)
-
-        #if(pixel[2] == 0):
-        #    newHex = "0xffffffff, "
-
-        if(newHex == "0x000, "):
-            newHex = "0x00000000, "
-        f.write(newHex)
-    f.write("\n")
-
+		if(newHex == "0x000, "):
+			newHex = "0x00000000, "
+	f.write(newHex + "\n")
 f.write("};\n\n")
 
 f.close()
