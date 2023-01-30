@@ -73,43 +73,42 @@ override NASMFLAGS += \
 	-f elf64
  
 # Use find to glob all *.c, *.S, and *.asm files in the directory and extract the object names.
-override CPPFILES := $(shell find . -type f -name '*.cpp')
-override ASFILES := $(shell find . -type f -name '*.S')
-override NASMFILES := $(shell find . -type f -name '*.asm')
-override OBJ := $(CPPFILES:.cpp=.o) $(ASFILES:.S=.o) $(NASMFILES:.asm=.o)
-override HEADER_DEPS := $(CPPFILES:.cpp=.d) $(ASFILES:.S=.d)
+override CPPFILES  := $(shell cd kernel && find -O3 . -type f -name '*.cpp')
+override NASMFILES := $(shell cd kernel && find -O3 . -type f -name '*.asm')
+override CFILES    := $(shell cd kernel && find -O3 . -type f -name '*.c')
+override OBJ_CPP   := $(subst .cpp,.o,$(CPPFILES))
+override OBJ_C     := $(subst .c,.o,$(CFILES))
+override OBJ_ASM   := $(subst .asm,.o,$(NASMFILES))
+override OBJ       := $(subst ./,build/kernel/,$(OBJ_CPP) $(OBJ_ASM) $(OBJ_C))
+
+#test:
+#	@echo $(OBJ)
  
 # Default target.
 .PHONY: all
-all: dirs $(KERNEL)
- 
-dirs:
-	@mkdir -p build
-	@mkdir -p build/kernel/{fs,gdt,idt,memory,userinput,video,audio}
-	@mkdir -p bin
+all: $(KERNEL)
 
 # Link rules for the final kernel executable.
 $(KERNEL): $(OBJ)
 	@echo "   LD   $(subst ./,,$(subst kernel/,,$(OBJ))) ==> $@"
 	@$(LD) $(subst ./,build/,$(OBJ)) $(LDFLAGS) -o bin/$@
  
-# Include header dependencies.
--include $(HEADER_DEPS)
- 
 # Compilation rules for *.c files.
-%.o: %.cpp
+build/%.o: %.cpp
+	@mkdir -p $(@D)
 	@echo "   CXX   $@"
-	@g++ $(CPPFLAGS) $(CFLAGS) -c $< -o build/$@
+	@g++ $(CPPFLAGS) $(CFLAGS) -c $< -o $@
  
-# Compilation rules for *.S files.
-%.o: %.S
-	@echo "   AS    $@"
-	@$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o build/$@
- 
+build/%.o: %.c
+	@mkdir -p $(@D)
+	@echo "   CC    $@"
+	@gcc $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+
 # Compilation rules for *.asm (nasm) files.
-%.o: %.asm
+build/%.o: %.asm
+	@mkdir -p $(@D)
 	@echo "   NASM  $@"
-	@nasm $(NASMFLAGS) $< -o build/$@
+	@nasm $(NASMFLAGS) $< -o $@
  
 # Remove object files and the final executable.
 .PHONY: clean
