@@ -3,7 +3,7 @@ import sys
 import numpy as np
 from misc import *
 import cv2
-
+//
 if len(sys.argv) < 3:
     print("Usage: iconconv <bitmapfile> <output_name>")
     raise TypeError("Usage: iconconv <bitmapfile> <output_name>")
