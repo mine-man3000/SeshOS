@@ -62,7 +62,7 @@ An extremely lightweight and optimized OS for UEFI systems.
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ### Building
->**Note**: For the Debian, Ubuntu, or any other distro with the APT package manager, make sure to run `sudo apt install build-essential qemu-system-x86 xorriso`
+>**Note**: For Debian, Ubuntu, or any other distro with the APT package manager, make sure to run `sudo apt install build-essential qemu-system-x86 xorriso`
 
 #### Dependencies 
 - gcc 
