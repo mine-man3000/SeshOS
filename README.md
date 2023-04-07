@@ -11,7 +11,7 @@ A lightweight and optimized OS for UEFI systems.
 - [Building](#building)
   - [Dependencies](#dependencies)
   - [Building](#building)
-- [TODO](#todo)
+- [Todo](#todo)
   - [Plans for future](#i-plan-to-work-on)
   - [Need to do](#i-need-to-do)
 - [License](#license)
