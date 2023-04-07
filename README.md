@@ -109,7 +109,7 @@ SeshOS is licensed under the GNU General Public License v3.0
 ### Security
 >**Warning**: Do not submit security vunerablillity reports to Issues.
 
-At SeshOS, we take security seriously. **Please report all security exploits to securityexploits@seshos.com**. 
+Please refer to [Security.md](https://github.com/meghan06/minemanOS/blob/rewrite/SECURITY.md)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
