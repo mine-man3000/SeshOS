@@ -5,6 +5,9 @@ A lightweight and optimized OS for UEFI systems.
 
 ### Table of Contents
 
+- [Current Status](#current-status)
+- [**Disclaimer**](#disclaimer)
+- [Requirements](#requirements)
 - [Building](#building)
   - [Dependencies](#dependencies)
   - [Building](#building)
@@ -15,7 +18,39 @@ A lightweight and optimized OS for UEFI systems.
 - [Security](#security)
 - [Credits](#credits)
 
----------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+### Current Status
+
+| **Feature**        | **Status**           | **Notes**                                                                                     |
+|--------------------|----------------------|-----------------------------------------------------------------------------------------------|
+| WiFi               | Working              |                   |
+| Bluetooth          | Working              |                                      |
+| Suspend / Sleep    | Working              |                                    |
+| Trackpad           | Working              |                                             | 
+| Graphics Accel.    | Working              |                                                |
+| Internal Speakers  | Working              |   |
+                                                                          
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+### Disclaimer 
+
+ > **Warning**:  **By continuing, you acknowledge that you have read and understood the contents of [LICENSE.md](LICENSE.md) and the [disclaimer](#%EF%B8%8F-disclaimer-%EF%B8%8F), and consent to their terms.**
+
+ **The instructions outlined in this [GitHub repo](https://github.com/meghan06/ChromebookOSX) have the potential to cause permanent harm to your laptop, and you should be aware of this potential outcome before proceeding. I cannot be held accountable for any damage caused from following or disregarding these instructions. I make zero assurances concerning the dependability or efficacy of the materials referenced in this repository.**
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+### Requirements
+- 
+- 
+- 
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ### Building
 >**Note**: For the Debian, Ubuntu, or any other distro with the APT package manager, make sure to run `sudo apt install build-essential qemu-system-x86 xorriso`
@@ -29,9 +64,9 @@ A lightweight and optimized OS for UEFI systems.
 - make
 
 #### Compiling 
-- Run `make run` to compile and run the OS.
+- Execute `make run` to compile and run the OS.
 
----------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ### Todo
 
@@ -55,19 +90,19 @@ A lightweight and optimized OS for UEFI systems.
 - [ ] Userland
 
 
----------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ### License
 SeshOS is licensed under _.
 
----------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ### Security
 >**Warning**: Do not submit security vunerablillity reports to Issues.
 
 At SeshOS, we take security seriously. **Please report all security exploits to securityexploits@seshos.com**. 
 
----------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ### Credits
 
