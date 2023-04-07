@@ -37,9 +37,9 @@ A lightweight and optimized OS for UEFI systems.
 
 ### Disclaimer 
 
- > **Warning**:  **By continuing, you acknowledge that you have read and understood the contents of [LICENSE.md](LICENSE.md) and the [disclaimer](#%EF%B8%8F-disclaimer-%EF%B8%8F), and consent to their terms.**
+ > **Warning**:  By continuing, you acknowledge that you have read and understood the contents of [LICENSE.md](LICENSE.md) and the [disclaimer](#%EF%B8%8F-disclaimer-%EF%B8%8F), and consent to their terms.
 
- **The instructions outlined in this [GitHub repo](https://github.com/meghan06/ChromebookOSX) have the potential to cause permanent harm to your laptop, and you should be aware of this potential outcome before proceeding. I cannot be held accountable for any damage caused from following or disregarding these instructions. I make zero assurances concerning the dependability or efficacy of the materials referenced in this repository.**
+ The instructions outlined in this GitHub repo have the potential to cause permanent harm to your computer, and you should be aware of this potential outcome before proceeding. I cannot be held accountable for any damage caused from following or disregarding these instructions. I make zero assurances concerning the dependability or efficacy of the materials referenced in this repository.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
