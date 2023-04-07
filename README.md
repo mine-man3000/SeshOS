@@ -1,14 +1,41 @@
-## BUILDING
+## SeshOS
+A lightweight and optimized OS for UEFI systems.
 
-install gcc, nasm, qemu-system-x86_64, qemu-uefi, xorriso, and make
+---------------------------------------------------------------------------------------------------------------------------------------------------------
 
-for the debian/ubuntu/distros with APT, run ``sudo apt install build-essential qemu-system-x86 xorriso``
+### Table of Contents
 
-then run ``make run`` and it will build and run the OS.
+- [Building](#building)
+  - [Dependencies](#dependencies)
+  - [Building](#building)
+- [TODO](#todo)
+  - [Plans for future](#i-plan-to-work-on)
+  - [Need to do](#i-need-to-do)
+- [License](#license)
+- [Security](#security)
+- [Credits](#credits)
 
-## TODO
+---------------------------------------------------------------------------------------------------------------------------------------------------------
 
-What I want to do: 
+### Building
+>**Note**: For the Debian, Ubuntu, or any other distro with the APT package manager, make sure to run `sudo apt install build-essential qemu-system-x86 xorriso`
+
+#### Dependencies 
+- gcc 
+- qemu-system-x86_64
+- nasm
+- qemu-uefi
+- xorriso
+- make
+
+#### Compiling 
+- Run `make run` to compile and run the OS.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+### Todo
+
+#### I plan to work on: 
 - [X] Booting 
 - [X] Basic GUI 
 - [X] Mouse Detection 
@@ -18,7 +45,7 @@ What I want to do:
 - [X] Make boot partition FAT32
 - [X] Get initrd working
 
-What I need to do:
+#### I need to do:
 - [X] Load an IDT so that exceptions and interrupts can be handled.
 - [X] Memory Management 
 - [ ] Scheduler 
@@ -26,3 +53,32 @@ What I need to do:
 - [ ] VFS
 - [ ] Elf loader
 - [ ] Userland
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+### License
+SeshOS is licensed under _.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+### Security
+>**Warning**: Do not submit security vunerablillity reports to Issues.
+
+At SeshOS, we take security seriously. **Please report all security exploits to securityexploits@seshos.com**. 
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+### Credits
+
+- mineman for being cool
+- meghan06 for being cool
+- donald trump
+- sleepy joe
+- hi
+- people 
+
+
+
+
+
