@@ -33,12 +33,12 @@ An extremely lightweight and optimized OS for UEFI systems.
 
 | **Feature**        | **Status**           | **Notes**                                                                                     |
 |--------------------|----------------------|-----------------------------------------------------------------------------------------------|
-| WiFi               | Working              |                   |
-| Bluetooth          | Working              |                                      |
-| Suspend / Sleep    | Working              |                                    |
-| Trackpad           | Working              |                                             | 
-| Graphics Accel.    | Working              |                                                |
-| Internal Speakers  | Working              |   |
+| 1               | Working              |                   |
+| 2          | Working              |                                      |
+| 3    | Working              |                                    |
+| 4           | Working              |                                             | 
+| 5    | Working              |                                                |
+| 6  | Working              |   |
                                                                           
 
 
@@ -65,12 +65,12 @@ An extremely lightweight and optimized OS for UEFI systems.
 >**Note**: For Debian, Ubuntu, or any other distro with the APT package manager, make sure to run `sudo apt install build-essential qemu-system-x86 xorriso`
 
 #### Dependencies 
-- gcc 
-- qemu-system-x86_64
-- nasm
-- qemu-uefi
-- xorriso
-- make
+- `gcc`
+- `qemu-system-x86_64`
+- `nasm`
+- `qemu-uefi`
+- `xorriso`
+- `make`
 
 #### Compiling 
 - Execute `make run` to compile and run the OS.
