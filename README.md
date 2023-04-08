@@ -24,7 +24,7 @@ An extremely lightweight and optimized OS for UEFI systems.
 - [Getting Started](#getting-started)
    - [Dependencies](#dependencies)
    - [Building](#compiling)
-- [ToDo](#todo)
+- [To Do](#todo)
 - [Frequently Asked Questions](#faq)
 - [Contributing](#contributing)
 - [Security](#security)
