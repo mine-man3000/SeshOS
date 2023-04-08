@@ -1,6 +1,8 @@
 ## SeshOS
 An extremely lightweight and optimized OS for UEFI systems.
 
+[![License](https://img.shields.io/badge/license-GPL-blue)](https://www.gnu.org/licenses/gpl-3.0.en.html) [![Status](https://user-images.githubusercontent.com/77316348/230705808-40c7ba6b-9b4f-41fb-8c40-8e7db3b97ad0.png)](https://github.com/mine-man3000/SeshOS)
+
 ```
  ____            _      ___  ____  
 / ___|  ___  ___| |__  / _ \/ ___| 
@@ -17,14 +19,14 @@ An extremely lightweight and optimized OS for UEFI systems.
 - [Current Status](#current-status)
 - [**Disclaimer**](#disclaimer)
 - [Requirements](#requirements)
-- [Building](#building)
-  - [Dependencies](#dependencies)
-  - [Building](#building)
-- [Todo](#todo)
-  - [Plans for future](#i-plan-to-work-on)
-  - [Need to do](#i-need-to-do)
-- [License](#license)
+- [Features](#features)
+- [Getting Started](#getting-started)
+   - [Dependencies](#dependencies)
+   - [Building](#compiling)
+- [ToDo](#todo)
+- [Contributing](#contributing)
 - [Security](#security)
+- [License](#license)
 - [Credits](#credits)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -46,22 +48,30 @@ An extremely lightweight and optimized OS for UEFI systems.
 
 ### Disclaimer 
 
- > **Warning**:  By continuing, you acknowledge that you have read and understood the contents of [LICENSE.md](LICENSE.md) and the [disclaimer](#%EF%B8%8F-disclaimer-%EF%B8%8F), and consent to their terms.
+ > **Warning**:  By continuing, you acknowledge that you have read and understood the contents of [LICENSE.txt](LICENSE) and the [disclaimer](#disclaimer), and consent to their terms.
 
- The instructions outlined in this GitHub repo have the potential to cause permanent harm to your computer, and you should be aware of this potential outcome before proceeding. I cannot be held accountable for any damage caused from following or disregarding these instructions. I make zero assurances concerning the dependability or efficacy of the materials referenced in this repository.
+The contents in this GitHub repo have the potential to cause permanent harm to your computer, and you should be aware of this potential outcome before proceeding. I cannot be held accountable for any damage, nuclear war, market crashes, or planet collision caused from these instructions. I make zero (0) assurances concerning the dependability or efficacy of the materials referenced in this GitHub repository.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ### Requirements
-- 
-- 
-- 
-
+To be able to install SeshOS on your computer, you must have:
+- UEFI firmware
+   - **BIOS is unsupported**
+- 64 bit CPU 
 
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
-### Building
+### Features
+- No dependency on Linux.
+- Lightweight
+- no telemetry :sunglasses: 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+### Getting Started
+
 >**Note**: For Debian, Ubuntu, or any other distro with the APT package manager, make sure to run `sudo apt install build-essential qemu-system-x86 xorriso`
 
 #### Dependencies 
@@ -79,7 +89,6 @@ An extremely lightweight and optimized OS for UEFI systems.
 
 ### Todo
 
-#### I plan to work on: 
 - [X] Booting 
 - [X] Basic GUI 
 - [X] Mouse Detection 
@@ -88,8 +97,6 @@ An extremely lightweight and optimized OS for UEFI systems.
 - [ ] Port *Something*
 - [X] Make boot partition FAT32
 - [X] Get initrd working
-
-#### I need to do:
 - [X] Load an IDT so that exceptions and interrupts can be handled.
 - [X] Memory Management 
 - [ ] Scheduler 
@@ -101,28 +108,31 @@ An extremely lightweight and optimized OS for UEFI systems.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
-### License
-SeshOS is licensed under the GNU General Public License v3.0
+### Contributing
+>**Warning**: Do not submit security vulnerability reports to the Issues tab.
+
+Want to contribute? We love hearing from our community and welcome any feedback or contributions. 
+
+If you come across any issues with SeshOS, please let us know by reporting it in the Issues tab in this repo. Thank you for your support in improving SeshOS.
+
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ### Security
->**Warning**: Do not submit security vulnerability reports to Issues.
+>**Warning**: Do not submit security vulnerability reports to the Issues tab.
 
-Please refer to [Security.md](https://github.com/meghan06/minemanOS/blob/rewrite/SECURITY.md)
+Please refer to [our security policy](SECURITY.md) for reporting security issues.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+### License
+Copyright (c) mine-man3000. All rights reserved.
+
+SeshOS is licensed under the [GNU General Public License v3.0](LICENSE)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ### Credits
 
-- mineman for being cool
-- meghan06 for being cool
-- donald trump
-- sleepy joe
-- hi
-- people 
-
-
-
-
-
+- [mineman](https://github.com/mine-man3000) for writing this
+- [meghan06](https://github.com/meghan06) for writing documentation
