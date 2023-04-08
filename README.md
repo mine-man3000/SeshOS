@@ -24,7 +24,7 @@ An extremely lightweight and optimized OS for UEFI systems.
 - [Getting Started](#getting-started)
    - [Dependencies](#dependencies)
    - [Building](#compiling)
-- [To Do](#todo)
+- [To Do](#to-do)
 - [Frequently Asked Questions](#faq)
 - [Contributing](#contributing)
 - [Security](#security)
@@ -98,8 +98,9 @@ To be able to install SeshOS on your computer, you must have:
 #### Compiling 
 To compile and run the OS, follow these steps:
 
-Open the terminal and `cd` to the project directory.
-Run the `make run` command to build the OS.
+1. Open the terminal and `cd` to the project directory.
+2. Type `make run` to build the OS.
+
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ### To Do
