@@ -9,12 +9,12 @@ volatile struct limine_framebuffer_request framebuffer_request = {
 
 void putPixel(int x, int y, uint32_t pixel)
 {
-    *((uint32_t*)(buffer->address + 4 * (buffer->pitch / 4) * y + 4 * x)) = pixel;
+    *((uint32_t*)((char*)buffer->address + 4 * (buffer->pitch / 4) * y + 4 * x)) = pixel;
 }
 
 uint32_t getPixel(uint32_t x, uint32_t y)
 {
-    return *(uint32_t *)(uint32_t*)(buffer->address + 4 * (buffer->pitch / 4) * y + 4 * x);
+    return *(uint32_t *)(uint32_t*)((char*)buffer->address + 4 * (buffer->pitch / 4) * y + 4 * x);
 }
 
 void drawRect(int startx, int starty, int width, int height, uint32_t VGA_COLOR)

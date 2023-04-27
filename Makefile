@@ -73,9 +73,9 @@ override NASMFLAGS += \
 	-f elf64
  
 # Use find to glob all *.c, *.S, and *.asm files in the directory and extract the object names.
-override CPPFILES  := $(shell cd kernel && find -O3 . -type f -name '*.cpp')
-override NASMFILES := $(shell cd kernel && find -O3 . -type f -name '*.asm')
-override CFILES    := $(shell cd kernel && find -O3 . -type f -name '*.c')
+override CPPFILES  := $(shell cd kernel && find . -type f -name '*.cpp')
+override NASMFILES := $(shell cd kernel && find . -type f -name '*.asm')
+override CFILES    := $(shell cd kernel && find . -type f -name '*.c')
 override OBJ_CPP   := $(subst .cpp,.o,$(CPPFILES))
 override OBJ_C     := $(subst .c,.o,$(CFILES))
 override OBJ_ASM   := $(subst .asm,.o,$(NASMFILES))

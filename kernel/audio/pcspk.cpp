@@ -19,7 +19,7 @@ void playSound(uint32_t nFrequence)
 void noSound()
 {
     uint8_t tmp = inb(0x61) & 0xFC;
- 
+	
  	outb(0x61, tmp);
 }
  
