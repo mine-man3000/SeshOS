@@ -7,7 +7,7 @@
 
 char SeshOSVer[] = "0.2.0";
 
-Shell newShell;
+//Shell newShell;
 bool xRunning = false;
 
 void Shell::PrintPrompt()
@@ -120,7 +120,7 @@ void Shell::TestCMD(char* input)
     {
         xRunning = false;
         Clear(0);
-        newShell.shouldPrint = true;
+        //newShell.shouldPrint = true;
     }
     else if (mystrcmp(input, "startx"))
     {
@@ -134,7 +134,7 @@ void Shell::TestCMD(char* input)
 
         drawRect(0, buffer->height - 40, buffer->width, 40, 0xff888888);        
     
-        newShell.shouldPrint = false;
+        //newShell.shouldPrint = false;
     }
     else if (mystrcmp(input, "pob"))
     {

@@ -21,4 +21,4 @@ class Shell
         bool shouldPrint;
 };
 
-extern Shell newShell;
+//extern Shell newShell;

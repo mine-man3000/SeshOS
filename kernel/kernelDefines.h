@@ -15,7 +15,7 @@ volatile struct limine_kernel_address_request kernel_address_request = {
 uint64_t physical_kernel_start;
 uint64_t virtual_kernel_start;
  
-struct limine_module_request module {
+struct limine_module_request module = {
     .id = LIMINE_MODULE_REQUEST,
     .revision = 0
 };

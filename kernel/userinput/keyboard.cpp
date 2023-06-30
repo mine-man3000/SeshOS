@@ -39,8 +39,8 @@ void HandleKeyboard(uint8_t scancode)
 		printf("\n");
 		c = '\0';
 		i = 0;
-		newShell.TestCMD(input);
-		newShell.PrintPrompt();
+		//newShell.TestCMD(input);
+		//newShell.PrintPrompt();
 		
 		for (int i = 0; i < 100; i ++) {
 		    input[i] = '\0';

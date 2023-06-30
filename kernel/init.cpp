@@ -6,11 +6,24 @@
 #include "init.h"
 #include "video/renderer.h"
 #include "memory/malloc.h"
+#include "acpi/acpi.h"
 
 extern "C" void disablePIC();
 
+kernie_heap heap;
+
 void init()
 {
+
+    for (uint64_t i = 0; i < mmap.response->entry_count; i++)
+    {
+        uint64_t type = mmap.response->entries[i]->type;
+        if (type == LIMINE_MEMMAP_USABLE)
+        {
+            kernie_heap::the()->init((unsigned char*)mmap.response->entries[i]->base);
+        }
+    }
+
     GDTDescriptor gdtDescriptor;
     gdtDescriptor.Size = sizeof(GDT) - 1;
     gdtDescriptor.Offset = (uint64_t)&DefaultGDT;
@@ -41,4 +54,8 @@ void init()
     parse();
 
     printf("[ %sOK %s] ramdisk parsed\n", Green, White);
+
+    initACPI();
+
+    printf("[ %sOK %s] ACPI Initialized\n", Green, White);
 }

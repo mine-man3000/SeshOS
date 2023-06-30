@@ -2,6 +2,8 @@
 
 #include <stdint.h>
 #include <stdarg.h>
+#include <stdbool.h>
+
 
 extern volatile struct limine_terminal_request terminal_request;
 
