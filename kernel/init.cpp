@@ -39,16 +39,11 @@ void init()
         }
     }
 
+    comout("got here");
+
     ft_ctx = flanterm_fb_init(
         internalAlloc, internalFree, (uint32_t*)buffer->address, buffer->width, buffer->height, buffer->pitch, NULL, NULL, NULL, &defaultbg, &defaultfg, NULL, NULL, NULL, 0, 0, 1, 1, 1, 0
     );
-
-    GDTDescriptor gdtDescriptor;
-    gdtDescriptor.Size = sizeof(GDT) - 1;
-    gdtDescriptor.Offset = (uint64_t)&DefaultGDT;
-    LoadGDT(&gdtDescriptor);
-
-    comout("TETS\n");
 
     if(ft_ctx) {
         comout("ft_ctx isn't NULL");
@@ -56,6 +51,13 @@ void init()
     else {
         comout("ft_ctx is NULL");
     }
+
+    GDTDescriptor gdtDescriptor;
+    gdtDescriptor.Size = sizeof(GDT) - 1;
+    gdtDescriptor.Offset = (uint64_t)&DefaultGDT;
+    LoadGDT(&gdtDescriptor);
+
+    comout("TETS\n");
 
     printf("[ %sOK %s] loading GDT\n", Green, White);
 
