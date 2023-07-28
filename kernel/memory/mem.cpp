@@ -15,17 +15,17 @@ uint64_t getMemSize()
     return memSize; 
 }
 
-//extern "C" void *memset(void *b, int c, int len)
-//{
-//	uint8_t *p = (uint8_t*)b;
-//	while (len > 0)
-//    {
-//		*p = c;
-//		p++;
-//		len--;
-//	}
-//	return b;
-//}
+extern "C" void *memset(void *b, int c, int len)
+{
+	uint8_t *p = (uint8_t*)b;
+	while (len > 0)
+    {
+		*p = c;
+		p++;
+		len--;
+	}
+	return b;
+}
 
 extern "C" void *memcpy(void* destination, const void* source, size_t num)
 {

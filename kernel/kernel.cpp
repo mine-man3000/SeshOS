@@ -12,7 +12,6 @@ void _comout(const char* input);
 struct limine_file* initramfs;
 struct limine_file* font;
 struct limine_framebuffer* buffer;
-struct limine_terminal *terminal;
 
 volatile struct limine_smp_request smp {
     .id = LIMINE_SMP_REQUEST,
@@ -22,11 +21,6 @@ volatile struct limine_smp_request smp {
 
 extern "C" void _start(void)
 {
-    if (terminal_request.response == NULL || terminal_request.response->terminal_count < 1)
-    {
-        asm("cli\nhlt");
-    }
-
     comout("\033[2J \033[H");
     
     init();

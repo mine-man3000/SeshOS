@@ -2,6 +2,12 @@
 #include "video.h"
 #include <stdarg.h>
 #include "../kernel.h"
+#include "../flanterm/flanterm.h"
+#include "../flanterm/backends/fb.h"
+#include "../memory/malloc.h"
+
+extern kernie_heap kernieHeap;
+extern flanterm_context *ft_ctx;
 
 #define PSF1_MAGIC0 0x36
 #define PSF1_MAGIC1 0x04
@@ -9,27 +15,6 @@
 uint32_t MouseCursorBuffer[16 * 16];
 uint32_t MouseCursorBufferAfter[16 * 16];
 bool MouseDrawn;
-static void limine_term_callback(struct limine_terminal *term, uint64_t t, uint64_t a, uint64_t b, uint64_t c);
-
-volatile struct limine_terminal_request terminal_request = {
-    .id = LIMINE_TERMINAL_REQUEST,
-    .revision = 0,
-    .callback = limine_term_callback
-};
-
-static void limine_term_callback(struct limine_terminal *term, uint64_t t, uint64_t a, uint64_t b, uint64_t c) {
-    if (t == 50)
-    {
-        Point termPos;
-        termPos.X = a;
-        termPos.Y = b;
-        comout("termPos.X: ");
-        comout(to_string(termPos.X));
-        comout("\ntermPos.Y: ");
-        comout(to_string(termPos.Y));
-        comout("\n\n");
-    }
-}
 
 void printf(const char* format, ...)
 {
@@ -49,19 +34,19 @@ void printf(const char* format, ...)
             {
                 case 's':
                     strPtr = va_arg(ap, const char*);
-                    terminal_request.response->write(terminal, strPtr, mystrlen(strPtr));
+                    flanterm_write(ft_ctx, strPtr, mystrlen(strPtr));
                     break;
                 case '%':
                     putChar('%');
                     break;
                 case 'i':
                     strPtr = to_string(va_arg(ap, uint64_t));
-                    terminal_request.response->write(terminal, strPtr, mystrlen(strPtr));
+                    flanterm_write(ft_ctx, strPtr, mystrlen(strPtr));
                     break;
                 case 'x':
                     strPtr = to_hstring(va_arg(ap, uint64_t));
-                    terminal_request.response->write(terminal, "0x", 2);
-                    terminal_request.response->write(terminal, strPtr, mystrlen(strPtr));
+                    flanterm_write(ft_ctx, "0x", 2);
+                    flanterm_write(ft_ctx, strPtr, mystrlen(strPtr));
                     break;
             }
         }
@@ -104,7 +89,7 @@ void gPutChar(char letter, int startx, int starty)
 void putChar(char c)
 {
     char yes[2] = {c, '\0'};
-    terminal_request.response->write(terminal, yes, 2);
+    flanterm_write(ft_ctx, yes, 2);
 }
 
 void ClearMouseCursor(uint8_t *mouseCursor, Point position)

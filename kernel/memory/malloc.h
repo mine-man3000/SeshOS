@@ -8,10 +8,10 @@ struct kernie_heap
     void *realloc(char* ptr, size_t size);
     void free(void *ptr);
 
-    bool heap_is_set_up = false;
+    bool kernieHeap_is_set_up = false;
     bool have_allocated = false;
     unsigned char *last_valid_address;
-    unsigned char *heap_space;
+    unsigned char *kernieHeap_space;
 
     void init(unsigned char* addr);
 

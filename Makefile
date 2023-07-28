@@ -1,6 +1,6 @@
 # This is the name that our final kernel executable will have.
 # Change as needed.
-override KERNEL := kernel.elf
+override KERNEL := bin/kernel.elf
  
 # Convenience macro to reliably declare overridable command variables.
 define DEFAULT_VAR =
@@ -24,7 +24,7 @@ $(eval $(call DEFAULT_VAR,LD,ld))
 CFLAGS ?= -g -Wall -Wextra -Wpedantic -pipe
  
 # User controllable preprocessor flags. We set none by default.
-CPPFLAGS ?=
+CPPFLAGS ?= -std=c++20 -Wno-c++20-extensions -fno-threadsafe-statics
  
 # User controllable nasm flags.
 NASMFLAGS ?= -F dwarf -g
@@ -40,25 +40,22 @@ override CFLAGS +=       \
 	-fno-stack-check     \
 	-fno-pie             \
 	-fno-pic             \
-	-fno-threadsafe-statics \
 	-m64                 \
 	-march=x86-64        \
 	-mabi=sysv           \
-	-mno-80387           \
+	-mno-80387			 \
 	-mno-mmx             \
 	-mno-sse             \
 	-mno-sse2            \
 	-mno-red-zone        \
 	-mcmodel=kernel      \
 	-Wno-unused-parameter \
-	-Wno-c++20-extensions \
 	-Wno-missing-field-initializers \
 	-Wno-address \
 	-Wno-int-to-pointer-cast \
 	-Wno-pointer-arith \
 	-Wno-write-strings \
 	-Wno-cast-function-type \
-	-std=c++20 \
 	-Wno-return-type
 
 # Internal linker flags that should not be changed by the user.
@@ -90,8 +87,9 @@ all: $(KERNEL)
 
 # Link rules for the final kernel executable.
 $(KERNEL): $(OBJ)
+	@mkdir -p $(@D) 
 	@echo "   LD   $(subst ./,,$(subst kernel/,,$(OBJ))) ==> $@"
-	@$(LD) $(subst ./,build/,$(OBJ)) $(LDFLAGS) -o bin/$@
+	@$(LD) $(subst ./,build/,$(OBJ)) $(LDFLAGS) -o $@
  
 # Compilation rules for *.c files.
 build/%.o: %.cpp
@@ -102,7 +100,7 @@ build/%.o: %.cpp
 build/%.o: %.c
 	@mkdir -p $(@D)
 	@echo "   CC    $@"
-	@gcc $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+	@gcc $(CFLAGS) -c $< -o $@
 
 # Compilation rules for *.asm (nasm) files.
 build/%.o: %.asm
@@ -127,17 +125,17 @@ iso:
 	@make limine.h
 	@make
 	@make initramfs
-	@git clone https://github.com/limine-bootloader/limine.git --branch=v4.x-branch-binary --depth=1 --quiet
+	@git clone https://github.com/limine-bootloader/limine.git --branch=v5.x-branch-binary --depth=1 --quiet
 	
 	@mkdir -p iso_root
  
-	@cp bin/kernel.elf initramfs font limine.cfg limine/limine.sys \
-	  limine/limine-cd.bin limine/limine-cd-efi.bin iso_root/
+	@cp bin/kernel.elf initramfs font limine.cfg limine/*.sys \
+	  limine/*.bin iso_root/
  
 	@./tools/iso.sh
 
 run: iso
-	@qemu-system-x86_64 -cdrom bin/image.iso -bios ./OVMF_CODE.fd -debugcon stdio -m 1G -smp 3 -display sdl
+	@qemu-system-x86_64 -cdrom bin/image.iso -bios ./OVMF_CODE.fd -debugcon stdio -m 1G -smp 3
 
 debug: iso
-	@qemu-system-x86_64 -cdrom bin/image.iso -bios ./OVMF_CODE.fd -debugcon stdio -m 1G -d int -D log.txt -no-reboot -no-shutdown -display sdl
+	@qemu-system-x86_64 -cdrom bin/image.iso -bios ./OVMF_CODE.fd -debugcon stdio -m 1G -d int -D log.txt -no-reboot -no-shutdown

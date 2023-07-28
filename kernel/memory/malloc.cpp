@@ -23,13 +23,13 @@ void *aligned_ptr(char *ptr)
 
 void *kernie_heap::malloc(size_t size)
 {
-    if (!heap_is_set_up)
+    if (!kernieHeap_is_set_up)
     {
-        last_valid_address = heap_space;
-        heap_is_set_up = true;
+        last_valid_address = kernieHeap_space;
+        kernieHeap_is_set_up = true;
     }
 
-    unsigned char *current_ptr = heap_space;
+    unsigned char *current_ptr = kernieHeap_space;
     char *allocated_location = 0;
 
     size += sizeof(mem_control_blk);
@@ -101,5 +101,5 @@ void kernie_heap::free(void* ptr)
 }
 
 void kernie_heap::init(unsigned char* addr) {
-    this->heap_space = addr;
+    this->kernieHeap_space = addr;
 }
