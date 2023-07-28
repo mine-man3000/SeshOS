@@ -12,14 +12,12 @@
 
 extern "C" void disablePIC();
 
-kernie_heap kernieHeap;
-
 static void *internalAlloc(size_t size) {
-    kernieHeap.malloc(size);
+    return kernie_heap::the()->malloc(size);
 }
 
 static void internalFree(void *ptr, size_t) {
-    kernieHeap.free(ptr);
+    kernie_heap::the()->free(ptr);
 }
 
 uint32_t defaultbg = 0x1b1c1b;
@@ -39,18 +37,22 @@ void init()
         }
     }
 
-    comout("got here");
+    buffer = framebuffer_request.response->framebuffers[0];  
+
+    comout("buffer is ");
+    comout_num((uint64_t) buffer);
+    comout("\n");
+    comout("buffer->address is ");
+    comout_num((uint64_t) buffer->address);
+    comout("\n");
 
     ft_ctx = flanterm_fb_init(
         internalAlloc, internalFree, (uint32_t*)buffer->address, buffer->width, buffer->height, buffer->pitch, NULL, NULL, NULL, &defaultbg, &defaultfg, NULL, NULL, NULL, 0, 0, 1, 1, 1, 0
     );
 
-    if(ft_ctx) {
-        comout("ft_ctx isn't NULL");
-    }
-    else {
-        comout("ft_ctx is NULL");
-    }
+    comout("ft_ctx is ");
+    comout_num((uint64_t) ft_ctx);
+    comout("\n");
 
     GDTDescriptor gdtDescriptor;
     gdtDescriptor.Size = sizeof(GDT) - 1;
@@ -70,8 +72,6 @@ void init()
 	virtual_kernel_start = kernel_address_request.response->virtual_base;
 
     hhdm_offset = hhdm_request.response->offset;
-
-    buffer = framebuffer_request.response->framebuffers[0];  
 
     initramfs = module.response->modules[0];
     font = module.response->modules[1];

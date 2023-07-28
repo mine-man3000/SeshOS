@@ -9,6 +9,7 @@
 #include "shell.h"
 
 void comout(const char* input);
+void comout_num(uint64_t num);
 
 extern struct limine_module_request module;
 extern struct limine_file* initramfs;
