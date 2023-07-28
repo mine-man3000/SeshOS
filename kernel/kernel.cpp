@@ -21,7 +21,7 @@ volatile struct limine_smp_request smp {
 
 extern "C" void _start(void)
 {
-    comout("\033[2J \033[H");
+    //comout("\033[2J \033[H");
     
     init();
 
@@ -47,6 +47,16 @@ void comout(const char* input)
     {
         outb(0xE9, input[i]);
     }    
+}
+
+void comout_num(uint64_t num)
+{
+    for (int i = 0; i < 16; i ++)
+    {
+        const char buf[2] = {"0123456789abcdef"[num >> 60], 0};
+        comout(&buf[0]);
+        num <<= 4;
+    }
 }
 
 limine_goto_address halt() {
