@@ -3,27 +3,29 @@
 #include "../userinput/keyboard.h"
 #include "../debugout.h"
 
+extern void Panic(const char *panicMessage, interrupt_frame *regs);
+
 extern void PIC_EndMaster();
 extern void PIC_EndSlave();
 
 __attribute__((interrupt)) void DivideByZero_Handler(interrupt_frame* frame)
 {
-    Panic("You can't divide by 0 silly :P");
+    Panic("You can't divide by 0 silly :P", frame);
 }
 
 __attribute__((interrupt)) void PageFault_Handler(interrupt_frame* frame)
 {
-    Panic("Page Fault Detected");
+    Panic("Page Fault Detected", frame);
 }
 
 __attribute__((interrupt)) void DoubleFault_Handler(interrupt_frame* frame)
 {
-    Panic("Double Fault Detected");
+    Panic("Double Fault Detected", frame);
 }
 
 __attribute__((interrupt)) void GPFault_Handler(interrupt_frame* frame)
 {
-    Panic("General Protection Fault Detected");
+    Panic("General Protection Fault Detected", frame);
 }
 
 __attribute__((interrupt)) void Keyboard_Handler(interrupt_frame* frame)

@@ -19,21 +19,6 @@ void Shell::PrintPrompt()
     }    
 }
 
-char ver[]      = "ver";
-char help[]     = "help";
-char clear[]    = "clear";
-char neofetch[] = "neofetch";
-char rm[]       = "rm";
-char panic[]    = "panic";
-char exitx[]    = "exitx";
-char startx[]   = "startx";
-char pob[]      = "pob";
-char tree[]     = "tree";
-char cat[]      = "cat";
-char lsStr[]    = "ls";
-char shutdown[] = "shutdown";
-char blank[] = "";
-
 void Shell::TestCMD(char* input)
 {
     TwoStrings twoStrings;
@@ -50,7 +35,7 @@ void Shell::TestCMD(char* input)
     {
         printf("SeshOS version %s\n", SeshOSVer);
     }
-    else if (mystrcmp(input, help))
+    else if (mystrcmp(input, "help"))
     {
         printf("List of available commands:\n");
         printf("    ver:         shows the version of SeshOS\n");
@@ -111,10 +96,6 @@ void Shell::TestCMD(char* input)
     else if (mystrcmp(input, "rm"))
     {
         printf("your 'rm' program is bad, sorry.\n");
-    }
-    else if (mystrcmp(input, "panic"))
-    {
-        Panic("User Caused Panic");
     }
     else if (mystrcmp(input, "exitx"))
     {

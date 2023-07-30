@@ -63,14 +63,14 @@ limine_goto_address halt() {
     asm("cli;hlt");
 }
 
-void Panic(const char *panicMessage)
+void Panic(const char *panicMessage, interrupt_frame *regs)
 {
     Clear(0);
-    printf("Kernel Panic\n\n%s \n\nSeshOS has been shutdown to prevent damage to your computer", panicMessage);
-
-    for (uint64_t i = 0; i < smp.response->cpu_count; i++) {
-        smp.response->cpus[i]->goto_address = (limine_goto_address)halt;
+    uint64_t cr2;
+    asm("movq %%cr2, %0\r\n" : "=r" (cr2) : );\
+    printf("Kernel Panic\n\n%s \n\nSeshOS has been shutdown to prevent damage to your computer\
+\n\nDebug Info:\nRAX: %x\nRBX: %x\nRCX: %x\nRDX: %x\nRDI: %x\nRSI: %x\nRIP: %x\nCR2: %x", panicMessage, regs->rax, regs->rbx, regs->rcx, regs->rdx, regs->rdi, regs->rsi, regs->rip, cr2);
+    while (true) {
+        asm("cli; hlt");
     }
-    comout("test!");
-    asm("cli;hlt");
 }

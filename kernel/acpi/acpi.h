@@ -15,7 +15,7 @@ struct RSDP2 {
 } __attribute__((packed));
 
 struct SDTHeader {
-    unsigned char Signature[4];
+    char Signature[4];
     uint32_t Length;
     uint8_t Revision;
     uint8_t Checksum;

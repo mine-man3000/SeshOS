@@ -20,7 +20,7 @@ static void internalFree(void *ptr, size_t) {
     kernie_heap::the()->free(ptr);
 }
 
-uint32_t defaultbg = 0x1b1c1b;
+uint32_t defaultbg = 0x000000;
 uint32_t defaultfg = 0xffffff;
 
 struct flanterm_context *ft_ctx;
@@ -46,9 +46,8 @@ void init()
     comout_num((uint64_t) buffer->address);
     comout("\n");
 
-    ft_ctx = flanterm_fb_init(
-        internalAlloc, internalFree, (uint32_t*)buffer->address, buffer->width, buffer->height, buffer->pitch, NULL, NULL, NULL, &defaultbg, &defaultfg, NULL, NULL, NULL, 0, 0, 1, 1, 1, 0
-    );
+    ft_ctx = flanterm_fb_simple_init(
+        (uint32_t*)buffer->address, buffer->width, buffer->height, buffer->pitch);
 
     comout("ft_ctx is ");
     comout_num((uint64_t) ft_ctx);
@@ -77,7 +76,7 @@ void init()
     font = module.response->modules[1];
 
     printf("[ %sOK %s] buffers filled\n", Green, White);
-
+    
     parse();
 
     printf("[ %sOK %s] ramdisk parsed\n", Green, White);
