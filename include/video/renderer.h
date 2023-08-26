@@ -1,7 +1,7 @@
 #pragma once
-#include "../limine.h"
-#include "../string.h"
-#include "../math.h"
+#include <limine.h>
+#include <mystring.h>
+#include <math.h>
 
 extern struct limine_terminal *terminal;
 

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../limine.h"
-#include "../kernel.h"
+#include <limine.h>
+#include <kernel.h>
 
 /*
  | offset |  size  | Description

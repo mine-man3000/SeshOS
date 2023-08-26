@@ -1,4 +1,4 @@
-#include "acpi.h"
+#include <acpi/acpi.h>
 
 volatile struct limine_rsdp_request rsdp = {
     .id = LIMINE_RSDP_REQUEST,

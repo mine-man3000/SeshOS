@@ -1,8 +1,8 @@
 #pragma once
-#include "../video/video.h"
-#include "../video/renderer.h"
-#include "../userinput/mouse.h"
-#include "../debugout.h"
+#include <video/video.h>
+#include <video/renderer.h>
+#include <userinput/mouse.h>
+#include <debugout.h>
 
 #define PIC1_COMMAND 0x20
 #define mastr_pic_cmnd_port 0x20

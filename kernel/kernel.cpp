@@ -1,11 +1,11 @@
 #include <stdint.h>
 #include <stddef.h>
-#include "kernel.h" 
-#include "idt/interrupts.h"
-#include "video/window.h"
-#include "audio/pcspk.h"
+#include <kernel.h> 
+#include <idt/interrupts.h>
+#include <video/window.h>
+#include <audio/pcspk.h>
 #include <cpuid.h>
-#include "acpi/acpi.h"
+#include <acpi/acpi.h>
 
 void _comout(const char* input);
 

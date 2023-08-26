@@ -56,7 +56,8 @@ override CFLAGS +=       \
 	-Wno-pointer-arith \
 	-Wno-write-strings \
 	-Wno-cast-function-type \
-	-Wno-return-type
+	-Wno-return-type \
+	-Iinclude/
 
 # Internal linker flags that should not be changed by the user.
 override LDFLAGS +=         \

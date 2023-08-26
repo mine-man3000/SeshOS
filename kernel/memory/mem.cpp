@@ -1,4 +1,4 @@
-#include "mem.h"
+#include <memory/mem.h>
 
 volatile struct limine_memmap_request mmap {
     .id = LIMINE_MEMMAP_REQUEST,

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "limine.h"
+#include <limine.h>
 
 volatile struct limine_hhdm_request hhdm_request = {
     .id = LIMINE_HHDM_REQUEST,

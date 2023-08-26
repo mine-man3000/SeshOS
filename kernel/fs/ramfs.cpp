@@ -1,5 +1,5 @@
-#include "ramfs.h"
-#include "../string.h"
+#include <fs/ramfs.h>
+#include <mystring.h>
 #include <stddef.h>
 
 struct tar_header *headers[32];

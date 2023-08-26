@@ -1,9 +1,9 @@
-#include "shell.h"
-#include "memory/mem.h"
-#include "fs/ramfs.h"
+#include <shell.h>
+#include <memory/mem.h>
+#include <fs/ramfs.h>
 #include "../tools/picsofbread.h"
-#include "video/window.h"
-#include "train/train.h"
+#include <video/window.h>
+#include <train/train.h>
 
 char SeshOSVer[] = "0.2.0";
 

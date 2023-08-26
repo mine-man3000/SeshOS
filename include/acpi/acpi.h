@@ -1,6 +1,6 @@
-#include "../limine.h"
-#include "../video/renderer.h"
-#include "../idt/interrupts.h"
+#include <limine.h>
+#include <video/renderer.h>
+#include <idt/interrupts.h>
 
 struct RSDP2 {
     unsigned char Signature[8];

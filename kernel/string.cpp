@@ -1,6 +1,6 @@
-#include "limine.h"
-#include "string.h"
-#include "video/video.h"
+#include <limine.h>
+#include <mystring.h>
+#include <video/video.h>
 
 char uintTo_StringOutput[128];
 const char *to_string(uint64_t value)

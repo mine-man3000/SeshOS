@@ -1,6 +1,6 @@
-#include "mouse.h"
-#include "../video/window.h"
-#include "../idt/interrupts.h"
+#include <userinput/mouse.h>
+#include <video/window.h>
+#include <idt/interrupts.h>
 
 Mouse GlobalMouse;
 

@@ -1,6 +1,6 @@
-#include "train.h"
-#include "image.h"
-#include "../time.h"
+#include <train/train.h>
+#include <train/image.h>
+#include <time.h>
 
 int x = 0;
 

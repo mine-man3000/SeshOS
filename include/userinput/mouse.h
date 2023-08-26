@@ -1,8 +1,8 @@
 #ifndef MOUSE_H
 #define MOUSE_H
 
-#include "../video/renderer.h"
-#include "../math.h"
+#include <video/renderer.h>
+#include <math.h>
 
 #define PS2Leftbutton 0b00000001
 #define PS2Middlebutton 0b00000100

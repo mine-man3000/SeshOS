@@ -1,12 +1,12 @@
-#include "gdt/gdt.h"
-#include "idt/idt.h"
-#include "memory/mem.h"
-#include "idt/interrupts.h"
-#include "kernelDefines.h"
-#include "init.h"
-#include "video/renderer.h"
-#include "memory/malloc.h"
-#include "acpi/acpi.h"
+#include <gdt/gdt.h>
+#include <idt/idt.h>
+#include <memory/mem.h>
+#include <idt/interrupts.h>
+#include <kernelDefines.h>
+#include <init.h>
+#include <video/renderer.h>
+#include <memory/malloc.h>
+#include <acpi/acpi.h>
 #include "flanterm/flanterm.h"
 #include "flanterm/backends/fb.h"
 

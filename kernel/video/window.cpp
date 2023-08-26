@@ -1,8 +1,8 @@
-#include "window.h"
-#include "video.h"
-#include "../string.h"
-#include "../shell.h"
-#include "../userinput/mouse.h"
+#include <video/window.h>
+#include <video/video.h>
+#include <mystring.h>
+#include <shell.h>
+#include <userinput/mouse.h>
 
 uint32_t closeIcon[] = {
     10, 10,

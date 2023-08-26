@@ -1,7 +1,7 @@
 #pragma once
 
-#include "video/renderer.h"
-#include "video/video.h"
+#include <video/renderer.h>
+#include <video/video.h>
 
 #define     White   "\033[1;00m"
 #define     Red     "\033[1;31m"

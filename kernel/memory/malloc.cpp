@@ -1,9 +1,9 @@
-#include "malloc.h"	
+#include <memory/malloc.h>	
 #include <stddef.h>
 #include <stdint.h>
-#include <string.h>
-#include "../video/renderer.h"	
-#include "../kernel.h"
+#include <mystring.h>
+#include <video/renderer.h>
+#include <kernel.h>
 
 struct mem_control_blk
 {

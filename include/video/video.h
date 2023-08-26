@@ -1,7 +1,7 @@
 #include <stdint.h>
 #include <stddef.h>
-#include "../limine.h"
-#include "../debugout.h"
+#include <limine.h>
+#include <debugout.h>
 
 /**
  * @brief startx but better

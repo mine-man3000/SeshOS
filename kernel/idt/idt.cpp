@@ -1,6 +1,6 @@
-#include "idt.h"
-#include "interrupts.h"
-#include "../debugout.h"
+#include <idt/idt.h>
+#include <idt/interrupts.h>
+#include <debugout.h>
 
 void set_interrupt_offset(InterruptEntry* int_ptr, uint64_t offset)
 {

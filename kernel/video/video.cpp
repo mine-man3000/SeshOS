@@ -1,6 +1,6 @@
-#include "video.h"
-#include "../string.h"
-#include "../time.h"
+#include <video/video.h>
+#include <mystring.h>
+#include <time.h>
 
 volatile struct limine_framebuffer_request framebuffer_request = {
     .id = LIMINE_FRAMEBUFFER_REQUEST,

@@ -1,7 +1,7 @@
-#include "interrupts.h"
-#include "../video/video.h"
-#include "../userinput/keyboard.h"
-#include "../debugout.h"
+#include <idt/interrupts.h>
+#include <video/video.h>
+#include <userinput/keyboard.h>
+#include <debugout.h>
 
 extern void Panic(const char *panicMessage, interrupt_frame *regs);
 

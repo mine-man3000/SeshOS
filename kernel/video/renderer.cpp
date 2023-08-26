@@ -1,10 +1,10 @@
-#include "renderer.h"
-#include "video.h"
+#include <video/renderer.h>
+#include <video/video.h>
 #include <stdarg.h>
-#include "../kernel.h"
+#include <kernel.h>
 #include "../flanterm/flanterm.h"
 #include "../flanterm/backends/fb.h"
-#include "../memory/malloc.h"
+#include <memory/malloc.h>
 
 extern kernie_heap kernieHeap;
 extern flanterm_context *ft_ctx;

@@ -1,4 +1,4 @@
-#include "video.h"
+#include <video/video.h>
 
 class Window
 {   public:

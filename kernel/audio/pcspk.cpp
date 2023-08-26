@@ -1,4 +1,4 @@
-#include "pcspk.h"
+#include <audio/pcspk.h>
 
 void playSound(uint32_t nFrequence)
 {

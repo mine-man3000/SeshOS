@@ -1,7 +1,7 @@
 #pragma once
 #include <stdint.h>
 #include <stddef.h>
-#include "idt/interrupts.h"
+#include <idt/interrupts.h>
 
 struct time
 {
