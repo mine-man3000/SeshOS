@@ -6,7 +6,6 @@
 #include <init.h>
 #include <memory/mem.h>
 #include <time.h>
-#include <shell.h>
 #include <idt/interrupts.h>
 
 void comout(const char* input);

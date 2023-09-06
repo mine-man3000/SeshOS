@@ -2,21 +2,12 @@
 
 #include <stddef.h>
 
-struct kernie_heap
-{
-    void *malloc(size_t size);
-    void *realloc(char* ptr, size_t size);
-    void free(void *ptr);
+extern void *malloc(size_t size);
+extern void *realloc(char* ptr, size_t size);
+extern void free(void *ptr);
+extern void MEM_Init(unsigned char* addr);
 
-    bool kernieHeap_is_set_up = false;
-    bool have_allocated = false;
-    unsigned char *last_valid_address;
-    unsigned char *kernieHeap_space;
-
-    void init(unsigned char* addr);
-
-    static kernie_heap* the(){
-		static kernie_heap me;
-		return &me;
-    }
-};
+extern bool kernieHeap_is_set_up;
+extern bool have_allocated;
+extern unsigned char *last_valid_address;
+extern unsigned char *kernieHeap_space;

@@ -1,8 +1,9 @@
+#pragma once
 #include <limine.h>
 #include <video/renderer.h>
 #include <idt/interrupts.h>
 
-struct RSDP2 {
+typedef struct {
     unsigned char Signature[8];
     uint8_t Checksum;
     uint8_t OEMID[6];
@@ -12,9 +13,9 @@ struct RSDP2 {
     uint64_t XSDTAddress;
     uint8_t ExtendedChecksum;
     uint8_t Reserved[3];
-} __attribute__((packed));
+} __attribute__((packed)) RSDP2;
 
-struct SDTHeader {
+typedef struct {
     char Signature[4];
     uint32_t Length;
     uint8_t Revision;
@@ -24,33 +25,31 @@ struct SDTHeader {
     uint32_t OEMRevision;
     uint32_t CreatorID;
     uint32_t CreatorRevision;
-}__attribute__((packed));
+}__attribute__((packed)) SDTHeader;
 
-struct MCFGHeader {
+typedef struct {
     SDTHeader Header;
     uint64_t Reserved;
-}__attribute__((packed));
+} __attribute__((packed)) MCFGHeader;
 
-struct DeviceConfig {
+typedef struct {
     uint64_t BaseAddress;
     uint16_t PCISegGroup;
     uint8_t StartBus;
     uint8_t EndBus;
     uint32_t Reserved;
-}__attribute__((packed));
+}__attribute__((packed)) DeviceConfig;
 
-struct GenericAddressStructure
-{
+typedef struct {
   uint8_t AddressSpace;
   uint8_t BitWidth;
   uint8_t BitOffset;
   uint8_t AccessSize;
   uint64_t Address;
-};
+} __attribute__((packed)) GenericAddressStructure;
 
-struct FADT
-{
-    struct   SDTHeader h;
+typedef struct {
+    SDTHeader h;
     uint32_t FirmwareCtrl;
     uint32_t Dsdt;
  
@@ -114,7 +113,8 @@ struct FADT
     GenericAddressStructure X_PMTimerBlock;
     GenericAddressStructure X_GPE0Block;
     GenericAddressStructure X_GPE1Block;
-};
+} __attribute__((packed)) FADT;
 
 
 void initACPI();
+extern MCFGHeader *mcfg;

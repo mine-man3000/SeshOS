@@ -11,6 +11,10 @@ extern bool MouseDrawn;
 
 void printf(const char *format, ...);
 void gPrint(const char chr[], unsigned int xOff, unsigned int yOff, uint32_t Color);
-void putChar(char c);
-void DrawOverlayMouseCursor(uint8_t* mouseCursor, Point position, uint32_t colour);
-void ClearMouseCursor(uint8_t* mouseCursor, Point position);
+void putchar(char c);
+void DrawOverlayMouseCursor(uint8_t* mouseCursor, point_t position, uint32_t colour);
+void ClearMouseCursor(uint8_t* mouseCursor, point_t position);
+
+#define Green "\e[32m"
+#define Blue  "\e[34m"
+#define White "\e[1;37m"

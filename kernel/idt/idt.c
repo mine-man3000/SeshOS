@@ -1,16 +1,15 @@
 #include <idt/idt.h>
 #include <idt/interrupts.h>
 #include <debugout.h>
+#include <io.h>
 
-void set_interrupt_offset(InterruptEntry* int_ptr, uint64_t offset)
-{
+void set_interrupt_offset(InterruptEntry* int_ptr, uint64_t offset) {
 	int_ptr->offset_0 = (uint16_t)((offset & 0x000000000000FFFF));
 	int_ptr->offset_1 = (uint16_t)((offset & 0x00000000FFFF0000) >> 16);
 	int_ptr->offset_2 = (uint32_t)((offset & 0xFFFFFFFF00000000) >> 32);
 }
 
-uint64_t get_interrupt_offset(InterruptEntry* int_ptr)
-{
+uint64_t get_interrupt_offset(InterruptEntry* int_ptr) {
 	uint64_t offset = 0;
 
 	offset |= (uint64_t)int_ptr->offset_0;
@@ -23,16 +22,14 @@ uint64_t get_interrupt_offset(InterruptEntry* int_ptr)
 IDT idt;
 uint8_t idt_page[4096] = { 0 };
 
-void CreateEntry(int interruptNum, uint64_t Handler)
-{
+void CreateEntry(int interruptNum, uint64_t Handler) {
 	InterruptEntry* entry = (InterruptEntry*)(idt.offset + interruptNum * sizeof(InterruptEntry));
 	set_interrupt_offset(entry, Handler);
 	entry->type_attribute = int_ta_gate;
 	entry->selector = 0x08;
 }
 
-void create_idt()
-{
+void create_idt() {
 	idt.limit = 0x0FFF;
 	idt.offset = (uint64_t)&idt_page[0];
 	
@@ -41,7 +38,6 @@ void create_idt()
 	CreateEntry(0x8,  (uint64_t)DoubleFault_Handler);
 	CreateEntry(0xD,  (uint64_t)GPFault_Handler);
 	CreateEntry(0x21, (uint64_t)Keyboard_Handler);
-	CreateEntry(0x2C, (uint64_t)MouseInt_Handler);
 	CreateEntry(0x69, (uint64_t)Test_Handler);
 
 	asm("lidt %0" : : "m" (idt));
@@ -54,8 +50,7 @@ void create_idt()
 }
 
 
-void remap_interrupts_for_io()
-{
+void remap_interrupts_for_io() {
 	uint8_t mastr_data_value;
 	uint8_t slave_data_value;
 
@@ -78,13 +73,11 @@ void remap_interrupts_for_io()
 	outb(slave_pic_data_port, slave_data_value); io_wait();
 }
 
-void end_interrupts_for_mastr_io()
-{
+void end_interrupts_for_mastr_io() {
 	outb(mastr_pic_cmnd_port, pic_eoi);
 }
 
-void end_interrupts_for_slave_io()
-{
+void end_interrupts_for_slave_io() {
 	outb(slave_pic_cmnd_port, pic_eoi);
 	end_interrupts_for_mastr_io();
 }

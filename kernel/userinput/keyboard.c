@@ -1,41 +1,35 @@
 #include <userinput/keyboard.h>
+#include <video/renderer.h>
 
 bool isLeftShiftPressed;
 bool isRightShiftPressed;
 
-extern bool xRunning;
 
 char input[100];
 int i = 0;
 
-void HandleKeyboard(uint8_t scancode)
-{
+void HandleKeyboard(uint8_t scancode) {
 	char c = get_us_qwerty_char_from_scan_code(scancode);
 
-	if (scancode == us_qwerty_left_shift)
-	{
+	if (scancode == us_qwerty_left_shift) {
 		is_us_qwerty_left_shift_pressed = 1;
 		c = '\0';
 	}
-	else if (scancode == us_qwerty_right_shift)
-	{
+	else if (scancode == us_qwerty_right_shift) {
 		is_us_qwerty_right_shift_pressed = 1;
 		c = '\0';
 	}
 
-	if (scancode == us_qwerty_left_shift + 0x80)
-	{
+	if (scancode == us_qwerty_left_shift + 0x80) {
 		is_us_qwerty_left_shift_pressed = 0;
 		c = '\0';
 	}
-	else if (scancode == us_qwerty_right_shift + 0x80)
-	{
+	else if (scancode == us_qwerty_right_shift + 0x80) {
 		is_us_qwerty_right_shift_pressed = 0;
 		c = '\0';
 	}
 
-	if (scancode == us_qwerty_enter && xRunning == false)
-	{
+	if (scancode == us_qwerty_enter){
 		printf("\n");
 		c = '\0';
 		i = 0;
@@ -46,21 +40,18 @@ void HandleKeyboard(uint8_t scancode)
 		    input[i] = '\0';
 		}
 	}
-	else if (scancode == us_qwerty_backspace)
-	{
+	else if (scancode == us_qwerty_backspace) {
 		printf("\b \b");
 		c = '\0';
 		i--;
 		input[i] = '\0';
-		if (i < 0)
-		{
+		if (i < 0) {
 			printf(" ");
 			i = 0;
 		}
 	}
 
-	if (c != '\0' && xRunning == false)
-	{
+	if (c != '\0') {
 		char str[2] = {c, '\0'};
 		input[i] = c;
 		i++;
@@ -85,14 +76,12 @@ char us_qwerty_ascii_ps2_mapping[] = {
 	'm', ',', '.', '/', '\0', '*', '\0', ' '
 };
 
-char get_us_qwerty_char_from_scan_code(uint8_t scancode)
-{
+char get_us_qwerty_char_from_scan_code(uint8_t scancode) {
 	if (scancode > 58) return '\0';
 	
 	char c = us_qwerty_ascii_ps2_mapping[scancode];
 	
-	if ((is_us_qwerty_left_shift_pressed || is_us_qwerty_right_shift_pressed))
-	{
+	if ((is_us_qwerty_left_shift_pressed || is_us_qwerty_right_shift_pressed)) {
 		// letters
 		if (c > 96 && c < 123) c -= 32;
 		

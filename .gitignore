@@ -7,3 +7,4 @@ initramfs
 *.iso
 .vscode
 log.txt
+test.disk

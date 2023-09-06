@@ -5,26 +5,21 @@
 #include <video/renderer.h>
 #include <kernel.h>
 
-struct mem_control_blk
-{
+typedef struct {
     bool free;
     size_t size;
-};
+} mem_control_blk;
     
-void *aligned_ptr(char *ptr)
-{
-    while ((uintptr_t) ptr % sizeof(int) != 0)
-    {
+void *aligned_ptr(char *ptr) {
+    while ((uintptr_t) ptr % sizeof(int) != 0) {
         ptr++;
     }
 
     return ptr;
 }
 
-void *kernie_heap::malloc(size_t size)
-{
-    if (!kernieHeap_is_set_up)
-    {
+void *malloc(size_t size) {
+    if (!kernieHeap_is_set_up) {
         last_valid_address = kernieHeap_space;
         kernieHeap_is_set_up = true;
     }
@@ -35,12 +30,9 @@ void *kernie_heap::malloc(size_t size)
     size += sizeof(mem_control_blk);
     mem_control_blk *mcb = (mem_control_blk *)current_ptr;
 
-    if (have_allocated)
-    {
-        while (current_ptr != last_valid_address)
-        {
-            if (mcb->free && mcb->size >= size)
-            {
+    if (have_allocated) {
+        while (current_ptr != last_valid_address) {
+            if (mcb->free && mcb->size >= size) {
                 mcb->free = false;
                 allocated_location = (char*)current_ptr;
                 break;
@@ -52,8 +44,7 @@ void *kernie_heap::malloc(size_t size)
         }
     }
 
-    if (!allocated_location)
-    {
+    if (!allocated_location) {
         allocated_location = (char*)last_valid_address;
         last_valid_address += size;
 
@@ -67,31 +58,27 @@ void *kernie_heap::malloc(size_t size)
     return allocated_location;
 }
 
-void *kernie_heap::realloc(char* ptr, size_t size)
-{
-    if (!ptr)
-    {
-        return this->malloc(size);
+void *realloc(char* ptr, size_t size) {
+    if (!ptr) {
+        return malloc(size);
     }
 
-    if (!size && ptr)
-    {
+    if (!size && ptr) {
         free(ptr);
-        return nullptr;
+        return NULL;
     }
 
-    void *new_ptr = this->malloc(size);
+    void *new_ptr = malloc(size);
 
     mem_control_blk *mcb = (mem_control_blk *)(ptr - sizeof(mem_control_blk));
 
     memcpy(new_ptr, ptr, mcb->size);
-    this->free(ptr);
+    free(ptr);
 
     return new_ptr;
 }
 
-void kernie_heap::free(void* ptr)
-{
+void free(void* ptr) {
     if (!ptr) return;
 
     mem_control_blk *mcb = (mem_control_blk *)((char*)ptr - sizeof(mem_control_blk));
@@ -100,6 +87,6 @@ void kernie_heap::free(void* ptr)
     mcb->free = true;
 }
 
-void kernie_heap::init(unsigned char* addr) {
-    this->kernieHeap_space = addr;
+void MEM_Init(unsigned char* addr) {
+    kernieHeap_space = addr;
 }
