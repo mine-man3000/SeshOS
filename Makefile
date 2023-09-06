@@ -21,10 +21,10 @@ $(eval $(call DEFAULT_VAR,CC,cc))
 $(eval $(call DEFAULT_VAR,LD,ld))
  
 # User controllable CFLAGS.
-CFLAGS ?= -g -Wall -Wextra -Wpedantic -pipe
+CFLAGS ?= -g -Wall -Wextra -pipe
  
 # User controllable preprocessor flags. We set none by default.
-CPPFLAGS ?= -std=c++20 -Wno-c++20-extensions -fno-threadsafe-statics
+#CPPFLAGS ?= -Wno-c++20-extensions -fno-threadsafe-statics
  
 # User controllable nasm flags.
 NASMFLAGS ?= -F dwarf -g
@@ -34,6 +34,7 @@ LDFLAGS ?=
  
 # Internal C flags that should not be changed by the user.
 override CFLAGS +=       \
+	-std=gnu2x           \
 	-I.                  \
 	-ffreestanding       \
 	-fno-stack-protector \
@@ -69,39 +70,39 @@ override LDFLAGS +=         \
 # Internal nasm flags that should not be changed by the user.
 override NASMFLAGS += \
 	-f elf64
- 
+
 # Use find to glob all *.c, *.S, and *.asm files in the directory and extract the object names.
-override CPPFILES  := $(shell cd kernel && find . -type f -name '*.cpp')
+#override CPPFILES  := $(shell cd kernel && find . -type f -name '*.cpp')
 override NASMFILES := $(shell cd kernel && find . -type f -name '*.asm')
 override CFILES    := $(shell cd kernel && find . -type f -name '*.c')
-override OBJ_CPP   := $(subst .cpp,.o,$(CPPFILES))
+#override OBJ_CPP   := $(subst .cpp,.o,$(CPPFILES))
 override OBJ_C     := $(subst .c,.o,$(CFILES))
 override OBJ_ASM   := $(subst .asm,.o,$(NASMFILES))
-override OBJ       := $(subst ./,build/kernel/,$(OBJ_CPP) $(OBJ_ASM) $(OBJ_C))
+override OBJ       := $(subst ./,build/kernel/,$(OBJ_ASM) $(OBJ_C))
 
 #test:
 #	@echo $(OBJ)
  
 # Default target.
 .PHONY: all
-all: $(KERNEL)
+all: flanterm $(KERNEL) 
 
 # Link rules for the final kernel executable.
 $(KERNEL): $(OBJ)
 	@mkdir -p $(@D) 
-	@echo "   LD   $(subst ./,,$(subst kernel/,,$(OBJ))) ==> $@"
+	@echo "   LD    $(subst build/,,$(subst ./,,$(subst kernel/,,$(OBJ)))) ==> $@"
 	@$(LD) $(subst ./,build/,$(OBJ)) $(LDFLAGS) -o $@
  
 # Compilation rules for *.c files.
-build/%.o: %.cpp
-	@mkdir -p $(@D)
-	@echo "   CXX   $@"
-	@g++ $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+# build/%.o: %.cpp
+#	@mkdir -p $(@D)
+#	@echo "   CXX   $@"
+#	@g++ $(CPPFLAGS) $(CFLAGS) -c $< -o $@
  
 build/%.o: %.c
 	@mkdir -p $(@D)
 	@echo "   CC    $@"
-	@gcc $(CFLAGS) -c $< -o $@
+	@gcc $(CFLAGS) -std=gnu2x -c $< -o $@
 
 # Compilation rules for *.asm (nasm) files.
 build/%.o: %.asm
@@ -121,11 +122,17 @@ initramfs:
 limine.h:
 	@wget https://raw.githubusercontent.com/limine-bootloader/limine/trunk/limine.h -q
 
-iso:
-	rm -rf limine/
+flanterm:
+ifeq ("$(wildcard kernel/flanterm/README.md)","")
+	git submodule update --init
+endif
+
+iso: $(kernel)
 	@make limine.h
+	@make flanterm
 	@make
 	@make initramfs
+	@rm -rf limine/
 	@git clone https://github.com/limine-bootloader/limine.git --branch=v5.x-branch-binary --depth=1 --quiet
 	
 	@mkdir -p iso_root
@@ -135,8 +142,11 @@ iso:
  
 	@./tools/iso.sh
 
-run: iso
-	@qemu-system-x86_64 -cdrom bin/image.iso -bios ./OVMF_CODE.fd -debugcon stdio -m 1G -smp 3 --enable-kvm
+test.disk:
+	qemu-img create test.disk 1G
 
-debug: iso
-	@qemu-system-x86_64 -cdrom bin/image.iso -bios ./OVMF_CODE.fd -debugcon stdio -m 1G -d int -D log.txt -no-reboot -no-shutdown
+run: iso test.disk
+	@qemu-system-x86_64 -hda test.disk -cdrom bin/image.iso -bios ./OVMF_CODE.fd -debugcon stdio -m 1G -smp 3 --enable-kvm
+
+debug: iso test.disk
+	@qemu-system-x86_64 -hda test.disk -cdrom bin/image.iso -bios ./OVMF_CODE.fd -debugcon stdio -m 1G -d int -D log.txt -no-reboot -no-shutdown

@@ -1,7 +1,8 @@
 #include <audio/pcspk.h>
+#include <io.h>
+#include <time.h>
 
-void playSound(uint32_t nFrequence)
-{
+void playSound(uint32_t nFrequence) {
 	uint32_t Div;
 	uint8_t tmp;
 
@@ -16,17 +17,14 @@ void playSound(uint32_t nFrequence)
 	}
 }
  
-void noSound()
-{
+void noSound() {
     uint8_t tmp = inb(0x61) & 0xFC;
 	
  	outb(0x61, tmp);
 }
  
-void beep()
-{
-    for (int i = 1; i < 11; i++)
-    {
+void beep() {
+    for (int i = 1; i < 11; i++) {
         playSound(i);
         sleep(1);
     }

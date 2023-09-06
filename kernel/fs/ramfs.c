@@ -45,7 +45,7 @@ char *readFile(char* fileToReadName)
 
     for (int i = 0; headers[i]->filename != "\0"; i++)
     {
-        if (mystrcmp(fileToReadName, headers[i]->filename))
+        if (strcmp(fileToReadName, headers[i]->filename))
         {
             header = headers[i];
             break;
@@ -82,7 +82,7 @@ void ls()
         {   
             oldFullName   = strsplit(headers[i-1]->filename, '/');
             oldNameInPath = strsplit(oldFullName.b, '/');    
-            if (!mystrcmp(oldNameInPath.a, nameInPath.a))
+            if (!strcmp(oldNameInPath.a, nameInPath.a))
             {
                 printf("%s\n", nameInPath.a);
             }

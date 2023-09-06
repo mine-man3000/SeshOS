@@ -1,6 +1,5 @@
 #include <stdint.h>
 #include <mystring.h>
-#include <shell.h>
 
 #define us_qwerty_left_shift	0x2A
 #define us_qwerty_right_shift	0x36

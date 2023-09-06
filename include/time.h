@@ -3,8 +3,7 @@
 #include <stddef.h>
 #include <idt/interrupts.h>
 
-struct time
-{
+typedef struct {
     uint8_t  sec;
     uint8_t  min;
     uint8_t  hour;
@@ -12,7 +11,7 @@ struct time
     uint8_t  day;
     uint8_t  month;
     uint16_t year;
-};
+} time;
 
 /**
  * @brief Gets the current time from the RTC

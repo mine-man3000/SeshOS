@@ -1,4 +1,5 @@
 #include <time.h>
+#include <io.h>
 
 #define REG_SEC                         0x00
 #define REG_SEC_ALARM                   0x01

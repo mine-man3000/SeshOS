@@ -4,12 +4,6 @@
 #include <debugout.h>
 
 /**
- * @brief startx but better
- * 
- */
-void initGUI();
-
-/**
  * @brief draws a rectangle at the given position
  * 
  * @param startx where on the screen the top left most corner will be on the X axis

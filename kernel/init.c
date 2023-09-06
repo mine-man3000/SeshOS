@@ -9,31 +9,18 @@
 #include <acpi/acpi.h>
 #include "flanterm/flanterm.h"
 #include "flanterm/backends/fb.h"
-
-extern "C" void disablePIC();
-
-static void *internalAlloc(size_t size) {
-    return kernie_heap::the()->malloc(size);
-}
-
-static void internalFree(void *ptr, size_t) {
-    kernie_heap::the()->free(ptr);
-}
+#include <pci/pci.h>
 
 uint32_t defaultbg = 0x000000;
 uint32_t defaultfg = 0xffffff;
 
 struct flanterm_context *ft_ctx;
 
-void init()
-{
-
-    for (uint64_t i = 0; i < mmap.response->entry_count; i++)
-    {
+void init() {
+    for (uint64_t i = 0; i < mmap.response->entry_count; i++) {
         uint64_t type = mmap.response->entries[i]->type;
-        if (type == LIMINE_MEMMAP_USABLE)
-        {
-            kernie_heap::the()->init((unsigned char*)mmap.response->entries[i]->base);
+        if (type == LIMINE_MEMMAP_USABLE) {
+            MEM_Init((unsigned char*)mmap.response->entries[i]->base);
         }
     }
 
@@ -63,7 +50,6 @@ void init()
     printf("[ %sOK %s] loading GDT\n", Green, White);
 
     create_idt();
-    InitPS2Mouse();
 
     printf("[ %sOK %s] loading IDT\n", Green, White);
 
@@ -72,16 +58,31 @@ void init()
 
     hhdm_offset = hhdm_request.response->offset;
 
-    initramfs = module.response->modules[0];
-    font = module.response->modules[1];
+    if (module.response->module_count == 1) {
+        font = module.response->modules[0];
+    }
+    else {
+        initramfs = module.response->modules[0];
+        font = module.response->modules[1];
+    }
 
     printf("[ %sOK %s] buffers filled\n", Green, White);
     
-    parse();
 
-    printf("[ %sOK %s] ramdisk parsed\n", Green, White);
+    if (initramfs) {
+        parse();
+        printf("[ %sOK %s] ramdisk parsed\n", Green, White);
+    }
+    else {
+        printf("[ %sINFO%s ] ramdisk not present\n", Blue, White);
+        Panic("ERROR: no ramdisk found! how do you expect to be able to do anything without a disk?", NULL);
+    }
 
+    //ACPI IS BROKEN
     initACPI();
-
+    
     printf("[ %sOK %s] ACPI Initialized\n", Green, White);
+    
+    EnumeratePCI(mcfg);
+    printf("[ %sOK %s] PCI Enumerated\n", Green, White);
 }

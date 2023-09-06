@@ -7,11 +7,10 @@
 
 extern volatile struct limine_terminal_request terminal_request;
 
-struct TwoStrings
-{
+typedef struct {
     char a[128];
     char b[128];
-};
+} TwoStrings;
 
 /**
  * @brief gets the length of the provided string
@@ -19,7 +18,7 @@ struct TwoStrings
  * @param str the string to get the length of
  * @return length of the string 
  */
-unsigned int mystrlen(const char* str);
+unsigned int strlen(const char* str);
 
 /**
  * @brief turns the givin value into a string
@@ -44,7 +43,7 @@ const char *to_hstring(uint64_t value);
  * @param str2 
  * @return true or false depending if the strings are the same 
  */
-bool mystrcmp(char* str1, char* str2);
+bool strcmp(char* str1, char* str2);
 
 /**
  * @brief splits the string at the specified character
