@@ -1,7 +1,7 @@
 #pragma once
 #include <limine.h>
 #include <video/renderer.h>
-#include <mystring.h>
+#include <string.h>
 #include <video/video.h>
 #include <init.h>
 #include <memory/mem.h>
@@ -13,5 +13,4 @@ void comout_num(uint64_t num);
 
 extern struct limine_module_request module;
 extern struct limine_file* initramfs;
-extern struct limine_file* font;
-void Panic(const char *panicMessage, interrupt_frame *regs);
+void panic(const char *panicMessage, registers_t *regs);
