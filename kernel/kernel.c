@@ -5,6 +5,7 @@
 #include <audio/pcspk.h>
 #include <cpuid.h>
 #include <acpi/acpi.h>
+#include <stdio.h>
 
 
 void * __gxx_personality_v0=0;
@@ -12,8 +13,6 @@ void * _Unwind_Resume =0;
 void _comout(const char* input);
 
 struct limine_file* initramfs;
-struct limine_file* font;
-struct limine_framebuffer* buffer;
 
 volatile struct limine_smp_request smp = {
     .id = LIMINE_SMP_REQUEST,
@@ -26,10 +25,7 @@ void _start(void) {
 
     comout("Hello COM\n");
 
-    printf("Welcome to SeshOS\n\0");
-
-    //newShell.shouldPrint = true;
-    //newShell.PrintPrompt();
+    printf("Welcome to SeshOS\n");
 
     // beep();
 
