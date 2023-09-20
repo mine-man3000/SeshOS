@@ -1,5 +1,6 @@
 #include <userinput/keyboard.h>
 #include <video/renderer.h>
+#include <stdio.h>
 
 bool isLeftShiftPressed;
 bool isRightShiftPressed;
@@ -33,20 +34,17 @@ void HandleKeyboard(uint8_t scancode) {
 		printf("\n");
 		c = '\0';
 		i = 0;
-		//newShell.TestCMD(input);
-		//newShell.PrintPrompt();
 		
 		for (int i = 0; i < 100; i ++) {
 		    input[i] = '\0';
 		}
 	}
 	else if (scancode == us_qwerty_backspace) {
-		printf("\b \b");
+		putchar('\b');
 		c = '\0';
 		i--;
 		input[i] = '\0';
 		if (i < 0) {
-			printf(" ");
 			i = 0;
 		}
 	}
