@@ -1,7 +1,7 @@
 #include <memory/malloc.h>	
 #include <stddef.h>
 #include <stdint.h>
-#include <mystring.h>
+#include <string.h>
 #include <video/renderer.h>
 #include <kernel.h>
 

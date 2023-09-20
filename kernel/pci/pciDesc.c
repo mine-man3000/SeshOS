@@ -1,5 +1,5 @@
 #include <stdint.h>
-#include <mystring.h>
+#include <string.h>
 
 const char *DeviceClasses[] = {
     "Unclassified",
