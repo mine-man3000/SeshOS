@@ -58,7 +58,8 @@ override CFLAGS +=       \
 	-Wno-write-strings \
 	-Wno-cast-function-type \
 	-Wno-return-type \
-	-Iinclude/
+	-Iinclude/ \
+	-include include/forceInclude.h
 
 # Internal linker flags that should not be changed by the user.
 override LDFLAGS +=         \
@@ -78,7 +79,7 @@ override CFILES    := $(shell cd kernel && find . -type f -name '*.c')
 #override OBJ_CPP   := $(subst .cpp,.o,$(CPPFILES))
 override OBJ_C     := $(subst .c,.o,$(CFILES))
 override OBJ_ASM   := $(subst .asm,.o,$(NASMFILES))
-override OBJ       := $(subst ./,build/kernel/,$(OBJ_ASM) $(OBJ_C))
+override OBJ       := $(subst ./,build/kernel/,$(OBJ_ASM) $(OBJ_C)) build/font.f16.bin.o
 
 #test:
 #	@echo $(OBJ)
@@ -109,7 +110,13 @@ build/%.o: %.asm
 	@mkdir -p $(@D)
 	@echo "   NASM  $@"
 	@nasm $(NASMFLAGS) $< -o $@
- 
+
+build/font.f16.bin.o: vgafont.f16
+	@$(info $s   PERL  vgafont.f16 ==> font.f16.c)
+	@perl tools/navcc.perl vgafont.f16 > build/font.f16.c
+	@$(info $s   CC    font.f16.c ==> font.bin.f16.o)
+	@$(CC) -c -Wno-gnu-binary-literal -std=gnu2x build/font.f16.c -o build/font.f16.bin.o
+
 # Remove object files and the final executable.
 .PHONY: clean
 clean:
@@ -137,7 +144,7 @@ iso: $(kernel)
 	
 	@mkdir -p iso_root
  
-	@cp bin/kernel.elf initramfs font limine.cfg limine/*.sys \
+	@cp bin/kernel.elf initramfs limine.cfg limine/*.sys \
 	  limine/*.bin iso_root/
  
 	@./tools/iso.sh
@@ -149,4 +156,4 @@ run: iso test.disk
 	@qemu-system-x86_64 -hda test.disk -cdrom bin/image.iso -bios ./OVMF_CODE.fd -debugcon stdio -m 1G -smp 3 --enable-kvm
 
 debug: iso test.disk
-	@qemu-system-x86_64 -hda test.disk -cdrom bin/image.iso -bios ./OVMF_CODE.fd -debugcon stdio -m 1G -d int -D log.txt -no-reboot -no-shutdown
+	@qemu-system-x86_64 -hda test.disk -cdrom bin/image.iso -bios ./OVMF_CODE.fd -debugcon stdio -m 1G -d int -D log.txt -no-reboot -no-shutdown -s -S

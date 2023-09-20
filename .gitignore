@@ -8,3 +8,5 @@ initramfs
 .vscode
 log.txt
 test.disk
+!kernel/boot/limine
+build/
