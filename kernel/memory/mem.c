@@ -38,6 +38,27 @@ void *memcpy(void* destination, const void* source, size_t num) {
 	return destination;
 }
 
+int memcmp(const void *s1, const void *s2, int_fast64_t len) {
+	const uint8_t *p = s1;
+	const uint8_t *q = s2;
+	int charCompareStatus = 0;
+	// If both pointer pointing same memory block
+	if (s1 == s2) {
+		return charCompareStatus;
+	}
+	while (len > 0) {
+		if (*p != *q) {
+			// compare the mismatching character
+			charCompareStatus = (*p > *q) ? 1 : -1;
+			break;
+		}
+		len--;
+		p++;
+		q++;
+	}
+	return charCompareStatus;
+}
+
 int numPages() {
     int pageCount = 0;
     for (uint64_t i = 0; i < mmap.response->entry_count; i++) {
