@@ -10,8 +10,6 @@ then run ``make run`` and it will build and run the OS.
 
 What I want to do: 
 - [X] Booting 
-- [X] Basic GUI 
-- [X] Mouse Detection 
 - [X] Keyboard Driver
 - [X] Terminal
 - [ ] Port *Something*
