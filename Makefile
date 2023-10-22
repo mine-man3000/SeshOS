@@ -86,7 +86,7 @@ override OBJ       := $(subst ./,build/kernel/,$(OBJ_ASM) $(OBJ_C)) build/font.f
  
 # Default target.
 .PHONY: all
-all: flanterm $(KERNEL) 
+all: $(KERNEL) 
 
 # Link rules for the final kernel executable.
 $(KERNEL): $(OBJ)
@@ -129,14 +129,8 @@ initramfs:
 limine.h:
 	@wget https://raw.githubusercontent.com/limine-bootloader/limine/trunk/limine.h -q
 
-flanterm:
-ifeq ("$(wildcard kernel/flanterm/README.md)","")
-	git submodule update --init
-endif
-
 iso: $(kernel)
 	@make limine.h
-	@make flanterm
 	@make
 	@make initramfs
 	@rm -rf limine/
@@ -153,7 +147,7 @@ test.disk:
 	qemu-img create test.disk 1G
 
 run: iso test.disk
-	@qemu-system-x86_64 -hda test.disk -cdrom bin/image.iso -bios ./OVMF_CODE.fd -debugcon stdio -m 1G -smp 3 --enable-kvm
+	@qemu-system-x86_64 -hda test.disk -cdrom bin/image.iso -bios ./OVMF_CODE.fd -debugcon stdio -m 1G -smp 3 --enable-kvm -M q35
 
 debug: iso test.disk
-	@qemu-system-x86_64 -hda test.disk -cdrom bin/image.iso -bios ./OVMF_CODE.fd -debugcon stdio -m 1G -d int -D log.txt -no-reboot -no-shutdown -s -S
+	@qemu-system-x86_64 -hda test.disk -cdrom bin/image.iso -bios ./OVMF_CODE.fd -debugcon stdio -m 1G -d int -D log.txt -no-reboot -no-shutdown  -M q35
