@@ -6,6 +6,8 @@ You may find the original code at https://github.com/techflashYT/Techflash-OS/bl
 ======================
 */
 #include <stdint.h>
+#include <stdbool.h>
+
 typedef void (*TTY_WriteFunc_t)(const char ch, const uint16_t x, const uint16_t y, const uint32_t fgColor, const uint32_t bgColor);
 
 extern uint16_t TTY_CursorX;

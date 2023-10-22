@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stddef.h>
+#include <stdbool.h>
 
 extern void *malloc(size_t size);
 extern void *realloc(char* ptr, size_t size);
