@@ -1,95 +1,89 @@
-// #include <pci/pci.h>
-// #include <disks/sata.h>
-// #include <acpi/acpi.h>
-// #include <stdio.h>
+#include <pci/pci.h>
+#include <disks/sata.h>
+#include <acpi/acpi.h>
+#include <stdio.h>
 
-// void EnumerateFunction(uint64_t deviceAddress, uint64_t function) {
-// 	uint64_t offset = function << 12;
-// 	uint64_t functionAddress = deviceAddress + offset;
+void EnumerateFunction(uint64_t deviceAddress, uint64_t function) {
+	uint64_t offset = function << 12;
+	uint64_t functionAddress = deviceAddress + offset;
 
-// 	PCIDeviceHeader *pciDeviceHeader = (PCIDeviceHeader *)functionAddress;
+	PCIDeviceHeader *pciDeviceHeader = (PCIDeviceHeader *)functionAddress;
 
-// 	if (pciDeviceHeader->DeviceID == 0)
-// 		return;
+	if (pciDeviceHeader->DeviceID == 0)
+		return;
 
-// 	if (pciDeviceHeader->DeviceID == 0xFFFF)
-// 		return;
+	if (pciDeviceHeader->DeviceID == 0xFFFF)
+		return;
 
-// 	printf("%s / %s / %s / %s / %s\n", GetVendorName(pciDeviceHeader->VendorID), GetDeviceName(pciDeviceHeader->VendorID, pciDeviceHeader->DeviceID), DeviceClasses[pciDeviceHeader->Class], GetSubclassName(pciDeviceHeader->Class, pciDeviceHeader->Subclass), GetProgIFName(pciDeviceHeader->Class, pciDeviceHeader->Subclass, pciDeviceHeader->ProgIF));
+	printf("%s / %s / %s / %s / %s\n", GetVendorName(pciDeviceHeader->VendorID), GetDeviceName(pciDeviceHeader->VendorID, pciDeviceHeader->DeviceID), DeviceClasses[pciDeviceHeader->Class], GetSubclassName(pciDeviceHeader->Class, pciDeviceHeader->Subclass), GetProgIFName(pciDeviceHeader->Class, pciDeviceHeader->Subclass, pciDeviceHeader->ProgIF));
 
-// 	switch (pciDeviceHeader->Class) {
-// 		case 0x01: { // mass storage controller
-// 			switch (pciDeviceHeader->Subclass) {
-// 				case 0x06: { // Serial ATA
-// 					switch (pciDeviceHeader->ProgIF) {
-// 						case 0x01: { // AHCI 1.0 device
-// 							//new AHCI::AHCIDriver(pciDeviceHeader);
-// 							break;
-// 						}
-// 					}
-// 				}
-// 			}
-// 		}
-// 	}
-// }
+	switch (pciDeviceHeader->Class) {
+		case 0x01: { // mass storage controller
+			switch (pciDeviceHeader->Subclass) {
+				case 0x06: { // Serial ATA
+					switch (pciDeviceHeader->ProgIF) {
+						case 0x01: { // AHCI 1.0 device
+							//new AHCI::AHCIDriver(pciDeviceHeader);
+							break;
+						}
+					}
+				}
+			}
+		}
+	}
+}
 
-// void EnumerateDevice(uint64_t busAddress, uint64_t device) {
-// 	uint64_t offset = device << 15;
+void EnumerateDevice(uint64_t busAddress, uint64_t device) {
+	uint64_t offset = device << 15;
 
-// 	uint64_t deviceAddress = busAddress + offset;
+	uint64_t deviceAddress = busAddress + offset;
 
-// 	PCIDeviceHeader *pciDeviceHeader = (PCIDeviceHeader *)deviceAddress;
+	PCIDeviceHeader *pciDeviceHeader = (PCIDeviceHeader *)deviceAddress;
 
-// 	if (pciDeviceHeader->DeviceID == 0) {
-// 		return;
-// 	}
-// 	if (pciDeviceHeader->DeviceID == 0xFFFF) {
-// 		return;
-// 	}
+	if (pciDeviceHeader->DeviceID == 0) {
+		return;
+	}
+	if (pciDeviceHeader->DeviceID == 0xFFFF) {
+		return;
+	}
 
-// 	for (uint64_t function = 0; function < 8; function++) {
-// 		EnumerateFunction(deviceAddress, function);
-// 	}
-// }
+	for (uint64_t function = 0; function < 8; function++) {
+		EnumerateFunction(deviceAddress, function);
+	}
+}
 
-// void EnumerateBus(uint64_t baseAddress, uint64_t bus) {
-// 	uint64_t offset = bus << 20;
+void EnumerateBus(uint64_t baseAddress, uint64_t bus) {
+	uint64_t offset = bus << 20;
 
-// 	uint64_t busAddress = baseAddress + offset;
+	uint64_t busAddress = baseAddress + offset;
 
-// 	comout("baseAddress is ");
-// 	comout_num(baseAddress);
-// 	comout("\n");
-// 	comout("offset is ");
-// 	comout_num(offset);
-// 	comout("\n");
+	PCIDeviceHeader *pciDeviceHeader = (PCIDeviceHeader *)busAddress;
 
-// 	PCIDeviceHeader *pciDeviceHeader = (PCIDeviceHeader *)busAddress;
 
-// 	comout("pciDeviceHeader is ");
-// 	comout_num((uint64_t) pciDeviceHeader);
-// 	comout("\n");
+	if (pciDeviceHeader->DeviceID == 0) {
+		return;
+	}
+	if (pciDeviceHeader->DeviceID == 0xFFFF) {
+		return;
+	}
 
-// 	if (pciDeviceHeader->DeviceID == 0) {
-// 		return;
-// 	}
-// 	if (pciDeviceHeader->DeviceID == 0xFFFF) {
-// 		return;
-// 	}
+	for (uint64_t device = 0; device < 32; device++) {
+		EnumerateDevice(busAddress, device);
+	}
+}
 
-// 	for (uint64_t device = 0; device < 32; device++) {
-// 		EnumerateDevice(busAddress, device);
-// 	}
-// }
+void EnumeratePCI(MCFGHeader *mcfg) {
 
-// void EnumeratePCI(MCFGHeader *mcfg) {
-// 	printf("MCFGHeader is %x\n", mcfg);
-// 	int entries = ((mcfg->Header.Length) - sizeof(MCFGHeader)) / sizeof(DeviceConfig);
-// 	for (int t = 0; t < entries; t++) {
-// 		DeviceConfig *newDeviceConfig = (DeviceConfig *)((uint64_t)mcfg + sizeof(MCFGHeader) + (sizeof(DeviceConfig) * t));
+    if(!mcfg) {
+        panic("MCFG was not found!", NULL);
+    }
 
-// 		for (uint64_t bus = newDeviceConfig->StartBus; bus < newDeviceConfig->EndBus; bus++) {
-// 			EnumerateBus(newDeviceConfig->BaseAddress, bus);
-// 		}
-// 	}
-// }
+	int entries = ((mcfg->Header.length) - sizeof(MCFGHeader)) / sizeof(DeviceConfig);
+	for (int t = 0; t < entries; t++) {
+		DeviceConfig *newDeviceConfig = (DeviceConfig *)((uint64_t)mcfg + sizeof(MCFGHeader) + (sizeof(DeviceConfig) * t));
+
+		for (uint64_t bus = newDeviceConfig->StartBus; bus < newDeviceConfig->EndBus; bus++) {
+			EnumerateBus(newDeviceConfig->BaseAddress, bus);
+		}
+	}
+}
