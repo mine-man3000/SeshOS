@@ -4,11 +4,7 @@
 #include <tty.h>
 #include <stdarg.h>
 #include <kernel.h>
-#include "../flanterm/flanterm.h"
-#include "../flanterm/backends/fb.h"
 #include <memory/malloc.h>
-
-extern struct flanterm_context *ft_ctx;
 
 #define PSF1_MAGIC0 0x36
 #define PSF1_MAGIC1 0x04
