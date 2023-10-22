@@ -35,4 +35,18 @@ typedef struct {
 	uint32_t pointerToOtherSDT[];
 } __attribute__ ((packed)) RSDT;
 
+typedef struct {
+    ACPISDTHeader Header;
+    uint64_t Reserved;
+}__attribute__((packed)) MCFGHeader;
+
+typedef struct {
+    uint64_t BaseAddress;
+    uint16_t PCISegGroup;
+    uint8_t StartBus;
+    uint8_t EndBus;
+    uint32_t Reserved;
+}__attribute__((packed)) DeviceConfig;
+
+extern MCFGHeader* mcfg; 
 extern void ACPI_Init();

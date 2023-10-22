@@ -9,7 +9,11 @@ You may find the original code at https://github.com/techflashYT/Techflash-OS/bl
 #include <string.h>
 #include <acpi/acpi.h>
 #include <kernel.h>
+#include <stdbool.h>
+
 MODULE("X86ACPI");
+
+MCFGHeader* mcfg;
 
 volatile struct limine_rsdp_request rsdpReq = {
 	.id = LIMINE_RSDP_REQUEST,
@@ -100,6 +104,9 @@ void ACPI_Init() {
 		if (memcmp(h->signature, "FACP", 4) == 0) {
 			// TODO: Handle FACP
 			log(MODNAME, "Found FACP", LOGLEVEL_INFO);
+		}
+		if (memcmp(h->signature, "MCFG", 4) == 0) {
+			mcfg = h;
 		}
 	}
 }
