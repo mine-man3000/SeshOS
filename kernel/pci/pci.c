@@ -23,6 +23,7 @@ void EnumerateFunction(uint64_t deviceAddress, uint64_t function) {
 				case 0x06: { // Serial ATA
 					switch (pciDeviceHeader->ProgIF) {
 						case 0x01: { // AHCI 1.0 device
+							AHCIDriver_Init(pciDeviceHeader);
 							//new AHCI::AHCIDriver(pciDeviceHeader);
 							break;
 						}
