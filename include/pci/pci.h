@@ -1,3 +1,5 @@
+#pragma once
+
 #include <stdint.h>
 #include <memory/mem.h>
 #include <video/renderer.h>
